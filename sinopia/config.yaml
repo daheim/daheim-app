@@ -1,0 +1,24 @@
+
+storage: ./storage
+
+auth:
+  htpasswd:
+    file: ./htpasswd
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+    maxage: 1h
+
+packages:
+  '@*/*':
+    access: $all
+    publish: $all
+
+  '*':
+    access: $all
+    publish: $all
+    proxy: npmjs
+
+logs:
+  - {type: file, path: sinopia.log, level: http}

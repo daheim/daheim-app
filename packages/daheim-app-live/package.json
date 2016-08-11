@@ -2,13 +2,16 @@
   "name": "daheim-app-live",
   "version": "0.1.0",
   "description": "Socket.IO Server for Daheim",
-  "private": true,
+  "main": "lib/app.js",
   "scripts": {
     "start": "NODE_ENV=production node lib/app",
     "dev": "../../node_modules/.bin/better-npm-run dev",
     "check": "../../node_modules/.bin/eslint .",
     "build": "../../node_modules/.bin/babel src/ -d lib/ --copy-files",
     "clean": "rm -rf lib"
+  },
+  "bin": {
+    "daheim-app-live": "bin/daheim-app-live.js"
   },
   "betterScripts": {
     "dev": {

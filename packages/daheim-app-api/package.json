@@ -2,8 +2,8 @@
   "name": "daheim-app-api",
   "description": "API Server of Daheim",
   "version": "0.1.0",
-  "private": true,
   "license": "MIT",
+  "main": "lib/app.js",
   "scripts": {
     "start": "NODE_ENV=production node lib/app",
     "dev": "../../node_modules/.bin/better-npm-run dev",
@@ -18,6 +18,9 @@
         "NODE_ENV": "development"
       }
     }
+  },
+  "bin": {
+    "daheim-app-api": "bin/daheim-app-api.js"
   },
   "repository": {
     "type": "git",

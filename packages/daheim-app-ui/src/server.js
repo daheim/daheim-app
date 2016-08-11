@@ -16,6 +16,10 @@ import bowser from 'bowser'
 import universal from './universal'
 import Html from './html'
 
+process.on("unhandledRejection", function(reason, promise) {
+  console.error('unhandled rejection', reason)
+})
+
 if (process.env.RAVEN_PRIVATE_DSN) {
   const ravenClient = new raven.Client(process.env.RAVEN_PRIVATE_DSN)
   ravenClient.patchGlobal()
@@ -96,18 +100,21 @@ app.use(async (req, res, next) => {
     // TODO: handle cannot load profile
   }
 
-  state.browser = bowser._detect(req.headers['user-agent'])
-  const store = {getState: () => state}
+  try {
+    state.browser = bowser._detect(req.headers['user-agent'])
+    const store = {getState: () => state}
 
-  // const store = createStore(history, client)
+    // const store = createStore(history, client)
 
-  function hydrateOnClient () {
-    res.send('<!doctype html>\n' +
-      ReactDOM.renderToString(<Html assets={universal.assets()} store={store} />))
+    function hydrateOnClient () {
+      res.send('<!doctype html>\n' +
+        ReactDOM.renderToString(<Html assets={universal.assets()} store={store} />))
+    }
+
+    hydrateOnClient()
+  } catch (err) {
+    next(err)
   }
-
-  hydrateOnClient()
-  return
 })
 
 if (process.env.RAVEN_PRIVATE_DSN) {
