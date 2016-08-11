@@ -1,6 +1,0 @@
-FROM mhart/alpine-node:6
-
-ADD . /app
-WORKDIR /app
-
-CMD npm start

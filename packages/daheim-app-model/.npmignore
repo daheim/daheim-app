@@ -1,2 +1,6 @@
 /src
 /cert
+/.babelrc
+/.env
+/.gitignore
+/.npmignore

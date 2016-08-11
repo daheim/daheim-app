@@ -1,2 +1,8 @@
 /src
 /cert
+/.npmignore
+/.babelrc
+/.env
+/.eslintignore
+/.eslintrc
+/.gitignore

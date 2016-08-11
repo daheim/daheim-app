@@ -1,2 +1,14 @@
 /src
 /cert
+/tmp
+/*.json.gzip
+/.babelrc
+/.dockerignore
+/.env
+/.env.example
+/.eslintignore
+/.eslintrc
+/.gitignore
+/.npmignore
+__mocks__
+__tests__
