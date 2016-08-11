@@ -1,0 +1,34 @@
+.dhm-profile-camera {
+	width: 100%;
+	height: 100%;
+}
+
+.dhm-profile-camera .dhm-video {
+	transform: scale(-1, 1);
+	-webkit-transform: scale(-1, 1);
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+.dhm-profile-camera .dhm-canvas {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+.dhm-profile-camera .dhm-icon {
+	font-size: 48px;
+	width: 48px;
+	height: 48px;
+	color: rgba(255, 255, 255, 0.7);
+	overflow: hidden;
+}
+
+.dhm-profile-camera .dhm-icon-wrapper {
+	background: rgba(0, 0, 0, 0.7);
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}

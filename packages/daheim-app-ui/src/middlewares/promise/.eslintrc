@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "space-before-function-paren": 0,
+    "babel/arrow-parens": 0
+  }
+}

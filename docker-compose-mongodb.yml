@@ -1,0 +1,5 @@
+mongodb:
+  image: mongo
+  command: --storageEngine wiredTiger
+  ports:
+    - '27017:27017'

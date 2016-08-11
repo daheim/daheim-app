@@ -1,0 +1,23 @@
+{
+  "browserNotSupported":"'Daheim' funktioniert auf Deinem Browser nicht. Wir bieten 'Daheim' derzeit auf Chrome und Firefox an - die Browser kannst Du hier herunterladen:",
+  "browserTooOld":"Dein {browserName} ist leider veraltet. Damit 'Daheim' reibungslos funktioniert, mache bitte ein Browserupdate:",
+  "emailAddressMissing":"Bitte E-Mail-Adresse eingeben",
+  "errorMessage":"Fehler: {message}",
+  "forgotPasswordPage.title":"Passwort vergessen?",
+  "forgotPasswordPage.description":"Gib Deine E-Mail-Adresse ein und wir helfen Dir ein neues Passwort zu bekommen.",
+  "forgotPasswordPage.userNotFound":"Du hast noch kein Profil bei 'Daheim'. Klicke hier, um Dich neu anzumelden.",
+  "forgotPasswordPage.emailAddressLabel":"E-Mail-Adresse",
+  "forgotPasswordPage.submitLabel":"Weiter",
+  "forgotPasswordPage.emailSent":"Wir haben Dir eine E-Mail geschickt.",
+  "loginPage.invalidPassword":"Das Passwort und die E-Mail-Adresse, die Du eingegeben hast, stimmen nicht überein.",
+  "ready.connecting":"Eine Verbindung mit dem 'Daheim' Netzwerk wird hergestellt. Bitte warte einen Moment!",
+  "ready.buttonCaption":"Los geht's - Gesprächspartner suchen",
+  "ready.lookingForPartners":"Es werden passende Gesprächspartner gesucht.",
+  "ready.cancel":"abbrechen",
+  "changePasswordPage.title":"Passwort ändern",
+  "changePasswordPage.currentPassword":"Aktuelles Passwort",
+  "changePasswordPage.newPassword":"Neues Passwort",
+  "changePasswordPage.repeatNewPassword":"Neues Passwort bestätigen",
+  "changePasswordPage.requiredField":"Eingabe erforderlich",
+  "changePasswordPage.newPasswordMismatch":"Passwort und Bestätigung stimmen nicht überein."
+}

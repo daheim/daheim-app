@@ -1,0 +1,27 @@
+{
+  "browserNotSupported": "Unfortunately your browser is not supported. Please download one of the supported browsers below:",
+  "browserTooOld": "Your {browserName} is getting a bit old. Please update it by clicking the link below:",
+  "emailAddressMissing": "Please fill in you email address",
+  "errorMessage": "Error: {message}",
+
+  "forgotPasswordPage.title": "Forgot password?",
+  "forgotPasswordPage.description": "Fill in your email address and we will help you to recover your password.",
+  "forgotPasswordPage.userNotFound": "User not found. Click here to create a new account.",
+  "forgotPasswordPage.emailAddressLabel": "Email Address",
+  "forgotPasswordPage.submitLabel": "Next",
+  "forgotPasswordPage.emailSent": "We have sent you an email.",
+
+  "loginPage.invalidPassword": "Invalid username or password",
+
+  "ready.connecting": "Connecting to the Daheim network. Please wait...",
+  "ready.buttonCaption": "Find me someone to talk to",
+  "ready.lookingForPartners": "Looking for matching partners.",
+  "ready.cancel": "cancel",
+
+  "changePasswordPage.title": "Change Password",
+  "changePasswordPage.currentPassword": "Current Password",
+  "changePasswordPage.newPassword": "New Password",
+  "changePasswordPage.repeatNewPassword": "Repeat New Password",
+  "changePasswordPage.requiredField": "Required field",
+  "changePasswordPage.newPasswordMismatch": "Not matching new passwords"
+}

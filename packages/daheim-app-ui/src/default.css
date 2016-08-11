@@ -1,0 +1,48 @@
+
+
+* {
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body, html {
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+/*	font-size: 16px;
+	color: #4A4A4A;*/
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	height: 100%;
+}
+
+
+
+
+
+
+body {
+	width: 100%;
+	background: #f2f2f2;
+	margin: 0;
+	padding: 0;
+	position: static;
+}
+
+html {
+	background: #f2f2f2;
+	margin: 0;
+	padding: 0;
+	position: static;
+}
+
+a {
+	text-decoration: none;
+	color: #3F51B5;
+}
+
+a:visited {
+	color: #3F51B5;
+}

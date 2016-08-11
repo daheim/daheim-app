@@ -1,0 +1,4 @@
+{
+  "forgotPassword.email.subject":"Daheim Passwort zurücksetzen",
+  "forgotPassword.email.text":"Klick bitte {linkStart}here um Deine Passwort zurückzusetzen.{linkEnd}"
+}

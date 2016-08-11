@@ -1,0 +1,83 @@
+{
+  "name": "daheim-app-api",
+  "description": "API Server of Daheim",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=production node lib/app",
+    "dev": "better-npm-run dev",
+    "check": "eslint .",
+    "build": "babel src/ -d lib/ --copy-files",
+    "clean": "rm -rf lib"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "babel-watch src/app | bunyan -o short",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/egergo/daheim-app-api.git"
+  },
+  "engines": {
+    "node": "5.11.0",
+    "npm": "3.8.8"
+  },
+  "dependencies": {
+    "axios": "^0.13.1",
+    "azure-common": "^0.9.16",
+    "azure-storage": "^0.6.0",
+    "babel-core": "^6.5.2",
+    "babel-polyfill": "^6.5.0",
+    "bcryptjs": "^2.3.0",
+    "bluebird": "^3.0.5",
+    "body-parser": "^1.13.3",
+    "bunyan": "^1.4.0",
+    "convict": "^1.0.1",
+    "cookie-parser": "^1.4.1",
+    "debug": "^2.2.0",
+    "es6-error": "^2.0.2",
+    "express": "^4.13.1",
+    "express-bunyan-logger": "^1.1.1",
+    "gravatar": "^1.5.2",
+    "intl-format-cache": "^2.0.5",
+    "intl-messageformat": "^1.3.0",
+    "jsonwebtoken": "^5.4.1",
+    "le_node": "^1.0.14",
+    "lodash": "^3.10.1",
+    "mongoose": "^4.4.3",
+    "newrelic": "^1.22.0",
+    "node-uuid": "^1.4.3",
+    "passport": "^0.3.0",
+    "passport-jwt": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "raven": "^0.11.0",
+    "request-promise": "^0.4.2",
+    "sendgrid": "^1.9.2",
+    "socket.io": "^1.4.6",
+    "socket.io-client": "^1.3.6",
+    "source-map-support": "^0.4.0",
+    "spdy": "^3.3.2",
+    "twilio": "^2.9.1",
+    "validator": "^4.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.8.0",
+    "babel-eslint": "^6.0.4",
+    "babel-plugin-transform-class-properties": "^6.5.2",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-watch": "^2.0.2",
+    "better-npm-run": "0.0.8",
+    "eslint": "^2.9.0",
+    "eslint-config-standard": "^5.3.1",
+    "eslint-plugin-babel": "^3.2.0",
+    "eslint-plugin-promise": "^1.1.0",
+    "eslint-plugin-standard": "^1.3.2",
+    "socket.io-client": "^1.3.7"
+  }
+}

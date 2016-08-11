@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "concurrently": "^2.2.0",
+    "lerna": "2.0.0-beta.24"
+  },
+  "scripts": {
+    "dev-db": "docker-compose -f docker-compose-mongodb.yml up mongodb",
+    "dev-api": "cd packages/daheim-app-api && npm run dev",
+    "dev-ui": "cd packages/daheim-app-ui && npm run dev",
+    "dev": "concurrently --kill-others --names \"db,api,ui\" --prefix \"[{name}]\" --prefix-length 5 \"npm run dev-db\" \"npm run dev-api\" \"npm run dev-ui\""
+  }
+}

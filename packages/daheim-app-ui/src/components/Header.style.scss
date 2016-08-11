@@ -1,0 +1,124 @@
+
+$headerHeight: 56;
+$textColor: rgba(0, 0, 0, 0.95);
+
+.head2 {
+  border-bottom: solid 1px white;
+  background: #EEE;
+  overflow-x: hidden;
+}
+
+.topbar {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  height: $headerHeight + px;
+
+  a {
+    color: $textColor;
+    text-decoration: none;
+    &:hover, &:active, &:visited {
+      text-decoration: none;
+      color: $textColor;
+    }
+  }
+}
+
+.logo {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.profile {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.cover2 {
+  height: 148px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: -74px;
+}
+
+.cover2 .photo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-size: cover;
+  background-image: url(https://assets.daheimapp.de/media/daheim_hero.jpg),url(https://assets.daheimapp.de/media/daheim_hero@tiny.jpg);
+  opacity: 0.9;
+  /*-webkit-filter: grayscale(20%) blur(1px);*/
+  -webkit-filter: grayscale(20%) sepia(40%) brightness(90%);
+  filter: grayscale(20%) sepia(40%) brightness(90%);
+  /*z-index: -1;*/
+}
+
+.cover2 .title {
+  color: rgba(255, 255, 255, 1);
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 10px;
+  /*text-shadow: 0 0 2px rgba(0,0,0,.3);*/
+  text-shadow: 0 0 3px rgba(0,0,0,0.9);
+  margin-bottom: 30px;
+  z-index: 1;
+  display: none;
+}
+
+.headerItem {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: $headerHeight + px;
+  transition: background-color 0.3s;
+  padding: 0 16px;
+}
+
+.headerItem:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.headerItemActive {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.logoText {
+  margin-left: 10px;
+  color: $textColor;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: #{$headerHeight - 20}px;
+  height: #{$headerHeight - 20}px;
+}
+
+a.dropDownItem {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+
+  &:hover, &:active, &:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+  &:hover {
+    background-color: #CCC;
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "forgotPassword.email.subject": "Daheim Password Reset",
+  "forgotPassword.email.text": "Please click {linkStart}here to reset your password.{linkEnd}"
+}
