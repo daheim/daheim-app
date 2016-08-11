@@ -1,0 +1,23 @@
+{
+  "name": "daheim-app-model",
+  "version": "0.1.0",
+  "description": "ORM for Daheim",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "check": "eslint .",
+    "build": "babel src/ -d lib/ --copy-files",
+    "clean": "rm -rf lib"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^4.4.3",
+    "bcryptjs": "^2.3.0",
+    "gravatar": "^1.5.2",
+    "es6-error": "^2.0.2",
+    "daheim-app-utils": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.8.0"
+  }
+}
