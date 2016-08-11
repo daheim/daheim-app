@@ -1,0 +1,22 @@
+{
+  "name": "daheim-app-utils",
+  "version": "0.1.0",
+  "description": "Utils for Daheim",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "check": "eslint .",
+    "build": "babel src/ -d lib/ --copy-files",
+    "clean": "rm -rf lib"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^4.4.3",
+    "bunyan": "^1.4.0",
+    "express-bunyan-logger": "^1.1.1",
+    "le_node": "^1.0.14"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.8.0"
+  }
+}
