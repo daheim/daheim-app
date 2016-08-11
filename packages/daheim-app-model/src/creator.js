@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
+import Bluebird from 'bluebird'
 import './model'
+
+mongoose.Promise = Bluebird
 
 export function getMongoDBUrlFromEnv () {
   if (process.env.MONGODB_URL) {

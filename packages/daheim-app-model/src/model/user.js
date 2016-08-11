@@ -2,8 +2,11 @@ import {Schema, default as mongoose} from 'mongoose'
 import bcrypt from 'bcryptjs'
 import BaseError from 'es6-error'
 import gravatar from 'gravatar'
+import Bluebird from 'bluebird'
 
 import avatars from '../avatars'
+
+Bluebird.promisifyAll(bcrypt)
 
 const SALT_WORK_FACTOR = 10
 const MAX_LOGIN_ATTEMPTS = 10
