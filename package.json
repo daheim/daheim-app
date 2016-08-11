@@ -18,8 +18,9 @@
   },
   "scripts": {
     "dev-db": "docker-compose -f docker-compose-mongodb.yml up mongodb",
+    "dev-live": "cd packages/daheim-app-live && npm run dev",
     "dev-api": "cd packages/daheim-app-api && npm run dev",
     "dev-ui": "cd packages/daheim-app-ui && npm run dev",
-    "dev": "concurrently --kill-others --names \"db,api,ui\" --prefix \"[{name}]\" --prefix-length 5 \"npm run dev-db\" \"npm run dev-api\" \"npm run dev-ui\""
+    "dev": "concurrently --kill-others --names \"db,live,api,ui\" --prefix \"[{name}]\" \"npm run dev-db\" \"npm run dev-live\" \"npm run dev-api\" \"npm run dev-ui\""
   }
 }

@@ -1,23 +1,14 @@
 import './optional_newrelic'
 import './bootstrap'
 
-import path from 'path'
 import fs from 'fs'
-import passport from 'passport'
 import http from 'http'
 import spdy from 'spdy'
 import express from 'express'
-import cookieParser from 'cookie-parser'
-import Azure from './azure'
-import User from './user'
 import tokenHandler from './token_handler'
-import config from './config'
-import bodyParser from 'body-parser'
-import log from './log'
-import api from './api'
-//import {User as ModelUser} from './model'
-import actions from './actions'
+import io from './realtime'
 import reporter from './reporter'
+import log from './log'
 
 import createDebug from 'debug'
 let debug = createDebug('dhm:app')
@@ -37,47 +28,14 @@ function createServer () {
     return new http.Server(app)
   }
 }
-const server = createServer()
-
-
-let azure = Azure.createFromEnv()
 
 app.use(log.requestLogger())
 app.enable('trust proxy')
 app.disable('x-powered-by')
-app.use(bodyParser.json({limit: '1mb'}))
-app.use(cookieParser())
 
-app.use(passport.initialize())
-app.use('/api/actions', actions)
-app.use('/api', api.router)
+const server = createServer()
+io.listen(server)
 
-app.get('/js/config.js', function(req, res) {
-  var cfg = {
-    socketIoUrl: 'http://localhost:3000',
-    storageAccount: azure.blobs.storageAccount,
-  }
-  res.send('angular.module("dhm").constant("config", ' + JSON.stringify(cfg) + ')')
-})
-
-app.use(express.static(__dirname + '/../../../../build/public'))
-app.use(express.static(__dirname + '/../../../../public'))
-app.get('*', function(req, res, next) {
-  req.url = '/'
-  res.sendFile(path.resolve(__dirname + '/../../../../build/public/index.html'))
-})
-
-app.use(function(err, req, res, next) {
-  if (res.headersSent) {
-    return next(err)
-  }
-
-  if (err.rest) {
-    res.status(400).send(err.rest)
-  }
-
-  next(err)
-})
 
 app.use(reporter.errorHandler)
 
@@ -109,7 +67,7 @@ app.use(function(err, req, res, next) {
 })
 
 function start() {
-  var port = process.env.PORT || 3000
+  var port = process.env.PORT || 3001
 
   const listener = server.listen(port, function(err) {
     if (err) return reporter.error(err, {fatal: true})
