@@ -1,5 +1,8 @@
-Dockerfile
+Dockerfile.builder
+Dockerfile.final
 .dockerignore
+.dockerignore.final
+Makefile
 
 build
 .DS_Store
@@ -7,6 +10,7 @@ build
 .vagrant
 .c9
 .env
+.travis.yml
 
 node_modules
 *.sqlite

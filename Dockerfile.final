@@ -1,0 +1,7 @@
+FROM mhart/alpine-node:6
+
+WORKDIR /app
+CMD echo "Please run one of daheim-app-ui, daheim-app-api or daheim-app-live"
+
+COPY . /app
+RUN cp /app/node_modules/.bin/daheim-app-* /usr/local/bin
