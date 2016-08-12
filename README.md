@@ -1,4 +1,4 @@
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/daheim-app/localized.svg)](https://crowdin.com/project/daheim-app)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![Travis CI](https://api.travis-ci.org/daheim/daheim-app.svg)](https://travis-ci.org/daheim/daheim-app) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/daheim-app/localized.svg)](https://crowdin.com/project/daheim-app) [![Docker Image](https://imagelayers.io/badge/egergo/daheim-app:latest.svg)](https://imagelayers.io/?images=egergo/daheim-app:latest 'Get your own badge on imagelayers.io')
 
 Welcome home! Willkommen Daheim! [willkommen-daheim.org](https://willkommen-daheim.org)
 
