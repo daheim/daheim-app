@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Checkbox from 'material-ui/Checkbox'
 import {Link} from 'react-router'
+import {FormattedMessage} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {register} from '../../actions/auth'
@@ -123,7 +124,10 @@ class RegistrationFormRaw extends Component {
           <Checkbox style={{marginTop: 10}} label='Ja, ich akzeptiere die AGB' checked={this.state.agree} onCheck={this.handleAgreeChange} />
           <div style={{textAlign: 'center'}}><RaisedButton disabled={!this.state.agree} type='submit' style={{marginTop: 20}} fullWidth primary label='Jetzt registrieren' /></div>
           <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
-            Klick hier, um <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}>dich anzumelden</Link>.
+            <FormattedMessage id='registerPage.buttomText' values={{
+              loginLink: <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}><FormattedMessage id='registerPage.loginLinkText' /></Link>,
+              agbLink: <a href='https://willkommen-daheim.org/agb/' target='_blank'><FormattedMessage id='registerPage.agbLinkText' /></a>
+            }} />
           </div>
         </form>
       </LoadingPanel>

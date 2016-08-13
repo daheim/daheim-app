@@ -19,5 +19,8 @@
   "changePasswordPage.newPassword":"Neues Passwort",
   "changePasswordPage.repeatNewPassword":"Neues Passwort bestätigen",
   "changePasswordPage.requiredField":"Eingabe erforderlich",
-  "changePasswordPage.newPasswordMismatch":"Passwort und Bestätigung stimmen nicht überein."
+  "changePasswordPage.newPasswordMismatch":"Passwort und Bestätigung stimmen nicht überein.",
+  "registerPage.buttomText":"Klick hier, um {loginLink}. Bitte lies die {agbLink}.",
+  "registerPage.loginLinkText":"dich anzumelden",
+  "registerPage.agbLinkText":"AGB"
 }
