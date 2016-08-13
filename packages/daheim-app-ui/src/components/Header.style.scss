@@ -4,8 +4,12 @@ $textColor: rgba(0, 0, 0, 0.95);
 
 .head2 {
   border-bottom: solid 1px white;
-  background: #EEE;
   overflow-x: hidden;
+
+  position: fixed;
+  background: #f2f2f2;
+  z-index: 1;
+  width: 100%;
 }
 
 .topbar {
@@ -22,6 +26,10 @@ $textColor: rgba(0, 0, 0, 0.95);
       color: $textColor;
     }
   }
+}
+
+.topbarSpacing {
+  height: $headerHeight + px;
 }
 
 .logo {

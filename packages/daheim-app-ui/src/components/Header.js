@@ -20,6 +20,7 @@ export default class Header extends React.Component {
             </div>
           </div>
         </div>
+        <div className={style.topbarSpacing}></div>
         <div className={style.cover2}>
           <div className={style.photo}></div>
           <div className={style.title}>Presse</div>
