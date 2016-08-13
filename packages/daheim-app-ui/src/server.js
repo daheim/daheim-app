@@ -48,8 +48,8 @@ const targetUrl = process.env.API_URL
 const proxy = httpProxy.createProxyServer({ target: targetUrl, secure: process.env.INSECURE_API_PROXY !== '1' })
 
 app.use(cookieParser())
-app.use('/dist', Express.static(path.join(__dirname, '..', 'build')))
-app.use(Express.static(path.join(__dirname, '..', 'static')))
+app.use('/dist', Express.static(path.join(__dirname, '..', 'build'), {maxAge: 86400000}))
+app.use(Express.static(path.join(__dirname, '..', 'static'), {maxAge: 86400000}))
 
 app.use('/api', (req, res) => {
   proxy.web(req, res, { target: targetUrl })
