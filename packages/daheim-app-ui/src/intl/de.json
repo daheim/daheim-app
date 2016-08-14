@@ -10,6 +10,7 @@
   "forgotPasswordPage.submitLabel":"Weiter",
   "forgotPasswordPage.emailSent":"Wir haben Dir eine E-Mail geschickt.",
   "loginPage.invalidPassword":"Das Passwort und die E-Mail-Adresse, die Du eingegeben hast, stimmen nicht überein.",
+  "loginPage.signInWithFacebook":"Mit Facebook anmelden",
   "ready.connecting":"Eine Verbindung mit dem 'Daheim' Netzwerk wird hergestellt. Bitte warte einen Moment!",
   "ready.buttonCaption":"Los geht's - Gesprächspartner suchen",
   "ready.lookingForPartners":"Es werden passende Gesprächspartner gesucht.",
