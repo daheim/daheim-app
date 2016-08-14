@@ -75,7 +75,7 @@ export default class Html extends Component {
             })(); </script>
           `}}></script>
           <script src='https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de'></script>
-          <script dangerouslySetInnerHTML={{__html: `window.__INIT=${JSON.stringify({SIO_URL: process.env.SIO_URL, RAVEN_DSN: process.env.RAVEN_DSN})}`}} charSet='UTF-8'/>
+          <script dangerouslySetInnerHTML={{__html: `window.__INIT=${JSON.stringify({SIO_URL: process.env.SIO_URL, RAVEN_DSN: process.env.RAVEN_DSN, FB_CLIENT_ID: process.env.FB_CLIENT_ID})}`}} charSet='UTF-8'/>
           <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())}`}} charSet='UTF-8'/>
           <script src={assets.javascript.main} charSet='UTF-8'/>
         </body>
