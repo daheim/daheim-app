@@ -3,6 +3,8 @@ import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import Helmet from 'react-helmet'
 import moment from 'moment'
+import {Link} from 'react-router'
+import {FormattedMessage} from 'react-intl'
 
 import loader from '../../loader'
 import {loadUser, sendReview} from '../../actions/users'
@@ -69,7 +71,10 @@ class ProfilePage extends Component {
         <div style={{lineHeight: '150%', display: 'flex', alignItems: 'center', marginBottom: 20, maxWidth: '100%', padding: 10, borderBottom: 'solid 1px #EEE'}}>
           <img src={picture} style={{width: 68, height: 68, borderRadius: '50%', marginTop: 6, boxShadow: '0 1px 1px 1px rgba(0,0,0,.1)', border: 'solid 2px white'}} />
           <div style={{marginLeft: 20}}>
-            <div style={{fontSize: 30, fontWeight: 600, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>{name}</div>
+            <div style={{fontSize: 30, fontWeight: 600, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>
+              {name}
+              {me ? <Link to='/profile' className={css.editButton}><FormattedMessage id='profile.edit' /></Link> : null}
+            </div>
             <div style={{fontSize: 14, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>{roleToTitle(role)}</div>
           </div>
         </div>

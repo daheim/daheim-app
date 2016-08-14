@@ -34,5 +34,7 @@
   "userMenu.settings": "Settings",
   "userMenu.signOut": "Sign out",
 
-  "backToConversations": "back to conversations"
+  "backToConversations": "back to conversations",
+
+  "profile.edit": "edit profile"
 }

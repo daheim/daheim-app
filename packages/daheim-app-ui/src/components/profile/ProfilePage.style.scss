@@ -1,4 +1,17 @@
 
+.editButton {
+  font-size: 14px;
+  border: solid 1px lightgray;
+  border-radius: 4px;
+  padding: 4px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.editButton:hover {
+  background: #EEE;
+}
+
 .section {
   display: flex;
   flex-wrap: wrap;
