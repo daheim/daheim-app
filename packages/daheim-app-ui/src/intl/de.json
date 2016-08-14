@@ -22,5 +22,11 @@
   "changePasswordPage.newPasswordMismatch":"Passwort und Bestätigung stimmen nicht überein.",
   "registerPage.buttomText":"Klick hier, um {loginLink}. Bitte lies die {agbLink}.",
   "registerPage.loginLinkText":"dich anzumelden",
-  "registerPage.agbLinkText":"AGB"
+  "registerPage.agbLinkText":"AGB",
+  "userMenu.frontPage":"Gespräche führen",
+  "userMenu.myProfile":"Mein Profil",
+  "userMenu.settings":"Einstellungen",
+  "userMenu.signOut":"Ausloggen",
+  "backToConversations":"zurück zu den Gesprächen",
+  "profile.edit":"Profil bearbeiten"
 }
