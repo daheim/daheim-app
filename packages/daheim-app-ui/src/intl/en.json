@@ -12,6 +12,7 @@
   "forgotPasswordPage.emailSent": "We have sent you an email.",
 
   "loginPage.invalidPassword": "Invalid username or password",
+  "loginPage.signInWithFacebook": "Sign in with Facebook",
 
   "ready.connecting": "Connecting to the Daheim network. Please wait...",
   "ready.buttonCaption": "Find me someone to talk to",

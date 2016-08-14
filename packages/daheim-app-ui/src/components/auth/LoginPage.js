@@ -8,6 +8,7 @@ import {FormattedMessage, injectIntl} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {login} from '../../actions/auth'
+import FacebookLogin from './FacebookLogin'
 
 class LoginFormRaw extends Component {
 
@@ -137,6 +138,7 @@ class LoginPage extends Component {
     return (
       <div style={{maxWidth: 400, padding: '16px 10px'}}>
         <div>
+          <div style={{paddingBottom: 16, marginBottom: 4, borderBottom: 'dashed 1px gray'}}><FacebookLogin onLogin={this.handleLogin} /></div>
           <LoginForm onLogin={this.handleLogin} login={this.props.login} defaultUsername={this.props.location.query.username} />
         </div>
       </div>

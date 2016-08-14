@@ -9,6 +9,7 @@ import {FormattedMessage} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {register} from '../../actions/auth'
+import FacebookLogin from './FacebookLogin'
 
 class RegistrationFormRaw extends Component {
 
@@ -115,7 +116,6 @@ class RegistrationFormRaw extends Component {
     return (
       <LoadingPanel loading={this.state.loading}>
         <form noValidate onSubmit={this.handleRegisterClick}>
-          <h1 style={{fontSize: 22, marginTop: 40}}>Jetzt kostenlos Mitglied werden!</h1>
           {error}
           <TextField ref='firstName' fullWidth floatingLabelText='Vorname' value={this.state.firstName} onChange={this.handleFirstNameChange} />
           <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
@@ -155,6 +155,8 @@ class RegistrationPage extends Component {
   render () {
     return (
       <div style={{width: 400}}>
+        <h1 style={{fontSize: 22, marginTop: 40}}>Jetzt kostenlos Mitglied werden!</h1>
+        <div style={{paddingBottom: 16, marginBottom: 4, borderBottom: 'dashed 1px gray'}}><FacebookLogin onLogin={this.handleLogin} /></div>
         <RegistrationForm onLogin={this.handleLogin} defaultUsername={this.props.location.query.username} />
       </div>
     )
