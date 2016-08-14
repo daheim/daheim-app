@@ -3,6 +3,9 @@ import createApiAction from './createApiAction'
 export const LOGIN = 'auth.login'
 export const login = createApiAction(LOGIN)
 
+export const FACEBOOK_LOGIN = 'auth.facebookLogin'
+export const facebookLogin = createApiAction(FACEBOOK_LOGIN)
+
 export const REGISTER = 'auth.register'
 export const register = createApiAction(REGISTER)
 

@@ -2,6 +2,8 @@ import {Router} from 'express'
 import Bluebird from 'bluebird'
 import passport from 'passport'
 import uuid from 'node-uuid'
+import axios from 'axios'
+import crypto from 'crypto'
 
 import restError from '../restError'
 import sendgrid from '../sendgrid'
@@ -10,6 +12,7 @@ import {avatars} from 'daheim-app-model'
 import mailchimp from '../mailchimp'
 import slack from '../slack'
 import intl from '../intl'
+import log from '../log'
 
 import {User, Review, Lesson} from '../model'
 
@@ -45,6 +48,48 @@ def('/auth.login', async (req, res) => {
 }, {
   auth: false,
   middlewares: [passport.authenticate('local', {session: false})],
+  checkCsrf: false
+})
+
+def('/auth.facebookLogin', async (req, res) => {
+  const {facebookAccessToken} = req.body
+
+  let facebookResponse
+  try {
+    // email is verified: https://stackoverflow.com/questions/14280535/is-it-possible-to-check-if-an-email-is-confirmed-on-facebook
+    facebookResponse = await axios.get(`https://graph.facebook.com/v2.7/me?fields=id,email,first_name&access_token=${encodeURIComponent(facebookAccessToken)}`)
+  } catch (err) {
+    log.error({err, facebookAccessToken}, 'facebook login error')
+    throw restError({code: 'facebookAuthError', error: 'Please try again later'})
+  }
+
+  const {email, first_name} = facebookResponse.data
+  if (!email) throw restError({code: 'facebookNeedsEmail', error: 'Your Facebook account does not have a verified email address'})
+
+  let result = 'login'
+  const username = email
+  const firstName = first_name
+
+  let user = await User.findOne({username})
+  if (!user) {
+    mailchimp.addMemberIfNew({email, firstName})
+    user = new User({
+      username,
+      password: crypto.randomBytes(20).toString('base64'),
+      profile: {
+        name: firstName
+      }
+    })
+    await user.save()
+    result = 'register'
+  }
+
+  const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365)
+  const accessToken = tokenHandler.issueForUser(user.id)
+  res.cookie('sid', accessToken, {httpOnly: true, secure: process.env.SECURE_COOKIES === '1', expires})
+  return {result}
+}, {
+  auth: false,
   checkCsrf: false
 })
 
