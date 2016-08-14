@@ -5,6 +5,7 @@ import Popover, {PopoverAnimationVertical} from 'material-ui/Popover'
 import classnames from 'classnames'
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down'
 import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-drop-up'
+import {FormattedMessage} from 'react-intl'
 
 import style from './Header.style'
 
@@ -24,11 +25,10 @@ class UserDropdown extends React.Component {
 
     return (
       <div style={{width: 200, overflowY: 'auto'}}>
-        <Link to='/' className={style.dropDownItem} onClick={this.handleClick}>Gespräche führen</Link>
-        <Link to={`/users/${user.id}`} className={style.dropDownItem} onClick={this.handleClick}>Mein Profil</Link>
-        <Link to='/profile' className={style.dropDownItem} onClick={this.handleClick}>Profil bearbeiten</Link>
-        <Link to='/password' className={style.dropDownItem} onClick={this.handleClick}>Passwort ändern</Link>
-        <Link to='/auth/logout' className={style.dropDownItem} onClick={this.handleClick}>Ausloggen</Link>
+        <Link to='/' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.frontPage' /></Link>
+        <Link to={`/users/${user.id}`} className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.myProfile' /></Link>
+        <Link to='/password' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.settings' /></Link>
+        <Link to='/auth/logout' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.signOut' /></Link>
       </div>
     )
   }

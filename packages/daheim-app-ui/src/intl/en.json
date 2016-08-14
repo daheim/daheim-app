@@ -27,5 +27,10 @@
 
   "registerPage.buttomText": "Click here to {loginLink}. Please read the {agbLink}.",
   "registerPage.loginLinkText": "sign in",
-  "registerPage.agbLinkText": "Terms and Conditions"
+  "registerPage.agbLinkText": "Terms and Conditions",
+
+  "userMenu.frontPage": "New Conversation",
+  "userMenu.myProfile": "My Profile",
+  "userMenu.settings": "Settings",
+  "userMenu.signOut": "Sign out"
 }
