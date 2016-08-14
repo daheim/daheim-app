@@ -6,6 +6,24 @@ import {loadProfile} from '../actions/profile'
 import Header from '../components/Header'
 import InvitedToLesson from '../components/InvitedToLesson'
 
+import {Link} from 'react-router'
+import {FormattedMessage} from 'react-intl'
+
+export class DefaultLayoutWithBreadcrumbs extends React.Component {
+  static propTypes = {
+    children: React.PropTypes.node
+  }
+
+  render () {
+    return (
+      <div>
+        <div style={{fontSize: 14, margin: '12px 16px'}}><Link to='/'>◀ <FormattedMessage id='backToConversations' /></Link></div>
+        {this.props.children}
+      </div>
+    )
+  }
+}
+
 class DefaultLayout extends React.Component {
 
   static propTypes = {

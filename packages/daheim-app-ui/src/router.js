@@ -5,6 +5,7 @@ import Helmet from 'react-helmet'
 import DefaultLayout from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
 import LessonPage from './containers/LessonPage'
+import {DefaultLayoutWithBreadcrumbs} from './containers/DefaultLayout'
 
 import AuthLayout from './components/auth/AuthLayout'
 import LoginPage from './components/auth/LoginPage'
@@ -31,11 +32,14 @@ export default function createRouter (history) {
       <Router history={history}>
         <Route path='/' component={DefaultLayout}>
           <IndexRoute component={ReadyPage} />
-          <Route path='lessons/:lessonId' component={LessonPage} />
-          <Route path='profile' component={EditProfilePage} />
-          <Route path='users/:userId' component={PublicProfilePage} />
-          <Route path='admin' component={AdminPage} />
-          <Route path='password' component={ChangePasswordPage} />
+
+          <Route path='/' component={DefaultLayoutWithBreadcrumbs}>
+            <Route path='lessons/:lessonId' component={LessonPage} />
+            <Route path='profile' component={EditProfilePage} />
+            <Route path='users/:userId' component={PublicProfilePage} />
+            <Route path='admin' component={AdminPage} />
+            <Route path='password' component={ChangePasswordPage} />
+          </Route>
         </Route>
 
         <Route path='/auth' component={AuthLayout}>

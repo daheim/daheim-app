@@ -32,5 +32,7 @@
   "userMenu.frontPage": "New Conversation",
   "userMenu.myProfile": "My Profile",
   "userMenu.settings": "Settings",
-  "userMenu.signOut": "Sign out"
+  "userMenu.signOut": "Sign out",
+
+  "backToConversations": "back to conversations"
 }
