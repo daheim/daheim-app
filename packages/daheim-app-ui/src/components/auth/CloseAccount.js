@@ -59,10 +59,10 @@ class CloseAccount extends Component {
         <FlatButton secondary label={intl.formatMessage({id: 'closeAccount.start'})} onClick={this.openDialog} />
         <Modal isOpen={open} onRequestClose={this.onRequestClose}>
           <div style={{maxWidth: 480}}>
-            <h1><FormattedMessage id='closeAccount.title' /></h1>
+            <h2><FormattedMessage id='closeAccount.title' /></h2>
 
-            <div><FormattedMessage id='closeAccount.getHelp.text' /></div>
-            <div style={{marginTop: 10}}>
+            <div style={{fontSize: 14, lineHeight: '150%'}}><FormattedMessage id='closeAccount.getHelp.text' /></div>
+            <div style={{marginTop: 14}}>
               <textarea ref={this.haveHintRef} placeholder={intl.formatMessage({id: 'closeAccount.getHelp.hint'})} style={{width: '100%', height: 150, borderRadius: 4, fontSize: 14, padding: 6, borderColor: '#AAA'}} value={ticket} onChange={this.handleTicketChange} />
             </div>
             <div style={{marginTop: 10}}>
