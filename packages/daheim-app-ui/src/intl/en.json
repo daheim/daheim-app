@@ -38,5 +38,14 @@
 
   "backToConversations": "back to conversations",
 
-  "profile.edit": "edit profile"
+  "profile.edit": "edit profile",
+
+  "closeAccount.start": "Close Account",
+  "closeAccount.title": "Close Account",
+  "closeAccount.cancel": "Cancel",
+  "closeAccount.submit": "Close Account Now",
+  "closeAccount.confirmLabel": "I understand that ALL my Daheim data will be deleted",
+  "closeAccount.getHelp.text": "We are sorry to see you go. If you had a bad experience, maybe we can help resolving it.",
+  "closeAccount.getHelp.submit": "Get Help",
+  "closeAccount.getHelp.hint": "Please tell us what went wrong and we will help you"
 }

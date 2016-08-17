@@ -20,3 +20,6 @@ export const logout = createApiAction(LOGOUT)
 
 export const CHANGE_PASSWORD = 'auth.changePassword'
 export const changePassword = createApiAction(CHANGE_PASSWORD)
+
+export const CLOSE_ACCOUNT = 'auth.closeAccount'
+export const closeAccount = createApiAction(CLOSE_ACCOUNT)

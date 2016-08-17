@@ -202,6 +202,13 @@ def('/auth.changePassword', async (req, res) => {
   ]
 })
 
+def('/auth.closeAccount', async (req, res) => {
+  const {user} = req
+  await user.remove()
+  await Review.remove({to: user.id})
+  return {}
+})
+
 def('/profile.saveProfile', async (req) => {
   const {user, body} = req
   const {name, topics, languages, inGermanySince, germanLevel, introduction, pictureType, pictureData} = body

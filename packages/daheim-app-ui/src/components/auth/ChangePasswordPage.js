@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import {changePassword} from '../../actions/auth'
+import CloseAccount from './CloseAccount'
 
 class ChangePasswordPage extends Component {
 
@@ -95,19 +96,24 @@ class ChangePasswordPage extends Component {
       repeatNewPassword, repeatNewPasswordError, errorMessage, running} = this.state
 
     return (
-      <div style={{padding: '16px 16px'}}>
+      <div>
         <Helmet title={intl.formatMessage({id: 'changePasswordPage.title'})} />
-        <h1><FormattedMessage id='changePasswordPage.title' /></h1>
-        <form noValidate onSubmit={this.handleSubmit} className='loginForm'>
-          <div style={{maxWidth: 300}}>
-            <TextField readOnly className='email' type='email' fullWidth floatingLabelText={intl.formatMessage({id: 'forgotPasswordPage.emailAddressLabel'})} value={profile.username} />
-            <TextField className='password' ref='password' type='password' errorText={passwordError} fullWidth floatingLabelText={intl.formatMessage({id: 'changePasswordPage.currentPassword'})} value={password} onChange={this.handlePasswordChange} />
-            <TextField className='newPassword' type='password' fullWidth errorText={newPasswordError} floatingLabelText={intl.formatMessage({id: 'changePasswordPage.newPassword'})} value={newPassword} onChange={this.handleNewPasswordChange} />
-            <TextField className='repeatNewPassword' type='password' fullWidth errorText={repeatNewPasswordError} floatingLabelText={intl.formatMessage({id: 'changePasswordPage.repeatNewPassword'})} value={repeatNewPassword} onChange={this.handleRepeatNewPasswordChange} />
-          </div>
-          <RaisedButton disabled={running} className='submit' type='submit' style={{marginTop: 20}} primary label={intl.formatMessage({id: 'changePasswordPage.submit'})} />
-          <span style={{color: 'red', marginLeft: 10, fontSize: 14}}>{errorMessage}</span>
-        </form>
+        <div style={{padding: '16px 16px'}}>
+          <h2><FormattedMessage id='changePasswordPage.title' /></h2>
+          <form noValidate onSubmit={this.handleSubmit} className='loginForm'>
+            <div style={{maxWidth: 300}}>
+              <TextField readOnly className='email' type='email' fullWidth floatingLabelText={intl.formatMessage({id: 'forgotPasswordPage.emailAddressLabel'})} value={profile.username} />
+              <TextField className='password' ref='password' type='password' errorText={passwordError} fullWidth floatingLabelText={intl.formatMessage({id: 'changePasswordPage.currentPassword'})} value={password} onChange={this.handlePasswordChange} />
+              <TextField className='newPassword' type='password' fullWidth errorText={newPasswordError} floatingLabelText={intl.formatMessage({id: 'changePasswordPage.newPassword'})} value={newPassword} onChange={this.handleNewPasswordChange} />
+              <TextField className='repeatNewPassword' type='password' fullWidth errorText={repeatNewPasswordError} floatingLabelText={intl.formatMessage({id: 'changePasswordPage.repeatNewPassword'})} value={repeatNewPassword} onChange={this.handleRepeatNewPasswordChange} />
+            </div>
+            <RaisedButton disabled={running} className='submit' type='submit' style={{marginTop: 20}} primary label={intl.formatMessage({id: 'changePasswordPage.submit'})} />
+            <span style={{color: 'red', marginLeft: 10, fontSize: 14}}>{errorMessage}</span>
+          </form>
+        </div>
+
+        <div style={{borderBottom: 'solid 1px lightgray', marginTop: 20}}></div>
+        <CloseAccount style={{padding: '16px 16px'}} />
       </div>
     )
   }
