@@ -21,13 +21,14 @@
   "changePasswordPage.repeatNewPassword":"Neues Passwort bestätigen",
   "changePasswordPage.requiredField":"Eingabe erforderlich",
   "changePasswordPage.newPasswordMismatch":"Passwort und Bestätigung stimmen nicht überein.",
+  "changePasswordPage.submit":"Änderungen speichern",
   "registerPage.buttomText":"Klick hier, um {loginLink}. Bitte lies die {agbLink}.",
-  "registerPage.loginLinkText":"dich anzumelden",
+  "registerPage.loginLinkText":"Dich anzumelden",
   "registerPage.agbLinkText":"AGB",
-  "userMenu.frontPage":"Gespräche führen",
+  "userMenu.frontPage":"Meine Gespräche",
   "userMenu.myProfile":"Mein Profil",
   "userMenu.settings":"Einstellungen",
-  "userMenu.signOut":"Ausloggen",
-  "backToConversations":"zurück zu den Gesprächen",
+  "userMenu.signOut":"Abmelden",
+  "backToConversations":"zu den Gesprächen",
   "profile.edit":"Profil bearbeiten"
 }
