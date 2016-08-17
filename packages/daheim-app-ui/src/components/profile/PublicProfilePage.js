@@ -84,6 +84,7 @@ class ProfilePage extends Component {
             <div style={{fontSize: 30, fontWeight: 600, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>
               {name}
               {me ? <Link to='/profile' className={css.editButton}><FormattedMessage id='profile.edit' /></Link> : null}
+              {!me ? <Link to={`/users/${id}/report`} className={css.editButton}><FormattedMessage id='profile.reportUser' /></Link> : null}
             </div>
             <div style={{fontSize: 14, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>{roleToTitle(role)}</div>
           </div>

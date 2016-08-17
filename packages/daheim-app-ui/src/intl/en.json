@@ -39,6 +39,7 @@
   "backToConversations": "back to conversations",
 
   "profile.edit": "edit profile",
+  "profile.reportUser": "report user",
 
   "closeAccount.start": "Close Account",
   "closeAccount.title": "Close Account",
@@ -48,5 +49,15 @@
   "closeAccount.getHelp.text": "We are sorry to see you go. If you had a bad experience, maybe we can help resolving it.",
   "closeAccount.getHelp.submit": "Get Help",
   "closeAccount.getHelp.hint": "Please tell us what went wrong and we will help you",
-  "closeAccount.getHelp.sent": "Thank you for your feedback. The Daheim Team will contact you soon."
+  "closeAccount.getHelp.sent": "Thank you for your feedback. The Daheim Team will contact you soon.",
+
+  "reportUser.sent": "We have received your report and will contact you soon. Thank you for your help.",
+  "reportUser.loadingName": "wird geladen...",
+  "reportUser.title": "Report User",
+  "reportUser.text": "Please use this form if you had an unpleasant experience with another user. Please note that everyone in the Daheim Team, as well as our users work on a non-profit basis. We appreciate your help with making our platform a safe place for everyone. For generic information please refer to the {houseRulesLink}.",
+  "reportUser.houseRulesLinkText": "community guidelines",
+  "reportUser.offendingUser": "Reported user: {name}",
+  "reportUser.hint": "Please describe your experience here as detailed as possible",
+  "reportUser.cancel": "Cancel",
+  "reportUser.submit": "Send Report"
 }

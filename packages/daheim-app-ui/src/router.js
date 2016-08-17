@@ -19,6 +19,7 @@ import AdminPage from './components/admin/AdminPage'
 
 import PublicProfilePage from './components/profile/PublicProfilePage'
 import EditProfilePage from './components/profile/EditProfilePage'
+import ReportUserPage from './components/profile/ReportUserPage'
 
 import NotFoundPage from './containers/NotFoundPage'
 import AvatarMakerPage from './components/avatar/AvatarMaker'
@@ -38,6 +39,7 @@ export default function createRouter (history) {
             <Route path='lessons/:lessonId' component={LessonPage} />
             <Route path='profile' component={EditProfilePage} />
             <Route path='users/:userId' component={PublicProfilePage} />
+            <Route path='users/:userId/report' component={ReportUserPage} />
             <Route path='admin' component={AdminPage} />
             <Route path='password' component={ChangePasswordPage} />
             <Route path='avatar' component={AvatarMakerPage} />
