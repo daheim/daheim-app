@@ -39,6 +39,8 @@ class Languages extends Component {
     onChange: PropTypes.func
   }
 
+  static suggestions = ['Englisch', 'Spanisch', 'Französisch', 'Italienisch', 'Russisch', 'Griechisch', 'Polnisch' , 'Türkisch', 'Arabisch', 'Farsi', 'Hebräisch', 'Kurdisch']
+
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 
   handleInGermanySinceChange = (e, key, inGermanySince) => {
@@ -58,8 +60,11 @@ class Languages extends Component {
     const {inGermanySince, germanLevel, languages, role} = this.props
     const showStudentFields = role !== 'teacher'
 
+    const leftovers = {...languages}
+    Languages.suggestions.forEach((suggestion) => delete leftovers[suggestion])
+
     return (
-      <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 700, marginTop: 20}}>
+      <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 20}}>
         <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
           Sprache
         </div>
@@ -82,12 +87,8 @@ class Languages extends Component {
           ) : null}
           <div style={{marginBottom: 8, marginTop: showStudentFields ? 16 : 0, fontWeight: 700, fontSize: 14}}>Andere Sprachen</div>
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Englisch' onCheck={this.handleLanguageCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Spanisch' onCheck={this.handleLanguageCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Französisch' onCheck={this.handleLanguageCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Italienisch' onCheck={this.handleLanguageCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Türkisch' onCheck={this.handleLanguageCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Arabisch' onCheck={this.handleLanguageCheck} /></div>
+            {[...Languages.suggestions, ...Object.keys(leftovers)].map((language) =>
+              <div key={language} style={{flex: '0 0 250px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector={language} onCheck={this.handleLanguageCheck} /></div>)}
           </div>
         </div>
       </div>
