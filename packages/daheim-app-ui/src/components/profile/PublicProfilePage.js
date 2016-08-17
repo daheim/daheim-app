@@ -60,6 +60,10 @@ class ProfilePage extends Component {
       return <div style={{margin: 16}}>Benuzter Konto abgeschlossen</div>
     }
 
+    if (!user) {
+      return <div style={{margin: 16}}>Wird geladen...</div>
+    }
+
     const {id, name, picture, role, introduction, inGermanySince, userSince, germanLevel, topics, languages, myReview, receivedReviews} = user
 
     const editorOpen = !me && (!myReview || this.state.editorOpen)
