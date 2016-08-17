@@ -105,7 +105,7 @@ class ChangePasswordPage extends Component {
             <TextField className='newPassword' type='password' fullWidth errorText={newPasswordError} floatingLabelText={intl.formatMessage({id: 'changePasswordPage.newPassword'})} value={newPassword} onChange={this.handleNewPasswordChange} />
             <TextField className='repeatNewPassword' type='password' fullWidth errorText={repeatNewPasswordError} floatingLabelText={intl.formatMessage({id: 'changePasswordPage.repeatNewPassword'})} value={repeatNewPassword} onChange={this.handleRepeatNewPasswordChange} />
           </div>
-          <RaisedButton disabled={running} className='submit' type='submit' style={{marginTop: 20}} primary label={intl.formatMessage({id: 'changePasswordPage.title'})} />
+          <RaisedButton disabled={running} className='submit' type='submit' style={{marginTop: 20}} primary label={intl.formatMessage({id: 'changePasswordPage.submit'})} />
           <span style={{color: 'red', marginLeft: 10, fontSize: 14}}>{errorMessage}</span>
         </form>
       </div>

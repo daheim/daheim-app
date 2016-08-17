@@ -25,6 +25,7 @@
   "changePasswordPage.repeatNewPassword": "Repeat New Password",
   "changePasswordPage.requiredField": "Required field",
   "changePasswordPage.newPasswordMismatch": "Not matching new passwords",
+  "changePasswordPage.submit": "Change Password",
 
   "registerPage.buttomText": "Click here to {loginLink}. Please read the {agbLink}.",
   "registerPage.loginLinkText": "sign in",
