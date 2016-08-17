@@ -41,7 +41,7 @@ function setupModalStyle () {
       right: 0,
       bottom: 0,
       backgroundColor: 'rgba(255, 255, 255, 0.75)',
-      zIndex: 2
+      zIndex: 3
     },
     content : {
       position: 'absolute',
