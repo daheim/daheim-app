@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import FlatButton from 'material-ui/FlatButton'
 import {Howl} from 'howler'
-import Modal from 'react-modal'
+import Modal from '../Modal'
 
 import {join, leave} from '../actions/live'
 import ProfilePage from './profile/PublicProfilePage'

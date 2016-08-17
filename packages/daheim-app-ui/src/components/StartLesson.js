@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
-import Modal from 'react-modal'
+import Modal from '../Modal'
 
 import {startLesson, leaveIfNotStarted} from '../actions/live'
 import ProfilePage from './profile/PublicProfilePage'

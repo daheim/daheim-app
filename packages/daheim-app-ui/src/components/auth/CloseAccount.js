@@ -3,10 +3,10 @@ import {connect} from 'react-redux'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import {FormattedMessage, injectIntl} from 'react-intl'
-import Modal from 'react-modal'
 import Checkbox from 'material-ui/Checkbox'
 import TextField from 'material-ui/TextField'
 
+import Modal from '../../Modal'
 import {closeAccount, logout} from '../../actions/auth'
 import {createTicket} from '../../actions/helpdesk'
 

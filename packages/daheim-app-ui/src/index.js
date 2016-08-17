@@ -8,7 +8,6 @@ import {IntlProvider, addLocaleData} from 'react-intl'
 import localeDe from 'react-intl/locale-data/de'
 import messagesDe from './intl/de'
 import messagesEn from './intl/en'
-import Modal from 'react-modal'
 
 import createRouter from './router'
 import muiTheme from './theme'
@@ -31,34 +30,6 @@ moment.locale('de') // TODO: find a better place to init
 addLocaleData(localeDe) // TODO: find a better place to init Intl
 const messages = {...messagesEn, ...messagesDe}
 //const messages = messagesEn
-
-function setupModalStyle () {
-  Modal.defaultStyles = {
-    overlay: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(255, 255, 255, 0.75)',
-      zIndex: 3
-    },
-    content : {
-      position: 'absolute',
-      top: '40px',
-      left: '40px',
-      right: '40px',
-      bottom: '40px',
-      border: '1px solid #ccc',
-      background: '#fff',
-      overflow: 'auto',
-      WebkitOverflowScrolling: 'touch',
-      borderRadius: '4px',
-      outline: 'none',
-      padding: '20px'
-    }
-  }
-}
 
 class App extends React.Component {
 
@@ -89,8 +60,6 @@ class App extends React.Component {
 }
 
 function main () {
-  setupModalStyle()
-
   const store = createStore(browserHistory, api, window.__data)
   const history = syncHistoryWithStore(withScroll(browserHistory), store)
 
