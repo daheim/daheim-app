@@ -10,7 +10,7 @@ builder_image:
 builder: builder_image
 	rm -rf build/builder
 	mkdir -p build
-	docker run $(NAME)-builder | tar x -C build
+	docker run --rm $(NAME)-builder | tar x -C build
 
 build: builder
 	cp Dockerfile.final build/builder/Dockerfile
