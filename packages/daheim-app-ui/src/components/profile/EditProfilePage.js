@@ -103,9 +103,9 @@ class Topics extends React.Component {
     onChange: PropTypes.func
   }
 
-  static suggestions = ['Ausbildung', 'Autos', 'Bücher', 'Essen', 'Familie', 'Filme&Serien',
-    'Fotografie', 'Garten', 'Kunst&Kultur', 'Kreatives', 'Musik', 'Politik', 'Prominente',
-    'Reisen', 'Sport', 'Sprachen', 'Typisch Deutsch']
+  static suggestions = ['Schule / Ausbildung', 'Fotographie', 'Computerspiele', 'Sprachen', 'Kreatives', 'Technik',
+    'Essen & Trinken', 'Kunst & Kultur', 'Sport', 'Familie', 'Bücher', 'Natur', 'Prominente',
+    'Musik', 'Reisen', 'Politik', 'Filme & Serien', 'Typisch Deutsch']
 
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 
@@ -125,7 +125,7 @@ class Topics extends React.Component {
     Topics.suggestions.forEach((suggestion) => delete leftovers[suggestion])
 
     return (
-      <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630, marginTop: 20}}>
+      <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 20}}>
         <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
           Themen
         </div>
@@ -133,9 +133,9 @@ class Topics extends React.Component {
           <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Ich spreche gern über...</div>
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
             {[...Topics.suggestions, ...Object.keys(leftovers)].map((topic) =>
-              <div key={topic} style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector={topic} onCheck={this.handleCheck} /></div>)}
+              <div key={topic} style={{flex: '0 0 250px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector={topic} onCheck={this.handleCheck} /></div>)}
           </div>
-          <div>
+          <div style={{maxWidth: 450}}>
             <TextField value={introduction} style={{marginTop: -8}} fullWidth multiLine floatingLabelText='Ein Paar Worte über dich' rows={1} rowsMax={8} onChange={this.handleIntroductionChage} />
           </div>
         </div>
