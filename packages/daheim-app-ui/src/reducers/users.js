@@ -25,7 +25,7 @@ export default handleActions({
       ...state,
       usersMeta: {
         ...state.usersMeta,
-        [id]: {error: action.payload.message}
+        [id]: {error: {code: action.payload.code, message: action.payload.message}}
       }
     }
   },

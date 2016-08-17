@@ -21,7 +21,7 @@ export default function loader (def) {
 
         if (!loaded) {
           if (typeof def.loadingElement === 'function') return def.loadingElement(this.props)
-          return def.loadingElement || <div>Loading...</div>
+          return def.loadingElement || <div style={{margin: 16}}>Wird geladen...</div>
         }
 
         const key = typeof def.key === 'function' ? def.key(this.props) : def.key

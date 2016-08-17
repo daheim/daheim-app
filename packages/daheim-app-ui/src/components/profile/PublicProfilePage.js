@@ -53,7 +53,13 @@ class ProfilePage extends Component {
   }
 
   render () {
-    const {user, me} = this.props
+    const {user, userMeta, me} = this.props
+
+    const userNotFound = userMeta && userMeta.error && userMeta.error.code === 'user_not_found'
+    if (userNotFound) {
+      return <div style={{margin: 16}}>Benuzter Konto abgeschlossen</div>
+    }
+
     const {id, name, picture, role, introduction, inGermanySince, userSince, germanLevel, topics, languages, myReview, receivedReviews} = user
 
     const editorOpen = !me && (!myReview || this.state.editorOpen)
@@ -169,18 +175,18 @@ const loaded = loader({
   },
 
   isLoaded (props) {
-    return props.user
+    return props.user || (props.userMeta && !props.userMeta.loading)
   },
 
   load (nextProps) {
     const {userMeta} = nextProps
     const {loading} = userMeta || {}
 
-    if (!loading) nextProps.loadUser({id: nextProps.userId})
+    if (!loading) nextProps.loadUser({id: nextProps.userId}).catch((err) => null)
   },
 
   key (props) {
-    return props.user.id
+    return props.user ? props.user.id : props.userId
   }
 })(ProfilePage)
 

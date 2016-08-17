@@ -285,7 +285,7 @@ def('/profile.saveProfile', async (req) => {
 
 async function loadUser(id, asUserId) {
   const user = await User.findById(id)
-  if (!user) throw new Error('user not found')
+  if (!user) throw restError({code: 'user_not_found', error: 'User not found'})
 
   const [receivedReviews, myReview] = await Bluebird.all([
     Review.find({to: id}),

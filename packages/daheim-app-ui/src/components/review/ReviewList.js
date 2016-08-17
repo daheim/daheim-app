@@ -78,7 +78,7 @@ class ReviewList extends React.Component {
   }
 
   render () {
-    const {lessonList, lessons, users, profile, style} = this.props
+    const {lessonList, lessons, users, usersMeta, profile, style} = this.props
     const error = !lessonList.meta.loaded && lessonList.meta.error
     const mergedStyle = {maxWidth: 600, ...style}
 
@@ -105,15 +105,20 @@ class ReviewList extends React.Component {
                     const lesson = lessons[lessonId].data
                     const handler = (e) => this.handleRowClick(e, lesson)
                     const partnerId = lesson.participants.find((id) => id !== profile.id)
-                    const partner = users[partnerId]
+                    const partner = users[partnerId] || {fake: true, name: 'wird geladen...'}
+                    const partnerMeta = usersMeta[partnerId]
+                    const partnerNotFound = partnerMeta && partnerMeta.error && partnerMeta.error.code === 'user_not_found'
+                    if (partner.fake && partnerNotFound) {
+                      partner.name = 'Benuzter Konto abgeschlossen'
+                    }
 
                     return (
                       <tr key={lesson.id} className={css.line} onClick={handler}>
                         <td style={{padding: '4px 0'}}>{moment(lesson.createdTime).format('lll')}</td>
-                        <td>{partner ? <img src={partner.picture} style={{borderRadius: '50%', width: 32, height: 32}} /> : ' '}</td>
-                        <td>{partner ? partner.name || '[kein Name]' : 'loading...'}</td>
+                        <td>{partner.picture ? <img src={partner.picture} style={{borderRadius: '50%', width: 32, height: 32}} /> : ' '}</td>
+                        <td>{partner.name ? partner.name : '[kein Name]'}</td>
                         <td>{this.msToString(lesson.duration)}</td>
-                        <td style={{textAlign: 'right'}}>{partner && (partner.myReview ? 'Feedback fertig' : <a href='#'>Feedback abgeben</a>)}</td>
+                        <td style={{textAlign: 'right'}}>{!partner.fake && (partner.myReview ? 'Feedback fertig' : <a href='#'>Feedback abgeben</a>)}</td>
                       </tr>
                     )
                   })}
