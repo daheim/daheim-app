@@ -47,5 +47,6 @@
   "closeAccount.confirmLabel": "I understand that ALL my Daheim data will be deleted",
   "closeAccount.getHelp.text": "We are sorry to see you go. If you had a bad experience, maybe we can help resolving it.",
   "closeAccount.getHelp.submit": "Get Help",
-  "closeAccount.getHelp.hint": "Please tell us what went wrong and we will help you"
+  "closeAccount.getHelp.hint": "Please tell us what went wrong and we will help you",
+  "closeAccount.getHelp.sent": "Thank you for your feedback. The Daheim Team will contact you soon."
 }

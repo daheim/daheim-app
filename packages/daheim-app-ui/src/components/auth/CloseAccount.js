@@ -8,12 +8,14 @@ import Checkbox from 'material-ui/Checkbox'
 import TextField from 'material-ui/TextField'
 
 import {closeAccount, logout} from '../../actions/auth'
+import {createTicket} from '../../actions/helpdesk'
 
 class CloseAccount extends Component {
   state = {
     open: false,
     confirmed: false,
-    ticket: ''
+    ticket: '',
+    getHelpDisabled: false
   }
 
   openDialog = (e) => this.setState({open: true, confirmed: false})
@@ -34,9 +36,23 @@ class CloseAccount extends Component {
     }
   }
 
+  createTicket = async () => {
+    if (this.state.getHelpDisabled) return
+    this.setState({getHelpDisabled: true})
+    try {
+      await this.props.createTicket({description: this.state.ticket, environment: 'Konto schließen'})
+      this.setState({open: false, ticket: ''})
+      setTimeout(() => alert(this.props.intl.formatMessage({id: 'closeAccount.getHelp.sent'})))
+    } catch (err) {
+      setTimeout(() => alert(err.message))
+    } finally {
+      this.setState({getHelpDisabled: false})
+    }
+  }
+
   render () {
-    const {closeAccount, intl, ...otherProps} = this.props
-    const {open, confirmed, ticket} = this.state
+    const {closeAccount, intl, logout, createTicket, ...otherProps} = this.props
+    const {open, confirmed, ticket, getHelpDisabled} = this.state
 
     return (
       <div {...otherProps}>
@@ -51,7 +67,7 @@ class CloseAccount extends Component {
             </div>
             <div style={{marginTop: 10}}>
               <FlatButton style={{marginRight: 12}} label={intl.formatMessage({id: 'closeAccount.cancel'})} onClick={this.onRequestClose} />
-              <RaisedButton disabled primary label={intl.formatMessage({id: 'closeAccount.getHelp.submit'})} onClick={this.onRequestClose} />
+              <RaisedButton primary disabled={getHelpDisabled} label={intl.formatMessage({id: 'closeAccount.getHelp.submit'})} onClick={this.createTicket} />
             </div>
 
             <div style={{borderBottom: 'solid 1px lightgray', marginTop: 30}}></div>
@@ -70,4 +86,4 @@ class CloseAccount extends Component {
   }
 }
 
-export default injectIntl(connect(null, {closeAccount, logout})(CloseAccount))
+export default injectIntl(connect(null, {closeAccount, logout, createTicket})(CloseAccount))
