@@ -165,7 +165,7 @@ def('/auth.requestNewPassword', async (req, res) => {
     html: intl.formatMessage('forgotPassword.email.text', {
       linkStart: `<a href="${process.env.URL}/auth/reset?token=${encodeURIComponent(token)}">`,
       linkEnd: '</a>'
-    })
+    }).replace(/\n/g, '<br/>')
   })
   return {}
 }, {
