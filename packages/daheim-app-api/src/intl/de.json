@@ -1,4 +1,4 @@
 {
-  "forgotPassword.email.subject":"Daheim Passwort zurücksetzen",
-  "forgotPassword.email.text":"Klick bitte {linkStart}here um Deine Passwort zurückzusetzen.{linkEnd}"
+  "forgotPassword.email.subject":"Dein Passwort vergessen?",
+  "forgotPassword.email.text":"Liebe Mitbewohnerin, lieber Mitbewohner,\n\nDu hast dein Passwort vergessen und brauchst ein neues?\n\nKlicke einfach auf den {linkStart}Link, um Dein Passwort zurückzusetzen!{linkEnd}\n\nHerzliche Grüße \nDein 'Daheim' Hilfe-Team\n"
 }
