@@ -43,6 +43,20 @@
     "dev-live": "cd packages/daheim-app-live && npm run dev",
     "dev-api": "cd packages/daheim-app-api && npm run dev",
     "dev-ui": "cd packages/daheim-app-ui && npm run dev",
-    "dev": "concurrently --kill-others --names \"db,live,api,ui\" --prefix \"[{name}]\" \"npm run dev-db\" \"npm run dev-live\" \"npm run dev-api\" \"npm run dev-ui\""
+    "dev": "concurrently --kill-others --names \"db,live,api,ui\" --prefix \"[{name}]\" \"npm run dev-db\" \"npm run dev-live\" \"npm run dev-api\" \"npm run dev-ui\"",
+    "crowdin-build": "better-npm-run crowdin-build",
+    "crowdin-download": "better-npm-run crowdin-download",
+    "crowdin-upload": "better-npm-run crowdin-upload"
+  },
+  "betterScripts": {
+    "crowdin-build": {
+      "command": "bin/crowdin --build"
+    },
+    "crowdin-download": {
+      "command": "bin/crowdin --download"
+    },
+    "crowdin-upload": {
+      "command": "bin/crowdin --upload"
+    }
   }
 }

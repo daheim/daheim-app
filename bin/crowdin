@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+for i in "$@"; do
+
+  case $i in
+
+    -d|--download)
+      curl -f "https://api.crowdin.com/api/project/daheim-app/export-file?json&file=ui/en.json&language=de&key=$CROWDIN_KEY" > packages/daheim-app-ui/src/intl/de.json
+      curl -f "https://api.crowdin.com/api/project/daheim-app/export-file?json&file=api/en.json&language=de&key=$CROWDIN_KEY" > packages/daheim-app-api/src/intl/de.json
+      shift
+      ;;
+
+    -b|--build)
+      curl -f "https://api.crowdin.com/api/project/daheim-app/export?json&key=$CROWDIN_KEY"
+      shift
+      ;;
+
+    -u|--upload)
+      curl -f -XPOST -F "files[ui/en.json]=@packages/daheim-app-ui/src/intl/en.json" -F "files[api/en.json]=@packages/daheim-app-api/src/intl/en.json" "https://api.crowdin.com/api/project/daheim-app/update-file?json&key=$CROWDIN_KEY"
+      shift
+      ;;
+
+  esac
+
+done
