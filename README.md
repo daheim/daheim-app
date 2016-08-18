@@ -11,3 +11,32 @@ This repository contains the web application that connects the users through Web
 Original module sources were:
 - https://github.com/daheim/daheim-app-ui
 - https://github.com/daheim/daheim-app-api
+
+## Internationalization
+
+The main target language of the platform is German. Although, to make international collaboration easier, code is written in English and messages translated from English to German. Our choice of internationalization is library is [react-intl](https://github.com/yahoo/react-intl). Translations are maintained in an open [Crowdin](https://crowdin.com/project/daheim-app) project.
+
+
+# Administrative Tasks
+
+## Manage Translations
+
+To run these scripts, a `CROWDIN_KEY` environment variable must specify a valid API key for the Crowdin project.
+
+Upload messages to translate:
+
+```bash
+npm run crowdin-upload
+```
+
+Build and package translations:
+
+```bash
+npm run crowdin-build
+```
+
+Download updated translations:
+
+```bash
+npm run crowdin-download
+```
