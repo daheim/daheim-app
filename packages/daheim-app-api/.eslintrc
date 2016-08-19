@@ -7,6 +7,7 @@
     "linebreak-style": [2, "unix"],
 
     "arrow-parens": 0,
+    "generator-star-spacing": 0,
 
     "babel/generator-star-spacing": 1,
     "babel/new-cap": 1,
