@@ -32,6 +32,7 @@ class Connecting extends Component {
 class ReadySwitch extends Component {
 
   static propTypes = {
+    intl: PropTypes.object.isRequired,
     ready: PropTypes.bool,
     connected: PropTypes.bool,
     setReady: PropTypes.func.isRequired,
@@ -55,7 +56,7 @@ class ReadySwitch extends Component {
     try {
       await this.props.setReady({ready: true})
     } catch (err) {
-      alert(this.props.intl.formatMessage({id: errorMessage}, {message: err.message}))
+      alert(this.props.intl.formatMessage({id: 'errorMessage'}, {message: err.message}))
     } finally {
       this.setState({busy: false})
     }
@@ -70,7 +71,7 @@ class ReadySwitch extends Component {
     try {
       await this.props.setReady({ready: false})
     } catch (err) {
-      alert(this.props.intl.formatMessage({id: errorMessage}, {message: err.message}))
+      alert(this.props.intl.formatMessage({id: 'errorMessage'}, {message: err.message}))
     } finally {
       this.setState({busy: false})
     }

@@ -1,8 +1,10 @@
 import {CALL_METHOD} from '../actions/facebook'
 
+/* global FB */
+
 class FacebookManager {
   static initPromise = new Promise((resolve) => {
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = function () {
       FB.init({
         appId: window.__INIT.FB_CLIENT_ID,
         version: 'v2.7'
@@ -18,13 +20,16 @@ class FacebookManager {
   }
 
   init () {
-    if (FacebookManager.initComplete) return Promise.resolve()
+    if (FacebookManager.initComplete) {
+      return Promise.resolve()
+    }
 
-    ;(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0]
+    ;(function (d, s, id) {
+      var js
+      var fjs = d.getElementsByTagName(s)[0]
       if (d.getElementById(id)) return
       js = d.createElement(s); js.id = id
-      js.src = "//connect.facebook.net/en_US/sdk.js"
+      js.src = '//connect.facebook.net/en_US/sdk.js'
       fjs.parentNode.insertBefore(js, fjs)
     }(document, 'script', 'facebook-jssdk'))
 
@@ -33,7 +38,7 @@ class FacebookManager {
 
   async login (opt) {
     return new Promise((resolve, reject) => {
-      new FB.login((response) => {
+      FB.login((response) => {
         response.authResponse ? resolve(response) : reject(response)
       }, opt)
     })

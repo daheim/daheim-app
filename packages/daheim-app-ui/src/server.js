@@ -16,7 +16,7 @@ import bowser from 'bowser'
 import universal from './universal'
 import Html from './html'
 
-process.on("unhandledRejection", function(reason, promise) {
+process.on('unhandledRejection', function (reason, promise) {
   console.error('unhandled rejection', reason)
 })
 
@@ -106,12 +106,8 @@ app.use(async (req, res, next) => {
 
     // const store = createStore(history, client)
 
-    function hydrateOnClient () {
-      res.send('<!doctype html>\n' +
-        ReactDOM.renderToString(<Html assets={universal.assets()} store={store} />))
-    }
-
-    hydrateOnClient()
+    res.send('<!doctype html>\n' +
+      ReactDOM.renderToString(<Html assets={universal.assets()} store={store} />))
   } catch (err) {
     next(err)
   }

@@ -2,10 +2,9 @@ import React from 'react'
 import {Router, Route, IndexRoute} from 'react-router'
 import Helmet from 'react-helmet'
 
-import DefaultLayout from './containers/DefaultLayout'
+import DefaultLayout, {DefaultLayoutWithBreadcrumbs} from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
 import LessonPage from './containers/LessonPage'
-import {DefaultLayoutWithBreadcrumbs} from './containers/DefaultLayout'
 
 import AuthLayout from './components/auth/AuthLayout'
 import LoginPage from './components/auth/LoginPage'

@@ -97,7 +97,7 @@ class ReviewList extends React.Component {
                     <th>&nbsp;</th>
                     <th style={{textAlign: 'left'}}>Partner</th>
                     <th style={{textAlign: 'left'}}>Länge</th>
-                    <th></th>
+                    <th />
                   </tr>
                 </thead>
                 <tbody>

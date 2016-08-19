@@ -29,7 +29,7 @@ import moment from 'moment'
 moment.locale('de') // TODO: find a better place to init
 addLocaleData(localeDe) // TODO: find a better place to init Intl
 const messages = {...messagesEn, ...messagesDe}
-//const messages = messagesEn
+// const messages = messagesEn
 
 class App extends React.Component {
 

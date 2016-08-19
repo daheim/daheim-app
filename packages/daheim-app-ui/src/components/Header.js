@@ -14,15 +14,15 @@ export default class Header extends React.Component {
             <div className={style.logo}>
               <Link to='/'><Logo /></Link>
             </div>
-            <div className={style.spacer}></div>
+            <div className={style.spacer} />
             <div className={style.profile}>
               <UserMenu />
             </div>
           </div>
         </div>
-        <div className={style.topbarSpacing}></div>
+        <div className={style.topbarSpacing} />
         <div className={style.cover2}>
-          <div className={style.photo}></div>
+          <div className={style.photo} />
           <div className={style.title}>Presse</div>
         </div>
       </div>

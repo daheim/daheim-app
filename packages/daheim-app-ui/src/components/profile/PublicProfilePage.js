@@ -36,7 +36,8 @@ function seitToText (seit) {
 class ProfilePage extends Component {
 
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object,
+    userMeta: PropTypes.object,
     me: PropTypes.bool
   }
 
@@ -187,7 +188,7 @@ const loaded = loader({
     const {userMeta} = nextProps
     const {loading} = userMeta || {}
 
-    if (!loading) nextProps.loadUser({id: nextProps.userId}).catch((err) => null)
+    if (!loading) nextProps.loadUser({id: nextProps.userId}).catch((err) => err)
   },
 
   key (props) {

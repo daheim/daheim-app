@@ -39,7 +39,7 @@ class Languages extends Component {
     onChange: PropTypes.func
   }
 
-  static suggestions = ['Englisch', 'Spanisch', 'Französisch', 'Italienisch', 'Russisch', 'Griechisch', 'Polnisch' , 'Türkisch', 'Arabisch', 'Farsi', 'Hebräisch', 'Kurdisch']
+  static suggestions = ['Englisch', 'Spanisch', 'Französisch', 'Italienisch', 'Russisch', 'Griechisch', 'Polnisch', 'Türkisch', 'Arabisch', 'Farsi', 'Hebräisch', 'Kurdisch']
 
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 

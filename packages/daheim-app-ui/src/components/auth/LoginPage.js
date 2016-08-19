@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
-import {FormattedMessage, injectIntl} from 'react-intl'
+import {injectIntl} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {login} from '../../actions/auth'
@@ -15,7 +15,8 @@ class LoginFormRaw extends Component {
   static propTypes = {
     defaultUsername: PropTypes.string,
     onLogin: PropTypes.func,
-    login: PropTypes.func.isRequired
+    login: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   state = {

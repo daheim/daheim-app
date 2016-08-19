@@ -22,8 +22,12 @@ class NotSupportedBrowser extends Component {
     }
   }
 
+  static propTypes = {
+    browser: PropTypes.object.isRequired
+  }
+
   render () {
-    const {browser, lang} = this.props
+    const {browser} = this.props
     const updateInfo = NotSupportedBrowser.getBrowserUpgradeInfo(browser)
     if (updateInfo.ok) return null
 

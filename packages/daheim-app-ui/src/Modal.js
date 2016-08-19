@@ -1,4 +1,4 @@
-import React, {PropTypes, Component} from 'react'
+import React, {PropTypes, Component} from 'react' // eslint-disable-line no-unused-vars
 import Modal from 'react-modal'
 import modalCss from './Modal.style'
 

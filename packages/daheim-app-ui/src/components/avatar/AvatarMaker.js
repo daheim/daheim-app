@@ -6,6 +6,10 @@ import data from './data'
 
 class AvatarRender extends Component {
 
+  static propTypes = {
+    def: PropTypes.object
+  }
+
   createAvatar () {
     const def = this.props.def || {}
 
@@ -33,10 +37,8 @@ class AvatarRender extends Component {
     return result
   }
 
-
   render () {
     const imagedata = this.createAvatar()
-    const uri = new Buffer(imagedata).toString('base64')
 
     return <img src={`data:image/svg+xml,${imagedata}`} style={{borderRadius: '50%'}} />
   }
@@ -53,7 +55,7 @@ export default class AvatarMakerPage extends Component {
       hijabColor: Math.floor(Math.random() * Object.keys(data.colors).length) + 1,
       face: Math.floor(Math.random() * Object.keys(data.face).length) + 1,
       glasses: Math.floor(Math.random() * Object.keys(data.glasses).length) + 1,
-      glassesColor: Math.floor(Math.random() * Object.keys(data.colors).length) + 1,
+      glassesColor: Math.floor(Math.random() * Object.keys(data.colors).length) + 1
     }
   }
 

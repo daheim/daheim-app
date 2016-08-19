@@ -4,13 +4,20 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import {FormattedMessage, injectIntl} from 'react-intl'
 import Checkbox from 'material-ui/Checkbox'
-import TextField from 'material-ui/TextField'
 
 import Modal from '../../Modal'
 import {closeAccount, logout} from '../../actions/auth'
 import {createTicket} from '../../actions/helpdesk'
 
 class CloseAccount extends Component {
+
+  static propTypes = {
+    closeAccount: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+    createTicket: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
+  }
+
   state = {
     open: false,
     confirmed: false,
@@ -51,7 +58,7 @@ class CloseAccount extends Component {
   }
 
   render () {
-    const {closeAccount, intl, logout, createTicket, ...otherProps} = this.props
+    const {closeAccount, intl, logout, createTicket, ...otherProps} = this.props // eslint-disable-line no-unused-vars
     const {open, confirmed, ticket, getHelpDisabled} = this.state
 
     return (
@@ -70,7 +77,7 @@ class CloseAccount extends Component {
               <RaisedButton primary disabled={getHelpDisabled} label={intl.formatMessage({id: 'closeAccount.getHelp.submit'})} onClick={this.createTicket} />
             </div>
 
-            <div style={{borderBottom: 'solid 1px lightgray', marginTop: 30}}></div>
+            <div style={{borderBottom: 'solid 1px lightgray', marginTop: 30}}/>
 
             <div style={{paddingLeft: 16, marginTop: 30}}>
               <Checkbox checked={confirmed} label={intl.formatMessage({id: 'closeAccount.confirmLabel'})} onCheck={this.handleCheck} />

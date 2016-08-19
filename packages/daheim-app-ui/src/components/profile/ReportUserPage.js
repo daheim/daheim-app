@@ -10,13 +10,22 @@ import {loadUser} from '../../actions/users'
 
 class ReportUserPage extends Component {
 
+  static propTypes = {
+    loadUser: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
+    reportUser: PropTypes.func.isRequired,
+    userId: PropTypes.string.isRequired,
+    intl: PropTypes.object.isRequired,
+    user: PropTypes.object
+  }
+
   state = {
     ticket: '',
     submitDisabled: false
   }
 
   componentDidMount () {
-    this.props.loadUser({id: this.props.userId}).catch((err) => null)
+    this.props.loadUser({id: this.props.userId}).catch((err) => err)
     if (this.refs.ticket) this.refs.ticket.focus()
   }
 

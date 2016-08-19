@@ -10,7 +10,6 @@ import ReadySwitch from '../components/ready/ReadySwitch'
 import TimeToChoose from '../components/ready/TimeToChoose'
 import NotYetInOperation from '../components/NotYetInOperation'
 import NotSupportedBrowser from '../components/ready/NotSupportedBrowser'
-import WebRTC from 'webrtc-adapter'
 
 class ReadyPageRaw extends React.Component {
 

@@ -8,6 +8,13 @@ import css from './FacebookLogin.style'
 
 class FacebookLogin extends Component {
 
+  static propTypes = {
+    init: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    facebookLogin: PropTypes.func.isRequired,
+    onLogin: PropTypes.func
+  }
+
   state = {
     inited: false
   }
@@ -21,7 +28,7 @@ class FacebookLogin extends Component {
     try {
       const response = await this.props.login({scope: 'email', auth_type: 'rerequest'})
       const {accessToken} = response.authResponse
-      await this.props.facebookLogin({facebookAccessToken:  accessToken})
+      await this.props.facebookLogin({facebookAccessToken: accessToken})
       if (this.props.onLogin) this.props.onLogin()
     } catch (err) {
       alert(err.message) // TODO: localize error message

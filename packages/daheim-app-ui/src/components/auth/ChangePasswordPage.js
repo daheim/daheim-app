@@ -11,6 +11,13 @@ import CloseAccount from './CloseAccount'
 
 class ChangePasswordPage extends Component {
 
+  static propTypes = {
+    intl: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
+    changePassword: PropTypes.func.isRequired,
+    profile: PropTypes.object.isRequired
+  }
+
   state = {
     password: '',
     passwordError: null,
@@ -112,7 +119,7 @@ class ChangePasswordPage extends Component {
           </form>
         </div>
 
-        <div style={{borderBottom: 'solid 1px lightgray', marginTop: 20}}></div>
+        <div style={{borderBottom: 'solid 1px lightgray', marginTop: 20}}/>
         <CloseAccount style={{padding: '16px 16px'}} />
       </div>
     )
