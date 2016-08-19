@@ -68,14 +68,7 @@ app.get('*', function(req, res, next) {
 })
 
 app.use(function(err, req, res, next) {
-  if (res.headersSent) {
-    return next(err)
-  }
-
-  if (err.rest) {
-    res.status(400).send(err.rest)
-  }
-
+  if (!res.headersSent && err.rest) return res.status(400).send(err.rest)
   next(err)
 })
 
