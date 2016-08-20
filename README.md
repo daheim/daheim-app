@@ -40,3 +40,13 @@ Download updated translations:
 ```bash
 npm run crowdin-download
 ```
+
+## Deploy Latest Version
+
+The application is hosted in a Kubernetes cluster. This scripts need a fully setup `kubectl`.
+
+Deploy all components to `latest` Docker tag and watch the deployment rolling out:
+
+```bash
+bin/devops --latest-api --latest-ui --latest-live --watch
+```

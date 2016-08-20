@@ -1,0 +1,51 @@
+#!/bin/bash -e
+
+NOW=$(date +"%Y%m%d%H%M%S")
+
+for i in "$@"; do
+
+  case $i in
+
+    --latest-api)
+      kubectl patch deployment daheim-app-api -p '{"spec":{"template":{"metadata":{"labels":{"egergo.com/deployment": "'$NOW'"}}}}}' --record
+      shift
+      ;;
+
+    --latest-ui)
+      kubectl patch deployment daheim-app-ui -p '{"spec":{"template":{"metadata":{"labels":{"egergo.com/deployment": "'$NOW'"}}}}}' --record
+      shift
+      ;;
+
+    --latest-live)
+      kubectl patch deployment daheim-app-live -p '{"spec":{"template":{"metadata":{"labels":{"egergo.com/deployment": "'$NOW'"}}}}}' --record
+      shift
+      ;;
+
+    --list)
+      echo "Deployments:"
+      kubectl get deployment -l 'run in (daheim-app-api, daheim-app-ui, daheim-app-live)'
+      kubectl get deployment -l 'app in (daheim-app-api, daheim-app-ui, daheim-app-live)'
+      echo "Replica Sets:"
+      kubectl get rs -l 'app in (daheim-app-api, daheim-app-ui, daheim-app-live)'
+      kubectl get rs -l 'run in (daheim-app-api, daheim-app-ui, daheim-app-live)'
+      echo "Pods:"
+      kubectl get po -l 'app in (daheim-app-api, daheim-app-ui, daheim-app-live)' -o wide
+      kubectl get po -l 'run in (daheim-app-api, daheim-app-ui, daheim-app-live)' -o wide
+      shift
+      ;;
+
+    --history)
+      kubectl rollout history deployments daheim-app-api
+      kubectl rollout history deployments daheim-app-ui
+      kubectl rollout history deployments daheim-app-live
+      shift
+      ;;
+
+    --watch)
+      watch -n 1 ./$0 --list
+      shift
+      ;;
+
+  esac
+
+done
