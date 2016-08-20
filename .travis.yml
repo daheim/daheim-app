@@ -10,3 +10,7 @@ after_success:
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     make release;
     fi
+
+notifications:
+  slack:
+    secure: ZEMMhUC6VVYnyoEP7fr4GtcOZMKb6HHqJ21swzJCmMcQCpM51qyYKJrb2Dhsw+KNgfguxNU936JP17cZCEcRsCYRpi4Tl9noHgkAnxSfp3kQ1mnVkTuS2caqECDYl/xSy3K74QEZvr69CnqGYHoOmvOZSyFBM0yPRiqKKIsi6AxUAp03yGHJvfAFQET0MN+jCNWAol90cHuW09oQadglHrb+kDTcwnlKTTHnvXO20suiyDa0wcYSnJ5uMTU0VN74L399h+CqtSgAz+1zv6UygSWohzeR92TjT+scXF0MX/PSZH0ZaWh69V/U9jPd+otm1s62MAzXVRvmmwGB34IGlQapekBELxnYYQApgwsyqjhObkBWC8w6HME6qVsZjw43n5Hhe0Rmtr3Z40B5pVWvFHESo1e22Secva3qFsEUwAOh2OBE64c4PL8LfwXGVYgD5+T6umBb+e+z2XJbR0eqXfdYNylcBjFV2US4zSFnotzk+pfGpqiohLiDStkDkdb+xyGtG+9OCsWCpsgjqffLVL0zArOLsyicgoOqvR/duZQmO19IFnzEHm5rjnz3PptGBueB3KqczK+5XluPtXgzygQt5Gt03/7KIvZQU+RM2QldZGgaz/PSnSz5Hnc23IFgtEWRE4wMvle2XpmWTGtbKES3nSvtqWdBXIaS+baHln8=
