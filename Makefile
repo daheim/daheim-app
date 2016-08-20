@@ -18,7 +18,7 @@ build: builder
 	docker build -t $(NAME):$(shell cat build/builder/REVISION) build/builder
 
 tag_latest:
-	docker tag -f $(NAME):$(shell cat build/builder/REVISION) $(NAME):latest
+	docker tag $(NAME):$(shell cat build/builder/REVISION) $(NAME):latest
 
 release: tag_latest
 	docker push $(NAME)
