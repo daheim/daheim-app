@@ -3,3 +3,5 @@ mongodb:
   command: --storageEngine wiredTiger
   ports:
     - '27017:27017'
+  volumes:
+    - ./mongodb-data:/data/db
