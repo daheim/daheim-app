@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import RoleSwitch from '../RoleSwitch'
 import {subscribeToWebPush, unsubscribeFromWebPush} from '../../middlewares/service_worker'
-import {testNotification} from '../../actions/notifications'
+import {testNotification, testNotificationBroadcast, registerNotificationEndpoint} from '../../actions/notifications'
 
 class AdminPage extends Component {
 
@@ -49,6 +49,24 @@ class AdminPage extends Component {
     }
   }
 
+  testBroadcast = async () => {
+    this.props.testNotificationBroadcast()
+  }
+
+  registerEndpoint = async () => {
+    try {
+      const sub = await this.props.subscribeToWebPush()
+
+      const {endpoint} = sub
+      const userPublicKey = sub.getKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))) : undefined
+      const userAuth = sub.getKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))) : undefined
+
+      await this.props.registerNotificationEndpoint({type: 'webpush', endpoint, userPublicKey, userAuth})
+    } catch (err) {
+      setTimeout(() => alert(err.message), 0)
+    }
+  }
+
   render () {
     return (
       <div style={{margin: 16}}>
@@ -62,6 +80,8 @@ class AdminPage extends Component {
             <button onClick={this.subscribe}>Subscribe</button>
             <button onClick={this.unsubscribe}>Unsubscribe</button>
             <button onClick={this.test}>Test</button>
+            <button onClick={this.testBroadcast}>Test Broadcast</button>
+            <button onClick={this.registerEndpoint}>Register Endpoint</button>
           </div>
         </div>
       </div>
@@ -72,4 +92,4 @@ class AdminPage extends Component {
 export default connect((state) => {
   const {registered} = state.serviceWorker
   return {registered}
-}, {subscribeToWebPush, unsubscribeFromWebPush, testNotification})(AdminPage)
+}, {subscribeToWebPush, unsubscribeFromWebPush, testNotification, testNotificationBroadcast, registerNotificationEndpoint})(AdminPage)
