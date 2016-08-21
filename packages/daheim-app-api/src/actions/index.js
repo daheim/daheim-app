@@ -17,6 +17,7 @@ import log from '../log'
 import {User, Review, Lesson} from '../model'
 
 import registerHelpdesk from './helpdesk'
+import registerNotifications from './notifications'
 
 const app = new Router()
 
@@ -40,6 +41,7 @@ function def (action, cb, {auth = true, middlewares = []} = {}) {
 }
 
 registerHelpdesk(def)
+registerNotifications(def)
 
 def('/auth.login', async (req, res) => {
   slack.sendText(`${req.user.username} logged in`)

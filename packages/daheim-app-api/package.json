@@ -56,6 +56,7 @@
     "passport-local": "^1.0.0",
     "sendgrid": "^1.9.2",
     "source-map-support": "^0.4.0",
-    "spdy": "^3.3.2"
+    "spdy": "^3.3.2",
+    "web-push": "^2.2.0"
   }
 }
