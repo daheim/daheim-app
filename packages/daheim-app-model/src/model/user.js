@@ -41,6 +41,11 @@ let UserSchema = new Schema({
     introduction: String,
     pictureType: String,
     pictureData: String
+  },
+
+  notifications: {
+    enabled: Boolean,
+    endpoints: [Schema.Types.Mixed]
   }
 }, {
   toJSON: {
@@ -65,6 +70,8 @@ let UserSchema = new Schema({
       }
       delete ret.profile.pictureType
       delete ret.profile.pictureData
+
+      delete ret.notifications.endpoints
 
       delete ret.password
       delete ret.loginAttempts

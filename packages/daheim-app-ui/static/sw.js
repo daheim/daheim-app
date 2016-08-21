@@ -36,7 +36,7 @@ self.addEventListener('push', function (event) {
   const data = event.data ? event.data.json() : {}
   console.log('push', event, data)
 
-  if (data.type === 'test') {
+  if (data.type === 'test' || data.type === 'testBroadcast') {
     const prom = self.registration.showNotification('Willkommen Daheim Test', {
       body: 'This is a test message showing three actions and an icon.',
       icon: '/favicon-192.png',
