@@ -18,8 +18,10 @@ class AdminPage extends Component {
     try {
       const sub = await this.props.subscribeToWebPush()
       console.log('sub', sub)
-      console.log('p256dh', btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))))
-      console.log('auth', btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))))
+      const userPublicKey = sub.getKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))) : undefined
+      const userAuth = sub.getKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))) : undefined
+      console.log('p256dh', userPublicKey)
+      console.log('auth', userAuth)
     } catch (err) {
       setTimeout(() => alert(err.message), 0)
     }
@@ -38,10 +40,8 @@ class AdminPage extends Component {
       const sub = await this.props.subscribeToWebPush()
 
       const {endpoint} = sub
-      const userPublicKeyArr = sub.getKey ? sub.getKey('p256dh') : ''
-      const userPublicKey = btoa(String.fromCharCode.apply(null, new Uint8Array(userPublicKeyArr)))
-      const userAuthArr = sub.getKey ? sub.getKey('auth') : ''
-      const userAuth = btoa(String.fromCharCode.apply(null, new Uint8Array(userAuthArr)))
+      const userPublicKey = sub.getKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))) : undefined
+      const userAuth = sub.getKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))) : undefined
 
       await this.props.testNotification({endpoint, userPublicKey, userAuth})
     } catch (err) {
