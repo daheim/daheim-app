@@ -48,6 +48,14 @@ const targetUrl = process.env.API_URL
 const proxy = httpProxy.createProxyServer({ target: targetUrl, secure: process.env.INSECURE_API_PROXY !== '1' })
 
 app.use(cookieParser())
+
+// Sending Service Worker script without caching headers
+app.get('/sw.js', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '../static/sw.js'), {}, (err) => {
+    if (err) next(err)
+  })
+})
+
 app.use('/dist', Express.static(path.join(__dirname, '..', 'build'), {maxAge: 86400000}))
 app.use(Express.static(path.join(__dirname, '..', 'static'), {maxAge: 86400000}))
 
