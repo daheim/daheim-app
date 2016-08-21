@@ -7,6 +7,7 @@ import users from './users'
 import lessons from './lessons'
 import notYetOpen from './not_yet_open'
 import {liveReducer} from '../live'
+import {serviceWorkerReducer} from '../middlewares/service_worker'
 
 export default combineReducers({
   messages,
@@ -16,5 +17,6 @@ export default combineReducers({
   notYetOpen,
   live: liveReducer,
   routing: routerReducer,
-  browser: (state, action) => state || {}
+  browser: (state, action) => state || {},
+  serviceWorker: serviceWorkerReducer
 })
