@@ -21,13 +21,9 @@ self.addEventListener('notificationclick', function (event) {
     console.log('clients', clients)
     for (var i = 0; i < clients.length; i++) {
       var client = clients[i]
-      if ('focus' in client) {
-        return client.focus()
-      }
+      if (client.focus) return client.focus()
     }
-    if ('openWindow' in self.clients) {
-      return self.clients.openWindow('https://app.daheimapp.de')
-    }
+    if (self.clients.openWindow) return self.clients.openWindow('https://app.daheimapp.de')
   })
   event.waitUntil(prom)
 })
