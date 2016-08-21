@@ -49,5 +49,12 @@ self.addEventListener('push', function (event) {
       }]
     })
     event.waitUntil(prom)
+  } else if (data.type === 'studentWaiting') {
+    const prom = self.registration.showNotification('Student Waiting', {
+      body: 'A student is waiting for a conversation.',
+      icon: '/favicon-192.png',
+      tag: 'studentWaiting',
+    })
+    event.waitUntil(prom)
   }
 })

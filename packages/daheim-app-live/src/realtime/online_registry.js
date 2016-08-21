@@ -2,6 +2,12 @@ import io from './io'
 import sioError from './sio_error'
 import lessonRegistry from './lesson_registry'
 import slack from '../slack'
+import {User} from 'daheim-app-model'
+import webPush from 'web-push'
+import log from '../log'
+import Bluebird from 'bluebird'
+
+webPush.setGCMAPIKey(process.env.GCM_API_KEY)
 
 const debug = require('debug')('dhm:realtime:OnlineRegistry')
 
@@ -69,12 +75,13 @@ class OnlineRegistry {
     this.emitOnline()
   }
 
-  onUserReady (socket, {topic} = {}) {
+  async onUserReady (socket, {topic} = {}) {
     if (!socket.user) throw sioError('unauthorized')
 
     if (this.ready[socket.userId]) return // already ready
 
     slack.sendText(`${socket.user.username} is ready for a Gespräch`)
+    await this.notifyTeachers(socket)
 
     const {role} = socket.user.profile
     if (role !== 'student') throw sioError('onlyStudents')
@@ -115,6 +122,46 @@ class OnlineRegistry {
       return {id, topic}
     })
     io.of('/').in('teachers').emit('readyUsers', users)
+  }
+
+  async notifyTeachers (socket) {
+    const {user} = socket
+    const teachers = await User.find({'notifications.enabled': true})
+    teachers.forEach((teacher) => {
+      if (teacher.id === user.id) return
+      if (this.teachers[teacher.id]) return
+      this.notifyTeacher(socket, teacher)
+    })
+  }
+
+  async notifyTeacher (socket, teacher) {
+    console.log('notifying', teacher)
+    const proms = teacher.notifications.endpoints.map((def) => webPush.sendNotification(def.endpoint, {
+      TTL: 60 * 2,
+      payload: JSON.stringify({type: 'studentWaiting', studentId: socket.user.id}),
+      userPublicKey: def.userPublicKey,
+      userAuth: def.userAuth
+    }).catch((err) => {
+      const {statusCode, headers, body} = err
+      if (statusCode >= 200 && statusCode < 300) return ''
+      if (statusCode === 400 || statusCode === 410) return 'remove'
+      log.error({err, statusCode, headers, body}, 'cannot send webpush notification')
+      return 'unknown'
+    }))
+
+    const results = await Bluebird.all(proms)
+    console.log(results)
+
+    let modified = false
+    for (let x = 0; x < results.length; x++) {
+      if (results[x] === 'remove') {
+        req.user.notifications.endpoints.splice(x, 1)
+        results.splice(x, 1)
+        x--
+        modified = true
+      }
+    }
+    if (modified) await teacher.save()
   }
 
 }
