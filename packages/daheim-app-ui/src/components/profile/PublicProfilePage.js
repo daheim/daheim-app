@@ -74,6 +74,11 @@ class ProfilePage extends Component {
     const topicsArr = Object.keys(topics)
     const languagesArr = Object.keys(languages)
 
+    const otherReviews = receivedReviews.slice(0, 5).map((review) => {
+      if (myReview && review.from === myReview.from) return null
+      return <Review key={review.from} {...this.props} review={review} />
+    })
+
     return (
       <div key={id} style={{margin: 16}}>
 
@@ -92,6 +97,23 @@ class ProfilePage extends Component {
         </div>
 
         <div style={{minHeight: 200}}>
+
+          {me ? null : (
+            <div className={css.section}>
+              <div className={css.sectionTitle}>Mein Feedback</div>
+              <div className={css.sectionContent}>
+                {editorOpen ? (
+                  <div className={css.field}>
+                    <div className={css.fieldText}>
+                      <SendReview {...this.props} onRequestClose={this.handleEditorRequestClose} />
+                    </div>
+                  </div>
+                ) : undefined}
+
+                {myReview ? <Review key={myReview.from} {...this.props} mine review={myReview} onRequestEdit={this.handleOpenEditor} /> : undefined}
+              </div>
+            </div>
+          )}
 
           <div className={css.section}>
             <div className={css.sectionTitle}>Personendaten</div>
@@ -150,22 +172,9 @@ class ProfilePage extends Component {
           <div className={css.section}>
             <div className={css.sectionTitle}>Feedback</div>
             <div className={css.sectionContent}>
-              {editorOpen ? (
-                <div className={css.field}>
-                  <div className={css.fieldTitle}>Dein Feedback</div>
-                  <div className={css.fieldText}>
-                    <SendReview {...this.props} onRequestClose={this.handleEditorRequestClose} />
-                  </div>
-                </div>
-              ) : undefined}
-
-              {myReview ? <Review key={myReview.from} {...this.props} mine review={myReview} onRequestEdit={this.handleOpenEditor} /> : undefined}
-
-              {receivedReviews.map((review) => {
-                if (myReview && review.from === myReview.from) return
-                return <Review key={review.from} {...this.props} review={review} />
-              })}
-
+              <div className={css.fieldText}>
+                {otherReviews.length ? otherReviews : <i>Es gibt noch keine Reviews</i>}
+              </div>
             </div>
           </div>
 
