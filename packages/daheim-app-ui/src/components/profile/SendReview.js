@@ -48,11 +48,14 @@ export default class SendReview extends Component {
   }
 
   render () {
+    const {user} = this.props
     const {text, rating} = this.state
+    const {name = 'mich'} = user
 
     return (
       <form>
-        <div><TextField value={text} onChange={this.handleTextChange} name='feedback' hintText='Bitte schreib ein Paar Worte über mich!' fullWidth multiLine rows={1} rowsMax={4} /></div>
+        <div><textarea placeholder={`Bitte schreib ein Paar Worte über ${name}!`} style={{width: '100%', height: 100, borderRadius: 4, fontSize: 14, padding: 6, borderColor: '#AAA', marginTop: 2}} value={text} onChange={this.handleTextChange} /></div>
+        <div style={{marginBottom: 8}}>Deutschkenntnis:</div>
         <div style={{marginBottom: 8}}><ProficiencyRating value={String(rating)} onChange={this.handleRatingChange} /></div>
         <div><RaisedButton label='Speichern' primary onClick={this.handleSend} /></div>
       </form>
