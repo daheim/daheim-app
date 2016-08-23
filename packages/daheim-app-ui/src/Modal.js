@@ -8,7 +8,8 @@ export default class DhmModal extends Component {
   static propTypes = {
     closeIcon: PropTypes.bool,
     onRequestClose: PropTypes.func,
-    children: PropTypes.node
+    children: PropTypes.node,
+    style: PropTypes.object
   }
 
   static defaultProps = {
@@ -20,13 +21,14 @@ export default class DhmModal extends Component {
   }
 
   render () {
-    const {children, closeIcon, ...otherProps} = this.props
+    const {children, closeIcon, style, ...otherProps} = this.props
+    const {inner, otherStyle} = style || {}
 
     return (
-      <Modal overlayClassName={modalCss.overlay} className={modalCss.container} {...otherProps}>
-        <div className={modalCss.inner}>
+      <Modal overlayClassName={modalCss.overlay} className={modalCss.container} style={otherStyle} {...otherProps}>
+        <div className={modalCss.inner} style={inner}>
           {closeIcon
-            ? <div className={modalCss.closeIconContainer}><CloseIcon className={modalCss.closeIcon} color='gray' onClick={this.handleCloseIconClick} /></div>
+            ? <div className={modalCss.closeIconContainer} onClick={this.handleCloseIconClick}><CloseIcon color='gray' /></div>
             : null}
           {children}
         </div>
