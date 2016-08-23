@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "check": "../../node_modules/.bin/eslint .",
-    "build": "../../node_modules/.bin/babel src/ -d lib/ --copy-files",
+    "build": "../../node_modules/.bin/babel src/ -d lib/ --copy-files --source-maps true",
     "clean": "rm -rf lib"
   },
   "license": "MIT",
