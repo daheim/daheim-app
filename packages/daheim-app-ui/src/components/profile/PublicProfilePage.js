@@ -38,7 +38,12 @@ class ProfilePage extends Component {
   static propTypes = {
     user: PropTypes.object,
     userMeta: PropTypes.object,
-    me: PropTypes.bool
+    me: PropTypes.bool,
+    reviewEditable: PropTypes.bool.isRequired
+  }
+
+  static defaultProps = {
+    reviewEditable: true
   }
 
   state = {
@@ -54,7 +59,7 @@ class ProfilePage extends Component {
   }
 
   render () {
-    const {user, userMeta, me} = this.props
+    const {user, userMeta, me, reviewEditable} = this.props
 
     const userNotFound = userMeta && userMeta.error && userMeta.error.code === 'user_not_found'
     if (userNotFound) {
@@ -67,7 +72,7 @@ class ProfilePage extends Component {
 
     const {id, name, picture, role, introduction, inGermanySince, userSince, germanLevel, topics, languages, myReview, receivedReviews} = user
 
-    const editorOpen = !me && (!myReview || this.state.editorOpen)
+    const editorOpen = !me && reviewEditable && (!myReview || this.state.editorOpen)
     const userSinceText = moment(userSince).format('LL')
     const showStudentFields = role !== 'teacher'
 
@@ -98,7 +103,7 @@ class ProfilePage extends Component {
 
         <div style={{minHeight: 200}}>
 
-          {me ? null : (
+          {(myReview || editorOpen) ? (
             <div className={css.section}>
               <div className={css.sectionTitle}>Mein Feedback</div>
               <div className={css.sectionContent}>
@@ -110,10 +115,10 @@ class ProfilePage extends Component {
                   </div>
                 ) : undefined}
 
-                {myReview ? <Review key={myReview.from} {...this.props} mine review={myReview} onRequestEdit={this.handleOpenEditor} /> : undefined}
+                {myReview ? <Review key={myReview.from} {...this.props} reviewEditable={reviewEditable} review={myReview} onRequestEdit={this.handleOpenEditor} /> : undefined}
               </div>
             </div>
-          )}
+          ) : null}
 
           <div className={css.section}>
             <div className={css.sectionTitle}>Personendaten</div>

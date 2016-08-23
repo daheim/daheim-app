@@ -13,7 +13,7 @@ class Review extends Component {
     user: PropTypes.object,
     userMeta: PropTypes.object,
     review: PropTypes.object.isRequired,
-    mine: PropTypes.bool,
+    reviewEditable: PropTypes.bool,
     loadUser: PropTypes.func.isRequired,
     onRequestEdit: PropTypes.func
   }
@@ -32,7 +32,7 @@ class Review extends Component {
   }
 
   render () {
-    const {review, user = {}, mine} = this.props
+    const {review, user = {}, reviewEditable} = this.props
     const {from, rating, text, date} = review
     const {name = 'BenutzerIn', picture} = user
 
@@ -46,7 +46,7 @@ class Review extends Component {
             <div style={{marginLeft: 8}}>
               <Link to={`/users/${from}`}>{name}</Link>
               <span style={{fontSize: 10, color: '#aaa'}}> {dateText}</span>
-              {mine ? <span> <a style={{fontSize: 10}} href='#' onClick={this.handleEditClick}>bearbeiten</a></span> : undefined}
+              {!reviewEditable ? null : <span> <a style={{fontSize: 10}} href='#' onClick={this.handleEditClick}>bearbeiten</a></span>}
             </div>
           </div>
         </div>

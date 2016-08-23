@@ -64,12 +64,12 @@ class InvitedToLessonDialog extends Component {
     ]
 
     return (
-      <Modal isOpen autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions}>
+      <Modal isOpen autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions} style={{inner: {minWidth: '60%'}}}>
         <div className='invitedToLessonDialog' style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
           {actions}
         </div>
         <h2>Neues Gespräch</h2>
-        <ProfilePage params={{userId: this.props.lesson.teacherId}} />
+        <ProfilePage params={{userId: this.props.lesson.teacherId}} reviewEditable={false} />
       </Modal>
     )
   }

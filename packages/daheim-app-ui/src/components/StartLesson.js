@@ -102,7 +102,7 @@ class StartLesson extends Component {
     ]
 
     return (
-      <Modal isOpen autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions}>
+      <Modal isOpen autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions} style={{inner: {minWidth: '60%'}}}>
         <div className='startLessonDialog' style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
           {actions}
         </div>
@@ -119,7 +119,7 @@ class StartLesson extends Component {
           </div>
         ) : undefined}
 
-        <ProfilePage params={{userId: user.id}} />
+        <ProfilePage params={{userId: user.id}} reviewEditable={false} />
       </Modal>
     )
   }
