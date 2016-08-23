@@ -81,7 +81,7 @@ class OnlineRegistry {
     if (this.ready[socket.userId]) return // already ready
 
     slack.sendText(`${socket.user.username} is ready for a Gespräch`)
-    await this.notifyTeachers(socket)
+    this.notifyTeachers(socket)
 
     const {role} = socket.user.profile
     if (role !== 'student') throw sioError('onlyStudents')
