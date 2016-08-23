@@ -79,10 +79,10 @@ class ProfilePage extends Component {
     const topicsArr = Object.keys(topics)
     const languagesArr = Object.keys(languages)
 
-    const otherReviews = receivedReviews.slice(0, 5).map((review) => {
-      if (myReview && review.from === myReview.from) return null
-      return <Review key={review.from} {...this.props} review={review} />
-    })
+    const otherReviews = receivedReviews
+      .filter((review) => !(myReview && review.from === myReview.from))
+      .slice(0, 5)
+      .map((review) => <Review key={review.from} {...this.props} review={review} />)
 
     return (
       <div key={id} style={{margin: 16}}>
