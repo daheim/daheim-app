@@ -1,11 +1,11 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
 import {leave, join} from '../actions/live'
+import ClosedLesson from '../components/lesson/ClosedLesson'
 
 class ResizedVideo extends Component {
 
@@ -119,24 +119,6 @@ class LessionPage extends React.Component {
   }
 }
 
-class ClosedLesson extends Component {
-  static propTypes = {
-    closeReason: PropTypes.string.isRequired
-  }
-
-  render () {
-    const {closeReason} = this.props
-
-    return (
-      <div style={{margin: 16}}>
-        <h1>Das Gespräch wurde beendet</h1>
-        <p><Link to='/'>Hier gelangst du zum Videoraum</Link></p>
-        <p style={{color: 'rgba(0, 0, 0, 0)'}}>Reason: {closeReason}</p>
-      </div>
-    )
-  }
-}
-
 class NotParticipating extends Component {
 
   static propTypes = {
@@ -193,6 +175,14 @@ class LessonOrLoading extends Component {
     lesson: PropTypes.object
   }
 
+  state = {
+    lastLesson: this.props.lesson
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.lesson) this.setState({lastLesson: nextProps.lesson})
+  }
+
   render () {
     const {lesson} = this.props
     if (lesson) {
@@ -200,7 +190,7 @@ class LessonOrLoading extends Component {
       else if (!lesson.active) return <NotActive {...this.props} />
       else return <LessionPage {...this.props} />
     } else {
-      return <ClosedLesson {...this.props} />
+      return <ClosedLesson {...this.props} lesson={this.state.lastLesson} />
     }
   }
 }
