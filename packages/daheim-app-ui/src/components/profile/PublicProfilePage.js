@@ -81,7 +81,7 @@ class ProfilePage extends Component {
 
     const otherReviews = receivedReviews
       .filter((review) => !(myReview && review.from === myReview.from))
-      .slice(0, 5)
+      .slice(0, 3)
       .map((review) => <Review key={review.from} {...this.props} review={review} />)
 
     return (
