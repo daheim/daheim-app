@@ -155,7 +155,7 @@ class OnlineRegistry {
     let modified = false
     for (let x = 0; x < results.length; x++) {
       if (results[x] === 'remove') {
-        req.user.notifications.endpoints.splice(x, 1)
+        teacher.notifications.endpoints.splice(x, 1)
         results.splice(x, 1)
         x--
         modified = true
