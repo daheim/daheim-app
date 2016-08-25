@@ -18,10 +18,13 @@ import api from './api'
 //import {User as ModelUser} from './model'
 import actions from './actions'
 import reporter from './reporter'
+import configurePassport from './auth'
 
 import createDebug from 'debug'
 let debug = createDebug('dhm:app')
 debug('starting server')
+
+configurePassport({secret: process.env.SECRET})
 
 var app = express()
 app.use(reporter.requestHandler)

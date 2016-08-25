@@ -1,22 +1,11 @@
 import {Router} from 'express'
 import passport from 'passport'
-import LocalStrategy from 'passport-local'
 import uuid from 'node-uuid'
 
 import sendgrid from '../sendgrid'
 import {User} from '../model'
 import tokenHandler from '../token_handler'
 import encounterApi from './encounter'
-
-passport.use(new LocalStrategy(async (username, password, done) => {
-  try {
-    let user = await User.getAuthenticated(username, password)
-    done(null, user)
-  } catch (err) {
-    if (err.name === 'AuthError') return done(null, null)
-    return done(err)
-  }
-}))
 
 export class Api {
 

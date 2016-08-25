@@ -15,34 +15,7 @@ export class TokenHandler {
   constructor ({secret, passport}) {
     if (!secret) { throw new Error('secret must be defined') }
     SECRETS[this] = secret
-
-    if (passport) {
-      this[$passport] = passport
-      passport.use('jwt', new JwtStrategy({
-        secretOrKey: SECRETS[this],
-        jwtFromRequest: (req) => req.cookies.sid
-      }, async function (jwt, done) {
-        try {
-          let user = await User.findById(jwt.sub)
-          done(null, user)
-        } catch (err) {
-          done(err)
-        }
-      }))
-
-      passport.use('reset', new JwtStrategy({
-        secretOrKey: SECRETS[this],
-        jwtFromRequest: (req) => req.body.token,
-        audience: 'reset',
-      }, async function (jwt, done) {
-        try {
-          let user = await User.findById(jwt.sub)
-          done(null, user || false)
-        } catch (err) {
-          done(err)
-        }
-      }))
-    }
+    this[$passport] = passport
   }
 
   get auth () { return this[$passport].authenticate('jwt', {session: false}) }
