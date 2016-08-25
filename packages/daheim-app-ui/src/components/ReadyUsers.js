@@ -39,7 +39,7 @@ class ReadyUser extends Component {
   }
 }
 
-export default class ReadyUsers extends Component {
+class ReadyUsers extends Component {
 
   static propTypes = {
     readyUsers: PropTypes.array.isRequired,

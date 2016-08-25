@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 
 import {switchRole} from '../actions/profile'
 
-export default class RoleSwitch extends React.Component {
+class RoleSwitch extends React.Component {
 
   static propTypes = {
     switchRole: PropTypes.func.isRequired,
