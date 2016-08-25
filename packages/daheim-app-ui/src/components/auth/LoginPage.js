@@ -44,8 +44,10 @@ class LoginFormRaw extends Component {
       this.setState({error: null})
     } catch (err) {
       success = false
+      const info = err.info || {}
       if (err.code === 'unauthorized') {
-        this.setState({error: this.props.intl.formatMessage({id: 'loginPage.invalidPassword'})})
+        if (info.userNotFound) this.setState({error: this.props.intl.formatMessage({id: 'loginPage.userNotFound'})})
+        else this.setState({error: this.props.intl.formatMessage({id: 'loginPage.invalidPassword'})})
       } else {
         this.setState({error: err.message})
       }

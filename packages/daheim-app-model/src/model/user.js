@@ -13,7 +13,10 @@ const MAX_LOGIN_ATTEMPTS = 10
 const LOCK_TIME = 3 * 60 * 1000
 
 export class AuthError extends BaseError {
-  constructor(m) { super(m) }
+  constructor(m, info) {
+    super(m)
+    this.info = info
+  }
 }
 
 function aToO(a) {
@@ -170,16 +173,16 @@ UserSchema.methods.incLoginAttempts = function() {
 UserSchema.statics.getAuthenticated = async function(username, password) {
   username = username.toLowerCase()
   let user = await this.findOne({username})
-  if (!user) { throw new AuthError('user not found') }
+  if (!user) { throw new AuthError('user not found', {userNotFound: true}) }
 
   if (user.isLocked) {
     await user.incLoginAttempts()
-    throw new AuthError('account locked')
+    throw new AuthError('account locked', {accountLocked: true, lockUntil: user.lockUntil})
   }
 
   if (!await user.comparePassword(password)) {
     await user.incLoginAttempts()
-    throw new AuthError('invalid password')
+    throw new AuthError('invalid password', {invalidPassword: true})
   }
 
   if (user.loginAttempts || user.lockUntil) {

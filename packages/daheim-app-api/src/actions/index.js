@@ -43,7 +43,20 @@ function def (action, cb, {auth = true, middlewares = []} = {}) {
 registerHelpdesk(def)
 registerNotifications(def)
 
-def('/auth.login', async (req, res) => {
+def('/auth.login', async (req, res, next) => {
+  const {user, info} = await new Promise((resolve, reject) => {
+    passport.authenticate('local', {session: false}, (err, user, info) => {
+      if (err) return reject(err)
+      resolve({user, info})
+    })(req, res, next)
+  })
+  req.user = user
+
+  if (!user) {
+    res.status(401)
+    return info || {}
+  }
+
   slack.sendText(`${req.user.username} logged in`)
 
   const accessToken = tokenHandler.issueForUser(req.user.id)
@@ -53,7 +66,6 @@ def('/auth.login', async (req, res) => {
   return {profile: req.user}
 }, {
   auth: false,
-  middlewares: [passport.authenticate('local', {session: false})],
   checkCsrf: false
 })
 

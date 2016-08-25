@@ -2,9 +2,10 @@ import ExtendableError from 'es6-error'
 import cookie from 'cookie'
 
 export class ApiError extends ExtendableError {
-  constructor (message, code) {
+  constructor (message, code, info) {
     super(`[${code}] ${message}`)
     this.code = code
+    this.info = info
   }
 
   async getCode () {
@@ -56,11 +57,17 @@ class ApiClient {
       opt.credentials = 'same-origin'
       const response = await fetch('/api' + url, opt)
       if (!response.ok) {
-        if (response.status === 401) throw new ApiError('Unauthorized', 'unauthorized')
-        const json = await response.json()
+        let json
+        try {
+          json = await response.json()
+        } catch (err) {
+          console.error('Cannot decode JSON error response:', response.text())
+        }
+
+        if (response.status === 401) throw new ApiError('Unauthorized', 'unauthorized', json)
         const code = json.code || 'network'
         const message = json.error || 'Du hast derzeit keine stabile Internetverbindung. Bitte versuche es später noch einmal.'
-        throw new ApiError(message, code)
+        throw new ApiError(message, code, json)
       }
       return await response.json()
     } catch (err) {
