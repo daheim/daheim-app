@@ -13,7 +13,7 @@
     "mongoose": "^4.4.3",
     "bunyan": "^1.4.0",
     "express-bunyan-logger": "^1.1.1",
-    "le_node": "^1.0.14",
+    "le_node": "^1.6.2",
     "raven": "^0.11.0"
   }
 }

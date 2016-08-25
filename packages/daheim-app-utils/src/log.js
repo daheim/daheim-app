@@ -2,7 +2,6 @@ var bunyan = require('bunyan')
 var bunyanLogger = require('express-bunyan-logger')
 var uuid = require('node-uuid')
 var LogentriesLogger = require('le_node')
-var LogentriesDefaults = require('le_node/lib/node_modules/defaults')
 var util = require('util')
 var stream = require('stream')
 
@@ -15,8 +14,7 @@ function BunyanStream(opt) {
   opt = opt || {}
 
   stream.Writable.call(this, {
-    objectMode: true,
-    highWaterMark: opt.bufferSize || LogentriesDefaults.bufferSize,
+    objectMode: true
   })
 
   this.logger = new LogentriesLogger(opt)
