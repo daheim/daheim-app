@@ -57,11 +57,13 @@ class ApiClient {
       opt.credentials = 'same-origin'
       const response = await fetch('/api' + url, opt)
       if (!response.ok) {
+        let text
         let json
         try {
-          json = await response.json()
+          text = await response.text()
+          json = JSON.parse(text)
         } catch (err) {
-          console.error('Cannot decode JSON error response:', response.text())
+          console.error('Cannot decode JSON error response:', text, err)
         }
 
         if (response.status === 401) throw new ApiError('Unauthorized', 'unauthorized', json)
