@@ -31,7 +31,8 @@ RUN TS=$(git show -s --format=%ct HEAD) && \
 
 RUN sh -c "sinopia &" && \
     node_modules/.bin/lerna bootstrap
-RUN node_modules/.bin/lerna run build
+RUN node_modules/.bin/lerna publish -c --force-publish='*' --skip-git --skip-npm --yes --repo-version=$(cat REVISION) && \
+    node_modules/.bin/lerna run build
 
 RUN sh -c "sinopia &" && \
     node_modules/.bin/lerna publish -c --force-publish='*' --skip-git --yes --repo-version=$(cat REVISION)
