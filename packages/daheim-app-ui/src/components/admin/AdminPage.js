@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import RoleSwitch from '../RoleSwitch'
 import {subscribeToWebPush, unsubscribeFromWebPush} from '../../middlewares/service_worker'
 import {testNotification, testNotificationBroadcast, registerNotificationEndpoint} from '../../actions/notifications'
+import version from '../../version'
 
 class AdminPage extends Component {
 
@@ -12,6 +13,10 @@ class AdminPage extends Component {
     unsubscribeFromWebPush: PropTypes.func.isRequired,
     testNotification: PropTypes.func.isRequired,
     registered: PropTypes.bool.isRequired
+  }
+
+  componentDidMount () {
+    console.log('[version info]', version)
   }
 
   subscribe = async () => {
@@ -70,6 +75,10 @@ class AdminPage extends Component {
   render () {
     return (
       <div style={{margin: 16}}>
+        <h2>Version</h2>
+        <div><b>Version:</b> {version.version}</div>
+        <div><b>Environment:</b> {version.environment}</div>
+
         <h2>Change User Role</h2>
         <div><RoleSwitch /></div>
 

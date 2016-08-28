@@ -1,4 +1,5 @@
 import Raven from 'raven-js'
+import version from './version'
 
 class Reporter {
 
@@ -10,7 +11,7 @@ class Reporter {
 
     if (RAVEN_DSN) {
       Raven
-        .config(RAVEN_DSN)
+        .config(RAVEN_DSN, {release: version.version})
         .install()
       this.useRaven = true
     }

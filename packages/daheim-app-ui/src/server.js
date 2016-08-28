@@ -15,6 +15,7 @@ import bowser from 'bowser'
 
 import universal from './universal'
 import Html from './html'
+import version from './version'
 
 process.on('unhandledRejection', function (reason, promise) {
   console.error('unhandled rejection', reason)
@@ -55,6 +56,8 @@ app.get('/sw.js', (req, res, next) => {
     if (err) next(err)
   })
 })
+
+app.get('/version', (req, res) => res.send(version))
 
 app.use('/dist', Express.static(path.join(__dirname, '..', 'build'), {maxAge: 86400000}))
 app.use(Express.static(path.join(__dirname, '..', 'static'), {maxAge: 86400000}))
@@ -132,6 +135,6 @@ const listener = server.listen(process.env.PORT || 8080, (err) => {
   const protocol = process.env.USE_HTTPS === '1' ? 'https' : 'http'
   const address = listener.address().family === 'IPv6' ? `[${listener.address().address}]` : listener.address().address
   console.info('----\n==> ✅  %s is running, talking to API server on %s.', 'Daheim App UI', targetUrl)
+  console.info('==> 🌲  Version: %s', version.version)
   console.info('==> 💻  Open %s://%s:%s in a browser to view the app.', protocol, address, listener.address().port)
 })
-
