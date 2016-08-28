@@ -35,6 +35,7 @@
   "userMenu.frontPage": "New Conversation",
   "userMenu.myProfile": "My Profile",
   "userMenu.settings": "Settings",
+  "userMenu.help": "Help",
   "userMenu.signOut": "Sign out",
 
   "backToConversations": "back to conversations",
@@ -80,5 +81,15 @@
   "reportUser.offendingUser": "Reported user: {name}",
   "reportUser.hint": "Please describe your experience here as detailed as possible",
   "reportUser.cancel": "Cancel",
-  "reportUser.submit": "Send Report"
+  "reportUser.submit": "Send Report",
+
+  "help.sent": "Thank you for your feedback. The Daheim Team will contact you soon.",
+  "help.title": "Help",
+  "help.goToHelpArea": "If you have questions about Daheim, you can get more information under the links below:",
+  "help.faq": "Frequently Asked Questions",
+  "help.manual": "International User Guide",
+  "help.houseRules": "Community Guidelines",
+  "help.text": "If you have any further questions, improvement ideas or just want to contact the Daheim Team, please use the form below.",
+  "help.hint": "Please describe your issue here",
+  "help.submit": "Contact Daheim Team"
 }

@@ -29,6 +29,7 @@
   "userMenu.frontPage":"Meine Gespräche",
   "userMenu.myProfile":"Mein Profil",
   "userMenu.settings":"Einstellungen",
+  "userMenu.help":"Hilfebereich",
   "userMenu.signOut":"Abmelden",
   "backToConversations":"zu den Gesprächen",
   "profile.edit":"Profil bearbeiten",
@@ -70,5 +71,14 @@
   "reportUser.offendingUser":"Gemeldeter Mitbewohner: {name}",
   "reportUser.hint":"Damit wir Dir bestmöglich helfen können, beschreibe bitte so genau wie möglich, was passiert ist. ",
   "reportUser.cancel":"Abbrechen",
-  "reportUser.submit":"Melden"
+  "reportUser.submit":"Melden",
+  "help.sent":"Vielen Dank für Dein Feedback! Wir melden uns so schnell wie möglich. \nHerzliche Grüße, Dein 'Daheim'-Team.",
+  "help.title":"Hilfebereich",
+  "help.goToHelpArea":"Wenn du Fragen zu Daheim hast, es gibt weitere Informationen unter den folgenden Links:",
+  "help.faq":"Häufige Fragen",
+  "help.manual":"Internationale Bedienungsanleitung",
+  "help.houseRules":"Hausregeln",
+  "help.text":"If you have any further questions, improvement ideas or just want to contact the Daheim Team, please use the form below.",
+  "help.hint":"Bitte beschreib dein Problem hier",
+  "help.submit":"'Daheim'-Team Kontaktieren"
 }

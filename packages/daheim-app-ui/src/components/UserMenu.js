@@ -28,6 +28,7 @@ class UserDropdown extends React.Component {
         <Link to='/' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.frontPage' /></Link>
         <Link to={`/users/${user.id}`} className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.myProfile' /></Link>
         <Link to='/password' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.settings' /></Link>
+        <Link to='/help' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.help' /></Link>
         <Link to='/auth/logout' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.signOut' /></Link>
       </div>
     )
