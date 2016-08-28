@@ -1,4 +1,5 @@
-console.log('start', self)
+const config = {{CONFIG}}
+console.log('start', self, config)
 
 self.addEventListener('install', function (event) {
   self.skipWaiting()
@@ -23,7 +24,7 @@ self.addEventListener('notificationclick', function (event) {
       var client = clients[i]
       if (client.focus) return client.focus()
     }
-    if (self.clients.openWindow) return self.clients.openWindow('https://app.daheimapp.de')
+    if (self.clients.openWindow) return self.clients.openWindow(location.origin)
   })
   event.waitUntil(prom)
 })

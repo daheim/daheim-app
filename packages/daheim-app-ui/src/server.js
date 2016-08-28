@@ -16,6 +16,7 @@ import bowser from 'bowser'
 import universal from './universal'
 import Html from './html'
 import version from './version'
+import sendServiceWorker from './service_worker'
 
 process.on('unhandledRejection', function (reason, promise) {
   console.error('unhandled rejection', reason)
@@ -51,11 +52,7 @@ const proxy = httpProxy.createProxyServer({ target: targetUrl, secure: process.e
 app.use(cookieParser())
 
 // Sending Service Worker script without caching headers
-app.get('/sw.js', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../static/sw.js'), {}, (err) => {
-    if (err) next(err)
-  })
-})
+app.get('/sw.js', sendServiceWorker)
 
 app.get('/version', (req, res) => res.send(version))
 
