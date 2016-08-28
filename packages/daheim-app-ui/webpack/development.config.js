@@ -36,6 +36,9 @@ var common = {
   progress: true,
   devtool: (ENV === 'development' ? 'eval' : 'source-map'),
   module: {
+    preLoaders: [
+      {test: /package\.json$/, loader: '../webpack/package_json_loader'},
+    ],
     loaders: [
       { test: /\.json$/, loader: 'json-loader' },
       {
