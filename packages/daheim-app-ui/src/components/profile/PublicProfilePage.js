@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import Helmet from 'react-helmet'
 import moment from 'moment'
 import {Link} from 'react-router'
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
 import loader from '../../loader'
 import {loadUser, sendReview} from '../../actions/users'
@@ -15,31 +15,14 @@ import SendReview from './SendReview'
 
 import css from './ProfilePage.style'
 
-function roleToTitle (role) {
-  switch (role) {
-    case 'student': return 'Daheim SchülerIn'
-    case 'teacher': return 'Daheim SprachcoachIn'
-    default: return 'Daheim BenutzerIn'
-  }
-}
-
-function seitToText (seit) {
-  switch (seit) {
-    case '2017': return '2017'
-    case '2016': return '2016'
-    case '2015': return '2015'
-    case '2014': return '2014'
-    default: return 'Früher als 2014'
-  }
-}
-
 class ProfilePage extends Component {
 
   static propTypes = {
     user: PropTypes.object,
     userMeta: PropTypes.object,
     me: PropTypes.bool,
-    reviewEditable: PropTypes.bool.isRequired
+    reviewEditable: PropTypes.bool.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -58,16 +41,36 @@ class ProfilePage extends Component {
     this.setState({editorOpen: true})
   }
 
+  roleToTitle (role) {
+    const {intl} = this.props
+    switch (role) {
+      case 'student': return intl.formatMessage({id: 'profile.student'})
+      case 'teacher': return intl.formatMessage({id: 'profile.coach'})
+      default: return intl.formatMessage({id: 'profile.user'})
+    }
+  }
+
+  seitToText (seit) {
+    const {intl} = this.props
+    switch (seit) {
+      case '2017': return '2017'
+      case '2016': return '2016'
+      case '2015': return '2015'
+      case '2014': return '2014'
+      default: return intl.formatMessage({id: 'profile.earlierThan2014'})
+    }
+  }
+
   render () {
     const {user, userMeta, me, reviewEditable} = this.props
 
     const userNotFound = userMeta && userMeta.error && userMeta.error.code === 'user_not_found'
     if (userNotFound) {
-      return <div style={{margin: 16}}>Benuzter Konto abgeschlossen</div>
+      return <div style={{margin: 16}}><FormattedMessage id='profile.accountClosed' /></div>
     }
 
     if (!user) {
-      return <div style={{margin: 16}}>Wird geladen...</div>
+      return <div style={{margin: 16}}><FormattedMessage id='profile.loading' /></div>
     }
 
     const {id, name, picture, role, introduction, inGermanySince, userSince, germanLevel, topics, languages, myReview, receivedReviews} = user
@@ -97,7 +100,7 @@ class ProfilePage extends Component {
               {me ? <Link to='/profile' className={css.editButton}><FormattedMessage id='profile.edit' /></Link> : null}
               {!me ? <Link to={`/users/${id}/report`} className={css.editButton}><FormattedMessage id='profile.reportUser' /></Link> : null}
             </div>
-            <div style={{fontSize: 14, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>{roleToTitle(role)}</div>
+            <div style={{fontSize: 14, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>{this.roleToTitle(role)}</div>
           </div>
         </div>
 
@@ -105,7 +108,7 @@ class ProfilePage extends Component {
 
           {(myReview || editorOpen) ? (
             <div className={css.section}>
-              <div className={css.sectionTitle}>Mein Feedback</div>
+              <div className={css.sectionTitle}><FormattedMessage id='profile.myFeedback' /></div>
               <div className={css.sectionContent}>
                 {editorOpen ? (
                   <div className={css.field}>
@@ -121,24 +124,24 @@ class ProfilePage extends Component {
           ) : null}
 
           <div className={css.section}>
-            <div className={css.sectionTitle}>Personendaten</div>
+            <div className={css.sectionTitle}><FormattedMessage id='profile.personalDetails' /></div>
             <div className={css.sectionContent}>
               <div className={css.field}>
-                <div className={css.fieldTitle}>Ein Paar Worte über mich</div>
+                <div className={css.fieldTitle}><FormattedMessage id='profile.introduction' values={{name}} /></div>
                 <div className={css.fieldText}>
-                  {introduction || <i>Es gibt noch keine Informationen.</i>}
+                  {introduction || <i><FormattedMessage id='profile.noIntroduction' /></i>}
                 </div>
               </div>
               {showStudentFields ? (
                 <div className={css.field}>
-                  <div className={css.fieldTitle}>Ich wohne in Deutschland seit</div>
-                  <div className={css.fieldText}>{seitToText(inGermanySince)}</div>
+                  <div className={css.fieldTitle}><FormattedMessage id='profile.inGermanySince' values={{name}} /></div>
+                  <div className={css.fieldText}>{this.seitToText(inGermanySince)}</div>
                 </div>
               ) : null}
               <div className={css.field}>
-                <div className={css.fieldTitle}>Ich spreche gern über...</div>
+                <div className={css.fieldTitle}><FormattedMessage id='profile.topics' values={{name}} /></div>
                 <div className={css.fieldText}>
-                  {topicsArr.length === 0 ? <i>Noch keine Themen</i> : (
+                  {topicsArr.length === 0 ? <i><FormattedMessage id='profile.noTopics' /></i> : (
                     topicsArr.map((topic) => <span key={topic} style={{border: 'solid 1px black', padding: 3, margin: 4, display: 'inline-block'}}>{topic}</span>)
                   )}
                 </div>
@@ -147,38 +150,34 @@ class ProfilePage extends Component {
           </div>
 
           <div className={css.section}>
-            <div className={css.sectionTitle}>Erfahrung</div>
+            <div className={css.sectionTitle}><FormattedMessage id='profile.experience' /></div>
             <div className={css.sectionContent}>
               {showStudentFields ? (
                 <div className={css.field}>
-                  <div className={css.fieldTitle}>Deutschkenntnis</div>
+                  <div className={css.fieldTitle}><FormattedMessage id='profile.germanLevel' /></div>
                   <div className={css.fieldText}><ProficiencyRating value={'' + germanLevel} readOnly /></div>
                 </div>
               ) : null}
               <div className={css.field}>
-                <div className={css.fieldTitle}>Ich spreche auch...</div>
+                <div className={css.fieldTitle}><FormattedMessage id='profile.languages' values={{name}} /></div>
                 <div className={css.fieldText}>
-                  {languagesArr.length === 0 ? <i>Keine andere Sprachen</i> : (
+                  {languagesArr.length === 0 ? <i><FormattedMessage id='profile.noLanguages' /></i> : (
                     languagesArr.map((language) => <span key={language} style={{border: 'solid 1px black', padding: 3, margin: 4, display: 'inline-block'}}>{language}</span>)
                   )}
                 </div>
               </div>
               <div className={css.field}>
-                <div className={css.fieldTitle}>Ich nutze Daheim seit</div>
+                <div className={css.fieldTitle}><FormattedMessage id='profile.userSince' values={{name}} /></div>
                 <div className={css.fieldText}>{userSinceText}</div>
-              </div>
-              <div className={css.field}>
-                <div className={css.fieldTitle}>Bisherige Gespräche auf Daheim</div>
-                <div className={css.fieldText}>4 Gespräche, 1 Stunde 47 Minuten</div>
               </div>
             </div>
           </div>
 
           <div className={css.section}>
-            <div className={css.sectionTitle}>Feedback</div>
+            <div className={css.sectionTitle}><FormattedMessage id='profile.feedback' /></div>
             <div className={css.sectionContent}>
               <div className={css.fieldText}>
-                {otherReviews.length ? otherReviews : <i>Es gibt noch keine Reviews</i>}
+                {otherReviews.length ? otherReviews : <i><FormattedMessage id='profile.noFeedback' /></i>}
               </div>
             </div>
           </div>
@@ -210,7 +209,7 @@ const loaded = loader({
   }
 })(ProfilePage)
 
-export default connect((state, props) => {
+export default injectIntl(connect((state, props) => {
   let {userId} = props.params
   userId = userId.toLowerCase()
 
@@ -219,4 +218,4 @@ export default connect((state, props) => {
   const {profile: {profile}} = state
   const me = profile.id === userId
   return {me, user, userMeta, userId}
-}, {push, loadUser, sendReview})(loaded)
+}, {push, loadUser, sendReview})(loaded))
