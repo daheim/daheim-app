@@ -9,8 +9,8 @@ const PING_THRESHOLD = 2.5 * 60 * 1000
 
 export class EncounterApi {
 
-  constructor({tokenHandler}) {
-    this.router = Router()
+  constructor ({tokenHandler}) {
+    this.router = new Router()
     this.router.use(tokenHandler.auth)
     this.router.get('/', this.handler(this.getEncounters))
     this.router.get('/:encounterId', this.handler(this.getEncounter))
@@ -20,7 +20,7 @@ export class EncounterApi {
       if (err instanceof MongooseError) {
         res.status(400).send({
           error: 'validation',
-          message: err.toString(),
+          message: err.toString()
         })
       } else {
         next(err)
@@ -28,7 +28,7 @@ export class EncounterApi {
     })
   }
 
-  async getEncounters({user}) {
+  async getEncounters ({user}) {
     let encounters = await Encounter.find({'participants.userId': user.id}).sort('-date')
 
     let userMap = {}
@@ -59,7 +59,7 @@ export class EncounterApi {
         length,
         myReview: me.review,
         partnerReview: partner.review,
-        partnerId: partner.userId,
+        partnerId: partner.userId
       }
     })
 
@@ -74,10 +74,10 @@ export class EncounterApi {
     return result
   }
 
-  async getEncounter({user, params: {encounterId}}) {
+  async getEncounter ({user, params: {encounterId}}) {
     let encounter = await Encounter.findOne({
       _id: encounterId,
-      'participants.userId': user.id,
+      'participants.userId': user.id
     })
     if (!encounter) { throw new Error('not found') }
 
@@ -93,7 +93,7 @@ export class EncounterApi {
 
     let [myRating, partnerRating] = await Promise.all([
       UserRating.findOne({from: me.userId, userId: partner.userId}).select('overall language -_id'),
-      UserRating.findOne({from: partner.userId, userId: me.userId}).select('overall language -_id'),
+      UserRating.findOne({from: partner.userId, userId: me.userId}).select('overall language -_id')
     ])
 
     let now = Date.now()
@@ -112,14 +112,14 @@ export class EncounterApi {
       partnerId: partner.userId,
       partnerName: partnerUser ? partnerUser.profile.name : undefined,
       myRating,
-      partnerRating,
+      partnerRating
     }
   }
 
-  async saveEncounter({user, body, params: {encounterId}}) {
+  async saveEncounter ({user, body, params: {encounterId}}) {
     let encounter = await Encounter.findOne({
       _id: encounterId,
-      'participants.userId': user.id,
+      'participants.userId': user.id
     })
     if (!encounter) { throw new Error('not found') }
 
@@ -150,7 +150,7 @@ export class EncounterApi {
     return await this.getEncounter({user, params: {encounterId}})
   }
 
-  handler(fn) {
+  handler (fn) {
     let self = this
     return async function(reqIgnored, res, next) {
       try {

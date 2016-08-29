@@ -1,4 +1,3 @@
-import axios from 'axios'
 import restError from '../restError'
 import log from '../log'
 import jira from '../jira'
@@ -22,7 +21,6 @@ async function createTicketAsync (opt) {
 }
 
 export default (def) => {
-
   def('/helpdesk.createTicket', async (req, res) => {
     if (!jira || !process.env.JIRA_SERVICE_DESK_ID || !process.env.JIRA_REQUEST_TYPE_ID) throw new Error('JIRA integration disabled')
 
@@ -60,5 +58,4 @@ export default (def) => {
     })
     return {}
   })
-
 }

@@ -22,12 +22,12 @@ const $tokenHandler = Symbol('tokenHandler')
 
 export default class User {
 
-  constructor({userStore, tokenHandler}) {
+  constructor ({userStore, tokenHandler}) {
     this[$userStore] = userStore
     this[$tokenHandler] = tokenHandler
     this.tokenHandler = tokenHandler
 
-    let router = this[$router] = express.Router()
+    let router = this[$router] = new express.Router()
 
     router.post('/register', bind(this, this[$postRegister]))
     router.post('/loginLink', bind(this, this[$postLoginLink]))
@@ -37,9 +37,9 @@ export default class User {
     router.get('/profile', tokenHandler.auth, bind(this, this[$getProfile]))
   }
 
-  get router() { return this[$router] }
+  get router () { return this[$router] }
 
-  async [$postRegister](req, res, next) {
+  async [$postRegister] (req, res, next) {
     try {
       let user = await this[$userStore].loadUserWithEmail(req.body.email)
       if (user) {
@@ -53,7 +53,7 @@ export default class User {
     }
   }
 
-  async [$getProfile](req, res, next) {
+  async [$getProfile] (req, res, next) {
     try {
       res.send(await this[$userStore].getProfile(req.user.id))
     } catch (err) {
@@ -61,7 +61,7 @@ export default class User {
     }
   }
 
-  async [$postProfile](req, res, next) {
+  async [$postProfile] (req, res, next) {
     try {
       try {
         res.send(await this[$userStore].updateProfile(req.user.id, req.body))
@@ -73,7 +73,7 @@ export default class User {
     }
   }
 
-  async [$postLoginLink](req, res, next) {
+  async [$postLoginLink] (req, res, next) {
     try {
       let user = await this[$userStore].loadUserWithEmail(req.body.email)
       if (!user) {
@@ -88,7 +88,7 @@ export default class User {
         from: 'daheim@mesellyounot.com',
         fromname: 'Daheim',
         subject: 'Daheim Login',
-        html: `Please click <a href="${process.env.URL}/#!/login/token/${token}">here to log in</a>.`,
+        html: `Please click <a href="${process.env.URL}/#!/login/token/${token}">here to log in</a>.`
       })
       await sendgrid.sendAsync(email)
 
@@ -98,7 +98,7 @@ export default class User {
     }
   }
 
-  async [$postLogin](req, res, next) {
+  async [$postLogin] (req, res, next) {
     try {
       if (req.body.token) {
         let accessToken = this[$tokenHandler].issueForLoginToken(req.body.token)
@@ -111,13 +111,13 @@ export default class User {
     }
   }
 
-  async [$postProfilePicture](req, res, next) {
+  async [$postProfilePicture] (req, res, next) {
     try {
       const header = 'data:image/pngbase64,'
       if (typeof req.body.data !== 'string') { throw new Error('data must be defined') }
       if (req.body.data.substring(0, header.length) !== header) { throw new Error('only base64 image/png data urls are supported') }
       let buffer = new Buffer(req.body.data.substring(header.length), 'base64')
-      let rIgnored = await this[$userStore].uploadProfilePicture(req.user.id, buffer)
+      await this[$userStore].uploadProfilePicture(req.user.id, buffer)
       res.send({})
     } catch (err) {
       next(err)
@@ -126,8 +126,8 @@ export default class User {
 
 }
 
-function bind(self, fn) {
-  return function() {
+function bind (self, fn) {
+  return function () {
     fn.apply(self, arguments)
   }
 }

@@ -21,7 +21,7 @@ class Mailchimp {
     const listId = process.env.MAILCHIMP_LIST_ID
 
     try {
-      const result = await this.axe.post(`/lists/${listId}/members`, {
+      await this.axe.post(`/lists/${listId}/members`, {
         email_address: email,
         status: 'pending',
         merge_fields: {FNAME: firstName},

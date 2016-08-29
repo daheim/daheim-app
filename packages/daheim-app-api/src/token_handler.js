@@ -1,11 +1,8 @@
-import {Strategy as JwtStrategy, ExtractJwt} from 'passport-jwt'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
 
 import createDebug from 'debug'
 let debug = createDebug('dhm:token') // eslint-disable-line no-unused-vars
-
-import {User} from './model'
 
 const SECRETS = new WeakMap()
 const $passport = Symbol('passport')

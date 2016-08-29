@@ -81,12 +81,12 @@ def('/auth.facebookLogin', async (req, res) => {
     throw restError({code: 'facebookAuthError', error: 'Please try again later'})
   }
 
-  const {email, first_name} = facebookResponse.data
+  const {email} = facebookResponse.data
+  const firstName = facebookResponse.data.first_name
   if (!email) throw restError({code: 'facebookNeedsEmail', error: 'Your Facebook account does not have a verified email address'})
 
   let result = 'login'
   const username = email
-  const firstName = first_name
 
   let user = await User.findOne({username})
   if (!user) {
@@ -301,7 +301,7 @@ def('/profile.saveProfile', async (req) => {
   return {user}
 })
 
-async function loadUser(id, asUserId) {
+async function loadUser (id, asUserId) {
   const user = await User.findById(id)
   if (!user) throw restError({code: 'user_not_found', error: 'User not found'})
 
@@ -352,7 +352,7 @@ def('/users.sendReview', async (req) => {
   // TODO: load user
   // TODO: check if had lesson
 
-  const myReview = await Review.update({from: user.id, to}, {$set: {date, rating, text}}, {runValidators: true, upsert: true})
+  await Review.update({from: user.id, to}, {$set: {date, rating, text}}, {runValidators: true, upsert: true})
 
   return loadUser(to, req.user.id)
 })

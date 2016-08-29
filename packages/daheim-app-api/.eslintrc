@@ -1,27 +1,17 @@
 {
   "parser": "babel-eslint",
   "extends": "standard",
-  "plugins": ["babel", "standard"],
+  "plugins": ["babel"],
   "rules": {
-    "no-console": 0,
     "linebreak-style": [2, "unix"],
 
     "arrow-parens": 0,
     "generator-star-spacing": 0,
+    "babel/generator-star-spacing": 2,
 
-    "babel/generator-star-spacing": 1,
-    "babel/new-cap": 1,
-    "babel/array-bracket-spacing": 1,
-    "babel/object-shorthand": 1,
-    "babel/arrow-parens": 1,
-    "babel/no-await-in-loop": 1
-  },
-  "env": {
-    "mocha": true,
-    "jasmine": true
-  },
-  "globals": {
-    "fetch": true,
-    "FormData": true
+    "babel/new-cap": 2,
+    "babel/array-bracket-spacing": 2,
+    "babel/object-shorthand": 2,
+    "babel/no-await-in-loop": 2
   }
 }

@@ -9,13 +9,10 @@ import spdy from 'spdy'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import Azure from './azure'
-import User from './user'
-import tokenHandler from './token_handler'
-import config from './config'
 import bodyParser from 'body-parser'
 import log from './log'
 import api from './api'
-//import {User as ModelUser} from './model'
+// import {User as ModelUser} from './model'
 import actions from './actions'
 import reporter from './reporter'
 import configurePassport from './auth'
@@ -42,7 +39,6 @@ function createServer () {
 }
 const server = createServer()
 
-
 let azure = Azure.createFromEnv()
 
 app.use(log.requestLogger())
@@ -55,22 +51,22 @@ app.use(passport.initialize())
 app.use('/api/actions', actions)
 app.use('/api', api.router)
 
-app.get('/js/config.js', function(req, res) {
+app.get('/js/config.js', function (req, res) {
   var cfg = {
     socketIoUrl: 'http://localhost:3000',
-    storageAccount: azure.blobs.storageAccount,
+    storageAccount: azure.blobs.storageAccount
   }
   res.send('angular.module("dhm").constant("config", ' + JSON.stringify(cfg) + ')')
 })
 
-app.use(express.static(__dirname + '/../../../../build/public'))
-app.use(express.static(__dirname + '/../../../../public'))
-app.get('*', function(req, res, next) {
+app.use(express.static(path.join(__dirname, '/../../../../build/public')))
+app.use(express.static(path.join(__dirname, '/../../../../public')))
+app.get('*', function (req, res, next) {
   req.url = '/'
-  res.sendFile(path.resolve(__dirname + '/../../../../build/public/index.html'))
+  res.sendFile(path.resolve(path.join(__dirname, '/../../../../build/public/index.html')))
 })
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   if (!res.headersSent && err.rest) return res.status(400).send(err.rest)
   next(err)
 })
@@ -81,7 +77,7 @@ app.use(reporter.errorHandler)
 app.use(log.errorLogger())
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // don't do anything if the response was already sent
   if (res.headersSent) {
     return next(err)
@@ -104,28 +100,25 @@ app.use(function(err, req, res, next) {
   next(err)
 })
 
-function start() {
+function start () {
   var port = process.env.PORT || 3000
 
-  const listener = server.listen(port, function(err) {
+  const listener = server.listen(port, function (err) {
     if (err) return reporter.error(err, {fatal: true})
 
-    log.info({port: port}, 'listening on %s', port)
+    log.info({port}, 'listening on %s', port)
 
     const protocol = process.env.USE_HTTPS === '1' ? 'https' : 'http'
     const address = listener.address().family === 'IPv6' ? `[${listener.address().address}]` : listener.address().address
     console.info('----\n==> ✅  %s is running', 'Daheim App API')
     console.info('==> 💻  Open %s://%s:%s in a browser to view the app.', protocol, address, listener.address().port)
   })
-  server.on('error', function(err) {
+  server.on('error', function (err) {
     reporter.error(err)
   })
   return server
 }
 
-module.exports = {
-  app: app,
-  start: start,
-}
+module.exports = {app, start}
 
 start()

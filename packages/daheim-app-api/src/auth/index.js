@@ -1,5 +1,4 @@
 import passport from 'passport'
-import jwt from 'jsonwebtoken'
 
 import configureJwtStrategies from './jwt_strategies'
 import configureLocalStrategies from './local_strategies'

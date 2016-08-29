@@ -14,7 +14,7 @@ export class Formatter {
     this.locales = locales
   }
 
-  formatMessage(id, values = {}, locale = this.defaultLocale) {
+  formatMessage (id, values = {}, locale = this.defaultLocale) {
     const message = this.resolveMessageId(id, locale)
 
     // Avoid expensive message formatting for simple messages without values. In
@@ -22,9 +22,9 @@ export class Formatter {
     if (process.env.NODE_ENV === 'production' && Object.keys(values).length === 0) return message
 
     try {
-        const formatter = getMessageFormat(message, locale)
-        const formatted = formatter.format(values)
-        return formatted
+      const formatter = getMessageFormat(message, locale)
+      const formatted = formatter.format(values)
+      return formatted
     } catch (err) {
       log.warn({err, locale, id, values}, 'cannot format message')
       return id
