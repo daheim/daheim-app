@@ -17,7 +17,7 @@ export function getMongoDBUrlFromEnv () {
   return 'mongodb://localhost/first'
 }
 
-export function connect(url, cb) {
+export function connect (url, cb) {
   mongoose.connect(url, {
     server: {reconnectTries: Infinity},
     db: {bufferMaxEntries: 0}

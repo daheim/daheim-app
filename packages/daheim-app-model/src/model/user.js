@@ -13,13 +13,13 @@ const MAX_LOGIN_ATTEMPTS = 10
 const LOCK_TIME = 3 * 60 * 1000
 
 export class AuthError extends BaseError {
-  constructor(m, info) {
+  constructor (m, info) {
     super(m)
     this.info = info
   }
 }
 
-function aToO(a) {
+function aToO (a) {
   const o = {}
   for (let value of a || []) {
     o[value] = 1
@@ -58,7 +58,7 @@ let UserSchema = new Schema({
   }
 }, {
   toJSON: {
-    transform: function(doc, ret, options) {
+    transform (doc, ret, options) {
       ret.id = ret._id
       delete ret._id
       delete ret.__v
@@ -92,13 +92,13 @@ let UserSchema = new Schema({
   }
 })
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   const LEVELS = {
     none: 1,
     beginner: 1,
     intermediate: 1,
     advanced: 1,
-    native: 1,
+    native: 1
   }
 
   if (!this.isModified('profile')) {
@@ -130,7 +130,7 @@ UserSchema.pre('save', function(next) {
   }
 })
 
-UserSchema.virtual('isLocked').get(function() {
+UserSchema.virtual('isLocked').get(function () {
   return !!(this.lockUntil && this.lockUntil > Date.now())
 })
 
@@ -159,15 +159,15 @@ UserSchema.pre('save', async function(next) {
   }
 })
 
-UserSchema.methods.comparePassword = function(candidatePassword) {
+UserSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compareAsync(candidatePassword, this.password)
 }
 
-UserSchema.methods.incLoginAttempts = function() {
+UserSchema.methods.incLoginAttempts = function () {
   if (this.lockUntil && this.lockUntil < Date.now()) {
     return this.update({
       $set: {loginAttempts: 1},
-      $unset: {lockUntil: 1},
+      $unset: {lockUntil: 1}
     })
   }
 
@@ -196,7 +196,7 @@ UserSchema.statics.getAuthenticated = async function(username, password) {
   if (user.loginAttempts || user.lockUntil) {
     await user.update({
       $set: {loginAttempts: 0},
-      $unset: {lockUntil: 1},
+      $unset: {lockUntil: 1}
     })
   }
 
