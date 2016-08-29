@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import Bluebird from 'bluebird'
 import './model'
 
+if (process.env.DEBUG && process.env.DEBUG.indexOf('mongoose') !== -1) mongoose.set('debug', true)
 mongoose.Promise = Bluebird
 
 export function getMongoDBUrlFromEnv () {
