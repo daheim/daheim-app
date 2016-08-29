@@ -1,4 +1,4 @@
-const config = {{CONFIG}}
+const config = JSON.parse('{{CONFIG}}')
 console.log('start', self, config)
 
 self.addEventListener('install', function (event) {
