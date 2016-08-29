@@ -10,6 +10,6 @@ const content = fs.readFileSync(path.join(__dirname, '../static/sw.js'), 'utf-8'
 
 export default function sendServiceWorker (req, res) {
   res.set('Content-Type', 'text/javascript;charset=utf-8')
-  res.set('Cache-Control', 'max-age=60')
+  if (process.env.NODE_ENV !== 'development') res.set('Cache-Control', 'max-age=60')
   res.send(content)
 }
