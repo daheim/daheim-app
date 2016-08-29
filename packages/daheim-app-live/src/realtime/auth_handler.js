@@ -4,7 +4,7 @@ import {User} from '../model'
 import onlineRegistry from './online_registry'
 import lessonRegistry from './lesson_registry'
 
-const debug = require('debug')('dhm:realtime:AuthHandler')
+const debug = require('debug')('dhm:realtime:AuthHandler') // eslint-disable-line no-unused-vars
 
 class AuthHandler {
 

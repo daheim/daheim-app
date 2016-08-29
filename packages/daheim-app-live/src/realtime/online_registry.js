@@ -9,7 +9,7 @@ import Bluebird from 'bluebird'
 
 webPush.setGCMAPIKey(process.env.GCM_API_KEY)
 
-const debug = require('debug')('dhm:realtime:OnlineRegistry')
+const debug = require('debug')('dhm:realtime:OnlineRegistry') // eslint-disable-line no-unused-vars
 
 const OFFLINE_TIMEOUT = 30 * 1000
 
@@ -49,7 +49,7 @@ class OnlineRegistry {
   }
 
   onSocketDisconnect (socket) {
-    const {students, teachers, ready} = this
+    const {students, teachers} = this
 
     if (students[socket.userId]) {
       delete students[socket.userId][socket.id]

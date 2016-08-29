@@ -5,7 +5,7 @@ import fs from 'fs'
 import http from 'http'
 import spdy from 'spdy'
 import express from 'express'
-import tokenHandler from './token_handler'
+import './token_handler'
 import io from './realtime'
 import reporter from './reporter'
 import log from './log'
@@ -36,14 +36,13 @@ app.disable('x-powered-by')
 const server = createServer()
 io.listen(server)
 
-
 app.use(reporter.errorHandler)
 
 // log errors
 app.use(log.errorLogger())
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // don't do anything if the response was already sent
   if (res.headersSent) {
     return next(err)
@@ -66,28 +65,25 @@ app.use(function(err, req, res, next) {
   next(err)
 })
 
-function start() {
+function start () {
   var port = process.env.PORT || 3001
 
-  const listener = server.listen(port, function(err) {
+  const listener = server.listen(port, function (err) {
     if (err) return reporter.error(err, {fatal: true})
 
-    log.info({port: port}, 'listening on %s', port)
+    log.info({port}, 'listening on %s', port)
 
     const protocol = process.env.USE_HTTPS === '1' ? 'https' : 'http'
     const address = listener.address().family === 'IPv6' ? `[${listener.address().address}]` : listener.address().address
     console.info('----\n==> ✅  %s is running', 'Daheim App API')
     console.info('==> 💻  Open %s://%s:%s in a browser to view the app.', protocol, address, listener.address().port)
   })
-  server.on('error', function(err) {
+  server.on('error', function (err) {
     reporter.error(err)
   })
   return server
 }
 
-module.exports = {
-  app: app,
-  start: start,
-}
+module.exports = {app, start}
 
 start()

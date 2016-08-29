@@ -3,10 +3,7 @@ import jwt from 'jsonwebtoken'
 import createDebug from 'debug'
 let debug = createDebug('dhm:token') // eslint-disable-line no-unused-vars
 
-import {User} from './model'
-
 const SECRETS = new WeakMap()
-const $passport = Symbol('passport')
 
 export class TokenHandler {
 
