@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import 'webrtc-adapter'
 
 const debug = require('debug')('dhm:live:Negotiator')

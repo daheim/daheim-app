@@ -6,6 +6,8 @@ import {facebookLogin} from '../../actions/auth'
 import {login, init} from '../../actions/facebook'
 import css from './FacebookLogin.style'
 
+const alert = window.alert
+
 class FacebookLogin extends Component {
 
   static propTypes = {

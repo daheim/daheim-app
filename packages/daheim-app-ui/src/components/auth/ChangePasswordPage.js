@@ -119,7 +119,7 @@ class ChangePasswordPage extends Component {
           </form>
         </div>
 
-        <div style={{borderBottom: 'solid 1px lightgray', marginTop: 20}}/>
+        <div style={{borderBottom: 'solid 1px lightgray', marginTop: 20}} />
         <CloseAccount style={{padding: '16px 16px'}} />
       </div>
     )

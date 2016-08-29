@@ -1,4 +1,4 @@
-module.exports = function(source, map) {
+module.exports = function (source, map) {
   this.cacheable && this.cacheable()
   var original = JSON.parse(source)
   var value = {version: original.version}

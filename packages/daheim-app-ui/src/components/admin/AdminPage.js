@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
@@ -6,13 +8,18 @@ import {subscribeToWebPush, unsubscribeFromWebPush} from '../../middlewares/serv
 import {testNotification, testNotificationBroadcast, registerNotificationEndpoint} from '../../actions/notifications'
 import version from '../../version'
 
+const btoa = window.btoa
+const alert = window.alert
+
 class AdminPage extends Component {
 
   static propTypes = {
     subscribeToWebPush: PropTypes.func.isRequired,
     unsubscribeFromWebPush: PropTypes.func.isRequired,
     testNotification: PropTypes.func.isRequired,
-    registered: PropTypes.bool.isRequired
+    registered: PropTypes.bool.isRequired,
+    testNotificationBroadcast: PropTypes.func.isRequired,
+    registerNotificationEndpoint: PropTypes.func.isRequired
   }
 
   componentDidMount () {

@@ -33,13 +33,13 @@ export default class Html extends Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
-          <link rel='apple-touch-icon' sizes='152x152' href='/favicon-152.png'/>
-          <link rel='icon' type='image/png' sizes='152x152' href='/favicon-152.png'/>
-          <link rel='icon' type='image/png' sizes='192x192' href='/favicon-192.png'/>
-          <link rel='icon' type='image/svg' sizes='any' href='/favicon.svg'/>
-          <link rel='manifest' href='/manifest.json'/>
+          <link rel='apple-touch-icon' sizes='152x152' href='/favicon-152.png' />
+          <link rel='icon' type='image/png' sizes='152x152' href='/favicon-152.png' />
+          <link rel='icon' type='image/png' sizes='192x192' href='/favicon-192.png' />
+          <link rel='icon' type='image/svg' sizes='any' href='/favicon.svg' />
+          <link rel='manifest' href='/manifest.json' />
 
-          <meta name='theme-color' content='#ffffff'/>
+          <meta name='theme-color' content='#ffffff' />
 
           <meta name='viewport' content='width=device-width, initial-scale=1' />
 
@@ -51,17 +51,12 @@ export default class Html extends Component {
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key} media='screen, projection'
-              rel='stylesheet' type='text/css' charSet='UTF-8'/>
+              rel='stylesheet' type='text/css' charSet='UTF-8' />
           )}
 
-          {/* (will be present only in development mode) */}
-          {/* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */}
-          {/* can smoothen the initial style flash (flicker) on page load in development mode. */}
-          {/* ideally one could also include here the style for the current page (Home.scss, About.scss, etc) */}
-          {Object.keys(assets.styles).length === 0 && false ? <style dangerouslySetInnerHTML={{__html: require('../theme/bootstrap.config.js') + require('../containers/App/App.scss')._style}}/> : null}
         </head>
         <body>
-          <div id='content' dangerouslySetInnerHTML={{__html: content}}/>
+          <div id='content' dangerouslySetInnerHTML={{__html: content}} />
           <script dangerouslySetInnerHTML={{__html: `
             WebFontConfig = {
               google: { families: [ 'Open+Sans:400,300,400italic,700,800:latin,latin-ext', 'Roboto:400,300,300italic,400italic,700,900:latin,latin-ext', 'Lato:400,700,900:latin,latin-ext', 'Raleway:400,300,300italic,400italic,700,900:latin,latin-ext', 'Oswald:400,700:latin,latin-ext' ] }
@@ -76,9 +71,9 @@ export default class Html extends Component {
             })(); </script>
           `}} />
           <script src='https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de' />
-          <script dangerouslySetInnerHTML={{__html: `window.__INIT=${JSON.stringify({SIO_URL: process.env.SIO_URL, RAVEN_DSN: process.env.RAVEN_DSN, FB_CLIENT_ID: process.env.FB_CLIENT_ID})}`}} charSet='UTF-8'/>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())}`}} charSet='UTF-8'/>
-          <script src={assets.javascript.main} charSet='UTF-8'/>
+          <script dangerouslySetInnerHTML={{__html: `window.__INIT=${JSON.stringify({SIO_URL: process.env.SIO_URL, RAVEN_DSN: process.env.RAVEN_DSN, FB_CLIENT_ID: process.env.FB_CLIENT_ID})}`}} charSet='UTF-8' />
+          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())}`}} charSet='UTF-8' />
+          <script src={assets.javascript.main} charSet='UTF-8' />
         </body>
       </html>
     )

@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 jest.unmock('../index.js')
 
 import promiseMiddleware from '../index.js'
@@ -8,9 +10,9 @@ import chaiAsPromised from 'chai-as-promised'
 global.expect = chai.expect
 chai.use(chaiAsPromised)
 
-function noop() {}
+function noop () {}
 const GIVE_ME_META = 'GIVE_ME_META'
-function metaMiddleware() {
+function metaMiddleware () {
   return next => action =>
     action.type === GIVE_ME_META
       ? next({ ...action, meta: 'here you go' })
@@ -25,7 +27,7 @@ describe('promiseMiddleware', () => {
 
   beforeEach(() => {
     baseDispatch = spy()
-    dispatch = function d(action) {
+    dispatch = function d (action) {
       const methods = { dispatch: d, getState: noop }
       return metaMiddleware()(promiseMiddleware(methods)(baseDispatch))(action)
     }

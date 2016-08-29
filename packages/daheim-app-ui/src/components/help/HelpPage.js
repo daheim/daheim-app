@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {FormattedMessage, injectIntl} from 'react-intl'
 import {createTicket} from '../../actions/helpdesk'
 
+const alert = window.alert
+
 class HelpPage extends Component {
 
   static propTypes = {
@@ -59,7 +61,7 @@ class HelpPage extends Component {
           <li><a href='https://willkommen-daheim.org/community/' target='_blank'><FormattedMessage id='help.houseRules' /></a></li>
         </ul>
 
-        <div style={{borderBottom: 'solid 1px lightgray', marginTop: 30}}/>
+        <div style={{borderBottom: 'solid 1px lightgray', marginTop: 30}} />
 
         <div style={{fontSize: 14, lineHeight: '150%', marginTop: 30}}><FormattedMessage id='help.text' /></div>
         <div style={{marginTop: 14}}>

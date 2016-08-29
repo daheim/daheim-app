@@ -45,7 +45,7 @@ class ReadySwitch extends Component {
     try {
       await this.props.setReady({ready: e.target.checked})
     } catch (err) {
-      alert(err.message)
+      window.alert(err.message)
     }
   }
 
@@ -56,7 +56,7 @@ class ReadySwitch extends Component {
     try {
       await this.props.setReady({ready: true})
     } catch (err) {
-      alert(this.props.intl.formatMessage({id: 'errorMessage'}, {message: err.message}))
+      window.alert(this.props.intl.formatMessage({id: 'errorMessage'}, {message: err.message}))
     } finally {
       this.setState({busy: false})
     }
@@ -71,7 +71,7 @@ class ReadySwitch extends Component {
     try {
       await this.props.setReady({ready: false})
     } catch (err) {
-      alert(this.props.intl.formatMessage({id: 'errorMessage'}, {message: err.message}))
+      window.alert(this.props.intl.formatMessage({id: 'errorMessage'}, {message: err.message}))
     } finally {
       this.setState({busy: false})
     }

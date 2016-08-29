@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import uuid from 'node-uuid'
 
 import Negotiator from './Negotiator'

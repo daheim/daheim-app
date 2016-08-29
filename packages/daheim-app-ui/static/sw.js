@@ -1,3 +1,5 @@
+/* eslint-env serviceworker */
+
 const config = JSON.parse('{{CONFIG}}')
 console.log('start', self, config)
 
@@ -24,7 +26,7 @@ self.addEventListener('notificationclick', function (event) {
       var client = clients[i]
       if (client.focus) return client.focus()
     }
-    if (self.clients.openWindow) return self.clients.openWindow(location.origin)
+    if (self.clients.openWindow) return self.clients.openWindow(self.location.origin)
   })
   event.waitUntil(prom)
 })
@@ -36,8 +38,8 @@ self.addEventListener('push', function (event) {
   const body = {
     endpointId: data && data.endpointId
   }
-  const url = location.origin + '/api/actions/notifications.received'
-  const f = fetch(url, {
+  const url = self.location.origin + '/api/actions/notifications.received'
+  const f = self.fetch(url, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
@@ -72,7 +74,7 @@ self.addEventListener('push', function (event) {
     const prom = self.registration.showNotification('Student Waiting', {
       body: 'A student is waiting for a conversation.',
       icon: '/favicon-192.png',
-      tag: 'studentWaiting',
+      tag: 'studentWaiting'
     })
     event.waitUntil(Promise.all([prom, f]))
   }

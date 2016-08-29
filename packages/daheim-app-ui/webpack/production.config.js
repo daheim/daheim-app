@@ -23,7 +23,7 @@ var common = {
   devtool: 'source-map',
   module: {
     preLoaders: [
-      {test: /package\.json$/, loader: '../webpack/package_json_loader'},
+      {test: /package\.json$/, loader: '../webpack/package_json_loader'}
     ],
     loaders: [
       {test: /\.json$/, loader: 'json-loader'},

@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 jest.unmock('../index.js')
 jest.unmock('../../actions/live')
 

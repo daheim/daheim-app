@@ -1,11 +1,11 @@
 import { isFSA } from 'flux-standard-action'
 import uniqueId from 'lodash/uniqueId'
 
-function isPromise(val) {
+function isPromise (val) {
   return val && typeof val.then === 'function'
 }
 
-export default function promiseMiddleware({ dispatch }) {
+export default function promiseMiddleware ({ dispatch }) {
   return next => action => {
     if (!isFSA(action)) {
       return isPromise(action)

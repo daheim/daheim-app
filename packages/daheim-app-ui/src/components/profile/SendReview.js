@@ -1,7 +1,6 @@
 import React, {PropTypes, Component} from 'react'
 import ProficiencyRating from '../ProficiencyRating'
 import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
 
 export default class SendReview extends Component {
 

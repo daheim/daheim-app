@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import ExtendableError from 'es6-error'
 import cookie from 'cookie'
 

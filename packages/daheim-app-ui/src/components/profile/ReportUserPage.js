@@ -38,9 +38,9 @@ class ReportUserPage extends Component {
     try {
       await this.props.reportUser({description: this.state.ticket, offendingUserId: this.props.userId})
       setTimeout(() => this.props.push('/'))
-      setTimeout(() => alert(this.props.intl.formatMessage({id: 'reportUser.sent'})))
+      setTimeout(() => window.alert(this.props.intl.formatMessage({id: 'reportUser.sent'})))
     } catch (err) {
-      setTimeout(() => alert(err.message))
+      setTimeout(() => window.alert(err.message))
     } finally {
       this.setState({submitDisabled: false})
     }
@@ -58,7 +58,7 @@ class ReportUserPage extends Component {
 
         <div style={{fontSize: 14, lineHeight: '150%'}}>
           <FormattedMessage id='reportUser.text' values={{
-            houseRulesLink: <a href="https://willkommen-daheim.org/" target="_blank"><FormattedMessage id='reportUser.houseRulesLinkText' /></a>
+            houseRulesLink: <a href='https://willkommen-daheim.org/' target='_blank'><FormattedMessage id='reportUser.houseRulesLinkText' /></a>
           }} />
         </div>
         <div style={{marginTop: 14, fontSize: 14}}><FormattedMessage id='reportUser.offendingUser' values={{name}} /></div>

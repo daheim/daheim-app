@@ -10,7 +10,7 @@ export default class TalkAbout extends React.Component {
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
           <div style={{flex: '0 0 200px', margin: 8}}>
             <h3>...das Alphabet</h3>
-            <div style={{fontSize: 30, fontFamily: 'monospace'}}>A B C D E<br/>F G H I J<br/>K L M N O<br/>P Q R S T<br/>U V W X Y<br/>Z Ä Ö Ü ß</div>
+            <div style={{fontSize: 30, fontFamily: 'monospace'}}>A B C D E<br />F G H I J<br />K L M N O<br />P Q R S T<br />U V W X Y<br />Z Ä Ö Ü ß</div>
           </div>
           <div style={{flex: '1 1 500px', margin: 8}}>
             <h3>...das Wetter</h3>

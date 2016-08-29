@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import md5 from 'md5'

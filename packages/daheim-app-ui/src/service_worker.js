@@ -2,9 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import version from './version'
 
-const config = {
-  version: version
-}
+const config = {version}
 const content = fs.readFileSync(path.join(__dirname, '../static/sw.js'), 'utf-8')
   .replace('{{CONFIG}}', JSON.stringify(config).replace('\'', '\\\''))
 

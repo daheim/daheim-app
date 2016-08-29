@@ -39,7 +39,7 @@ class CloseAccount extends Component {
       await this.props.closeAccount()
       await this.props.logout()
     } finally {
-      location.reload()
+      window.location.reload()
     }
   }
 
@@ -49,9 +49,9 @@ class CloseAccount extends Component {
     try {
       await this.props.createTicket({description: this.state.ticket, environment: 'Konto schließen'})
       this.setState({open: false, ticket: ''})
-      setTimeout(() => alert(this.props.intl.formatMessage({id: 'closeAccount.getHelp.sent'})))
+      setTimeout(() => window.alert(this.props.intl.formatMessage({id: 'closeAccount.getHelp.sent'})))
     } catch (err) {
-      setTimeout(() => alert(err.message))
+      setTimeout(() => window.alert(err.message))
     } finally {
       this.setState({getHelpDisabled: false})
     }
@@ -77,7 +77,7 @@ class CloseAccount extends Component {
               <RaisedButton primary disabled={getHelpDisabled} label={intl.formatMessage({id: 'closeAccount.getHelp.submit'})} onClick={this.createTicket} />
             </div>
 
-            <div style={{borderBottom: 'solid 1px lightgray', marginTop: 30}}/>
+            <div style={{borderBottom: 'solid 1px lightgray', marginTop: 30}} />
 
             <div style={{paddingLeft: 16, marginTop: 30}}>
               <Checkbox checked={confirmed} label={intl.formatMessage({id: 'closeAccount.confirmLabel'})} onCheck={this.handleCheck} />
