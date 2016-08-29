@@ -48,7 +48,13 @@ let UserSchema = new Schema({
 
   notifications: {
     enabled: Boolean,
-    endpoints: [Schema.Types.Mixed]
+    endpoints: [{
+      id: String,
+      endpoint: String,
+      userPublicKey: String,
+      userAuth: String,
+      userAgent: String
+    }]
   }
 }, {
   toJSON: {
@@ -74,7 +80,9 @@ let UserSchema = new Schema({
       delete ret.profile.pictureType
       delete ret.profile.pictureData
 
-      delete ret.notifications.endpoints
+      ret.notifications.endpoints = ret.notifications.endpoints.map(({id, userAgent}) => {
+        return {id, userAgent}
+      })
 
       delete ret.password
       delete ret.loginAttempts
