@@ -13,7 +13,7 @@
     "mongoose": "^4.4.3",
     "bcryptjs": "^2.3.0",
     "gravatar": "^1.5.2",
-    "es6-error": "^2.0.2",
+    "es6-error": "^3.0.1",
     "daheim-app-utils": "*"
   }
 }
