@@ -33,6 +33,24 @@ self.addEventListener('push', function (event) {
   const data = event.data ? event.data.json() : {}
   console.log('push', event, data)
 
+  const body = {
+    endpointId: data && data.endpointId
+  }
+  const url = location.origin + '/api/actions/notifications.received'
+  const f = fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json'
+    },
+    credentials: 'same-origin'
+  }).then(function (result) {
+    console.log('fetch result', result)
+  }).catch(function (err) {
+    console.error('fetch err', err)
+  })
+
   if (data.type === 'test' || data.type === 'testBroadcast') {
     const prom = self.registration.showNotification('Willkommen Daheim Test', {
       body: 'This is a test message showing three actions and an icon.',
@@ -49,13 +67,13 @@ self.addEventListener('push', function (event) {
         title: 'Third Action'
       }]
     })
-    event.waitUntil(prom)
+    event.waitUntil(Promise.all([prom, f]))
   } else if (data.type === 'studentWaiting') {
     const prom = self.registration.showNotification('Student Waiting', {
       body: 'A student is waiting for a conversation.',
       icon: '/favicon-192.png',
       tag: 'studentWaiting',
     })
-    event.waitUntil(prom)
+    event.waitUntil(Promise.all([prom, f]))
   }
 })

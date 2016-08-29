@@ -2,6 +2,7 @@ import webPush from 'web-push'
 import log from '../log'
 import restError from '../restError'
 import Bluebird from 'bluebird'
+import passport from 'passport'
 import uuid from 'node-uuid'
 
 webPush.setGCMAPIKey(process.env.GCM_API_KEY)
@@ -77,5 +78,18 @@ export default (def) => {
     req.user.notifications.enabled = true
     await req.user.save()
     return req.user
+  })
+
+  def('/notifications.received', async (req, res, next) => {
+    const user = await new Promise((resolve, reject) => {
+      passport.authenticate('jwt', {session: false}, (err, user) => {
+        if (err) return reject(err)
+        resolve(user)
+      })(req, res, next)
+    })
+    console.log('user', user)
+    console.log('body', req.body)
+  }, {
+    auth: false
   })
 }
