@@ -71,4 +71,13 @@ function main () {
   ReactDOM.render(<App store={store} history={history} />, dest)
 }
 
-main()
+if (!global.Intl) {
+  require.ensure([], function (require) {
+    require('intl')
+    require('intl/locale-data/jsonp/en.js')
+    require('intl/locale-data/jsonp/de.js')
+    main()
+  }, 'intl-polyfill')
+} else {
+  main()
+}
