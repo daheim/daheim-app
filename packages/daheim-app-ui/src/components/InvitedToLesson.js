@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton'
 import {Howl} from 'howler'
 import Modal from '../Modal'
 
-import {join, leave} from '../actions/live'
+import {join, leave, ready as setReady} from '../actions/live'
 import ProfilePage from './profile/PublicProfilePage'
 
 class InvitedToLessonDialog extends Component {
@@ -12,7 +12,8 @@ class InvitedToLessonDialog extends Component {
   static propTypes = {
     lesson: PropTypes.object.isRequired,
     join: PropTypes.func.isRequired,
-    leave: PropTypes.func.isRequired
+    leave: PropTypes.func.isRequired,
+    setReady: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -43,6 +44,12 @@ class InvitedToLessonDialog extends Component {
     this.props.join({id: this.props.lesson.id})
   }
 
+  handleReportUser = _ => {
+    // unq and leave conversation when reporting user
+    this.props.leave({id: this.props.lesson.id})
+    this.props.setReady({ready: false})
+  }
+
   render () {
     // const {lesson} = this.props
     // const {id} = lesson
@@ -69,7 +76,7 @@ class InvitedToLessonDialog extends Component {
           {actions}
         </div>
         <h2>Neues Gespräch</h2>
-        <ProfilePage params={{userId: this.props.lesson.teacherId}} reviewEditable={false} />
+        <ProfilePage params={{userId: this.props.lesson.teacherId}} reviewEditable={false} onReportUser={this.handleReportUser} />
       </Modal>
     )
   }
@@ -106,4 +113,4 @@ export default connect((state, props) => {
     if (lesson.connected || lesson.participating) lesson = undefined
   }
   return {lesson}
-}, {join, leave})(InvitedToLesson)
+}, {join, leave, setReady})(InvitedToLesson)

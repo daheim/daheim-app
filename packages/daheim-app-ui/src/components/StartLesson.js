@@ -66,6 +66,11 @@ class StartLesson extends Component {
     }
   }
 
+  handleReportUser = _ => {
+    // leave conversation when reporting user
+    if (this.props.onRequestClose) this.props.onRequestClose()
+  }
+
   async componentWillUnmount () {
     if (this.state.lessonId) {
       this.props.leaveIfNotStarted({id: this.state.lessonId})
@@ -119,7 +124,7 @@ class StartLesson extends Component {
           </div>
         ) : undefined}
 
-        <ProfilePage params={{userId: user.id}} reviewEditable={false} />
+        <ProfilePage params={{userId: user.id}} reviewEditable={false} onRequestClose={this.handleRequestClose} />
       </Modal>
     )
   }

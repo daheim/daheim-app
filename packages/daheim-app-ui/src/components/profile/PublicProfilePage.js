@@ -22,7 +22,9 @@ class ProfilePage extends Component {
     userMeta: PropTypes.object,
     me: PropTypes.bool,
     reviewEditable: PropTypes.bool.isRequired,
-    intl: PropTypes.object.isRequired
+    intl: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
+    onReportUser: PropTypes.func
   }
 
   static defaultProps = {
@@ -39,6 +41,13 @@ class ProfilePage extends Component {
 
   handleOpenEditor = () => {
     this.setState({editorOpen: true})
+  }
+
+  handleReport = e => {
+    e.preventDefault()
+    const {id} = this.props.user
+    if (this.props.onReportUser) this.props.onReportUser()
+    this.props.push(`/users/${id}/report`)
   }
 
   roleToTitle (role) {
@@ -98,7 +107,7 @@ class ProfilePage extends Component {
             <div style={{fontSize: 30, fontWeight: 600, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>
               <span style={{marginRight: 10}}>{name} </span>
               {me ? <Link to='/profile' className={css.editButton}><FormattedMessage id='profile.edit' /></Link> : null}
-              {!me ? <Link to={`/users/${id}/report`} className={css.editButton}><FormattedMessage id='profile.reportUser' /></Link> : null}
+              {!me ? <a onClick={this.handleReport} href='#' className={css.editButton}><FormattedMessage id='profile.reportUser' /></a> : null}
             </div>
             <div style={{fontSize: 14, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>{this.roleToTitle(role)}</div>
           </div>
