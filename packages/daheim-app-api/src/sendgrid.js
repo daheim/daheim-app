@@ -40,7 +40,7 @@ export class EmailSender {
     } catch (err) {
       const data = err.response && err.response.data
       const status = err.response && err.response.status
-      log.error({text, data, status, err}, 'cannot send email')
+      log.error({data, status, err}, 'cannot send email')
       throw err
     }
   }
