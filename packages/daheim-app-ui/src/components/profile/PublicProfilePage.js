@@ -92,11 +92,11 @@ class ProfilePage extends Component {
 
         <Helmet title={name} />
 
-        <div style={{lineHeight: '150%', display: 'flex', alignItems: 'center', marginBottom: 20, maxWidth: '100%', padding: 10, borderBottom: 'solid 1px #EEE'}}>
-          <img src={picture} style={{width: 68, height: 68, borderRadius: '50%', marginTop: 6, boxShadow: '0 1px 1px 1px rgba(0,0,0,.1)', border: 'solid 2px white'}} />
-          <div style={{marginLeft: 20}}>
+        <div style={{lineHeight: '150%', display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: 20, maxWidth: '100%', padding: 10, borderBottom: 'solid 1px #EEE'}}>
+          <img src={picture} style={{width: 68, height: 68, borderRadius: '50%', marginTop: 6, marginRight: 20, boxShadow: '0 1px 1px 1px rgba(0,0,0,.1)', border: 'solid 2px white'}} />
+          <div>
             <div style={{fontSize: 30, fontWeight: 600, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>
-              {name}
+              <span style={{marginRight: 10}}>{name} </span>
               {me ? <Link to='/profile' className={css.editButton}><FormattedMessage id='profile.edit' /></Link> : null}
               {!me ? <Link to={`/users/${id}/report`} className={css.editButton}><FormattedMessage id='profile.reportUser' /></Link> : null}
             </div>
