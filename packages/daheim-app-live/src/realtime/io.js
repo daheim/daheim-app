@@ -5,6 +5,7 @@ import authHandler from './auth_handler'
 import lessonHandler from './lesson_handler'
 import log from '../log'
 import reporter from '../reporter'
+import activeTimeHandler from './active_time_handler'
 
 function attachHandlers (socket, ...handlers) {
   // const onevent = socket.onevent
@@ -67,6 +68,7 @@ const io = new Server()
 io.use(authHandler.middleware)
 io.on('connection', (socket) => attachHandlers(socket,
   authHandler,
-  lessonHandler
+  lessonHandler,
+  activeTimeHandler
 ))
 export default io
