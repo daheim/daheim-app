@@ -6,6 +6,8 @@ import {User} from 'daheim-app-model'
 import webPush from 'web-push'
 import log from '../log'
 import Bluebird from 'bluebird'
+import events from '../events'
+import uuid from 'node-uuid'
 
 webPush.setGCMAPIKey(process.env.GCM_API_KEY)
 
@@ -80,15 +82,24 @@ class OnlineRegistry {
 
     if (this.ready[socket.userId]) return // already ready
 
-    slack.sendText(`${socket.user.username} is ready for a Gespräch`)
-    this.notifyTeachers(socket)
-
     const {role} = socket.user.profile
     if (role !== 'student') throw sioError('onlyStudents')
 
-    this.ready[socket.userId] = {topic, date: new Date()}
+    const readyId = uuid.v4()
+    this.ready[socket.userId] = {readyId, topic, date: new Date()}
     io.of('/').in(`user-${socket.userId}`).emit('userIsReady', {topic})
     this.emitReady()
+
+    // emit event
+    events.track({
+      category: 'lesson',
+      action: 'userReady',
+      userId: socket.userId,
+      readyId
+    })
+
+    slack.sendText(`${socket.user.username} is ready for a Gespräch`)
+    this.notifyTeachers(socket)
   }
 
   onUserNotReady (socket) {

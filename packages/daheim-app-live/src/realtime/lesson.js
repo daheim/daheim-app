@@ -3,19 +3,36 @@ import {Types} from 'mongoose'
 import sioError from './sio_error'
 import iceServers from './ice_servers'
 import {Lesson as LessonModel} from '../model'
+import events from '../events'
 
 const debug = require('debug')('dhm:realtime:Lesson')
 
 const INACTIVITY_TIMEOUT = 2 * 60 * 1000
 
 export default class Lesson {
-  constructor ({teacherId, studentId}) {
+  constructor ({teacherId, studentId, readyId}) {
     this.id = new Types.ObjectId()
 
     this.teacherId = teacherId
     this.studentId = studentId
+    this.readyId = readyId
     this.active = false
     this.handlers = {}
+  }
+
+  start () {
+    events.track({
+      category: 'lesson',
+      action: 'inviteStudent',
+      userId: this.teacherId,
+      readyId: this.readyId
+    })
+    events.track({
+      category: 'lesson',
+      action: 'invited',
+      userId: this.studentId,
+      readyId: this.readyId
+    })
   }
 
   subscribeToDisconnect (handler) {
@@ -110,6 +127,19 @@ export default class Lesson {
     this.handlers = {}
 
     this.onUpdate()
+
+    events.track({
+      category: 'lesson',
+      action: 'closed',
+      userId: this.teacherId,
+      readyId: this.readyId
+    })
+    events.track({
+      category: 'lesson',
+      action: 'closed',
+      userId: this.studentId,
+      readyId: this.readyId
+    })
   }
 
   checkState () {
@@ -140,6 +170,19 @@ export default class Lesson {
         debug('%s persist ping', this.id)
         LessonModel.update({_id: this.id}, {$set: {pingTime: new Date()}}).exec()
       }, 30000)
+
+      events.track({
+        category: 'lesson',
+        action: 'started',
+        userId: this.teacherId,
+        readyId: this.readyId
+      })
+      events.track({
+        category: 'lesson',
+        action: 'started',
+        userId: this.studentId,
+        readyId: this.readyId
+      })
     }
 
     if (this.active && !connected && !this.inactiveTimeout) {

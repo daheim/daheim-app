@@ -19,7 +19,10 @@ class LessonRegistry {
       })
     }
 
-    const lesson = new Lesson({teacherId, studentId})
+    if (!onlineRegistry.ready[studentId]) throw sioError('studentNotReady')
+    const {readyId} = onlineRegistry.ready[studentId]
+
+    const lesson = new Lesson({teacherId, studentId, readyId})
     lesson.onUpdate = () => this.handleLessonUpdate(lesson)
 
     this.lessons[lesson.id] = lesson
@@ -28,6 +31,7 @@ class LessonRegistry {
     this.users[studentId] = this.users[studentId] || []
     this.users[studentId].push(lesson)
 
+    lesson.start()
     lesson.join(teacherHandler)
 
     onlineRegistry.onLessonsChanged()
