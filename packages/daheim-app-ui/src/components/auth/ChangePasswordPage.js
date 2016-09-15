@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import {changePassword} from '../../actions/auth'
 import CloseAccount from './CloseAccount'
+import NotificationSettings from '../settings/NotificationSettings'
 
 class ChangePasswordPage extends Component {
 
@@ -105,6 +106,10 @@ class ChangePasswordPage extends Component {
     return (
       <div>
         <Helmet title={intl.formatMessage({id: 'changePasswordPage.title'})} />
+
+        <NotificationSettings style={{padding: '16px 16px'}} />
+        <div style={{borderBottom: 'solid 1px lightgray', marginTop: 20}} />
+
         <div style={{padding: '16px 16px'}}>
           <h2><FormattedMessage id='changePasswordPage.title' /></h2>
           <form noValidate onSubmit={this.handleSubmit} className='loginForm'>

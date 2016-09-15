@@ -91,5 +91,14 @@
   "help.houseRules": "Community Guidelines",
   "help.text": "If you have any further questions, improvement ideas or just want to contact the Daheim Team, please use the form below.",
   "help.hint": "Please describe your issue here",
-  "help.submit": "Contact Daheim Team"
+  "help.submit": "Contact Daheim Team",
+
+  "notificationSettings.title": "Notifications",
+  "notificationSettings.notAvailable": "Unfortunately notifications are not available in this browsers.",
+  "notificationSettings.subscribed": "This device is subscribed to receive notifications.",
+  "notificationSettings.unsubscribe": "Disable Notifications",
+  "notificationSettings.sendTest": "Send Test Notification",
+  "notificationSettings.notSubscribed": "This device is NOT subscribed to receive notifications.",
+  "notificationSettings.subscribe": "Enable Notifications",
+  "notificationSettings.description": "We can send you a notification when there is a suitable partner is available for a nice conversation. This way we can notify you even if the Daheim page is closed. Don't forget to open this page on your phone too to enable receiving notification on that device too."
 }
