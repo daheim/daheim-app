@@ -12,6 +12,7 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
 import {saveProfile} from '../../actions/profile'
 import ProficiencyRating from '../ProficiencyRating'
@@ -31,12 +32,13 @@ const avatars = {
   avatar12: 'https://assets.daheimapp.de/public/assets/avatar-12.svg'
 }
 
-class Languages extends Component {
+class LanguagesRaw extends Component {
 
   static propTypes = {
     inGermanySince: PropTypes.string.isRequired,
     languages: PropTypes.object.isRequired,
     germanLevel: PropTypes.number.isRequired,
+    intl: PropTypes.object.isRequired,
     role: PropTypes.string,
     onChange: PropTypes.func
   }
@@ -66,33 +68,33 @@ class Languages extends Component {
     const showStudentFields = role !== 'teacher'
 
     const leftovers = {...languages}
-    Languages.suggestions.forEach((suggestion) => delete leftovers[suggestion])
+    LanguagesRaw.suggestions.forEach((suggestion) => delete leftovers[suggestion])
 
     return (
       <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 20}}>
         <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-          Sprache
+          <FormattedMessage id='editProfile.language' />
         </div>
 
         <div style={{flex: '1 1 400px'}}>
           {showStudentFields ? (
             <div>
-              <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Seit wann wohnst du in Deutschland?</div>
+              <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.sinceWhen' /></div>
               <div>
                 <DropDownMenu value={inGermanySince} style={{marginTop: -10, marginLeft: -20}} onChange={this.handleInGermanySinceChange}>
                   <MenuItem value='2016' primaryText='2016' />
                   <MenuItem value='2015' primaryText='2015' />
                   <MenuItem value='2014' primaryText='2014' />
-                  <MenuItem value='earlier' primaryText='Früher als 2014' />
+                  <MenuItem value='earlier' primaryText={this.props.intl.formatMessage({id: 'editProfile.earlierThan2004'})} />
                 </DropDownMenu>
               </div>
-              <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}>Deutschkenntnis</div>
+              <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.germanLevel' /></div>
               <div><ProficiencyRating value={'' + germanLevel} onChange={this.handleGermanLevelChange} /></div>
             </div>
           ) : null}
-          <div style={{marginBottom: 8, marginTop: showStudentFields ? 16 : 0, fontWeight: 700, fontSize: 14}}>Andere Sprachen</div>
+          <div style={{marginBottom: 8, marginTop: showStudentFields ? 16 : 0, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.otherLanguages' /></div>
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
-            {[...Languages.suggestions, ...Object.keys(leftovers)].map((language) =>
+            {[...LanguagesRaw.suggestions, ...Object.keys(leftovers)].map((language) =>
               <div key={language} style={{flex: '0 0 250px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector={language} onCheck={this.handleLanguageCheck} /></div>)}
           </div>
         </div>
@@ -100,6 +102,7 @@ class Languages extends Component {
     )
   }
 }
+const Languages = injectIntl(LanguagesRaw)
 
 class Topics extends React.Component {
 
@@ -133,16 +136,18 @@ class Topics extends React.Component {
     return (
       <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 20}}>
         <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-          Themen
+          <FormattedMessage id='editProfile.topics' />
         </div>
         <div style={{flex: '1 1 400px'}}>
-          <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Ich spreche gern über...</div>
-          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+          <div style={{fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.likeToTalkAbout' /></div>
+          <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 8}}>
             {[...Topics.suggestions, ...Object.keys(leftovers)].map((topic) =>
               <div key={topic} style={{flex: '0 0 250px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector={topic} onCheck={this.handleCheck} /></div>)}
           </div>
-          <div style={{maxWidth: 450}}>
-            <TextField value={introduction} style={{marginTop: -8}} fullWidth multiLine floatingLabelText='Ein Paar Worte über dich' rows={1} rowsMax={8} onChange={this.handleIntroductionChage} />
+
+          <div style={{marginTop: 16, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.aboutYou' /></div>
+          <div style={{maxWidth: 450, marginTop: 8}}>
+            <textarea style={{width: '100%', height: 150, borderRadius: 4, fontSize: 14, padding: 6, borderColor: '#AAA'}} value={introduction} onChange={this.handleIntroductionChage} />
           </div>
         </div>
       </div>
@@ -172,12 +177,13 @@ class ValuedCheckbox extends React.Component {
   }
 }
 
-class ProfilePage extends React.Component {
+class ProfilePageRaw extends React.Component {
 
   static propTypes = {
     user: React.PropTypes.object.isRequired,
     saveProfile: React.PropTypes.func.isRequired,
-    push: React.PropTypes.func.isRequired
+    push: React.PropTypes.func.isRequired,
+    intl: React.PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -282,7 +288,7 @@ class ProfilePage extends React.Component {
 
     return (
       <div style={{margin: 16}}>
-        <h1>Profil</h1>
+        <h1><FormattedMessage id='editProfile.title' /></h1>
         <div>
 
           {!roleValid ? (
@@ -292,25 +298,25 @@ class ProfilePage extends React.Component {
 
               <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630}}>
                 <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-                  Personendaten
+                  <FormattedMessage id='editProfile.personalDetails' />
                 </div>
                 <div style={{flex: '1 1 400px'}}>
                   <div style={{marginTop: -14}}>
-                    <TextField fullWidth floatingLabelText='Name' value={name} onChange={this.handleNameChange} />
+                    <TextField fullWidth floatingLabelText={this.props.intl.formatMessage({id: 'editProfile.name'})} value={name} onChange={this.handleNameChange} />
                   </div>
-                  <div style={{marginTop: 16, marginBottom: 8, fontWeight: 700, fontSize: 14}}>Profilbild</div>
+                  <div style={{marginTop: 16, marginBottom: 8, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.profilePicture' /></div>
                   <div style={{display: 'flex'}}>
                     <Dropzone accept='image/*' style={{cursor: 'pointer', flex: '0 0 auto', margin: 5, padding: 5}} activeStyle={{backgroundColor: '#eee'}} onDrop={this.handleDrop}>
                       <div>
                         <img style={{borderRadius: '50%', width: 128, height: 128}} src={picture} />
                       </div>
                       <div style={{textAlign: 'center'}}>
-                        <a href='#' onClick={this.cancel}>Hochladen</a>
+                        <a href='#' onClick={this.cancel}><FormattedMessage id='editProfile.uploadPicture' /></a>
                       </div>
                     </Dropzone>
                     <div style={{margin: 10}}>
                       <div style={{marginBottom: 10}}>
-                        Wähle einen Avatar:
+                        <FormattedMessage id='editProfile.chooseAvatar' />
                       </div>
                       <div>
                         <a style={{margin: 5}} href='#' title='Use gravatar' onClick={this.handleGravatarClick}><img src={this.gravatarUrl} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
@@ -328,8 +334,8 @@ class ProfilePage extends React.Component {
               <Topics topics={topics} introduction={introduction} onChange={this.handleChange} />
 
               <div style={{marginTop: 20, maxWidth: 630, display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
-                <FlatButton style={{margin: '0 10px'}} label='Zurück' onClick={this.handleBack} />
-                <RaisedButton style={{margin: '0 10px'}} label='Speichern' primary onClick={this.handleSave} />
+                <FlatButton style={{margin: '0 10px'}} label={this.props.intl.formatMessage({id: 'editProfile.back'})} onClick={this.handleBack} />
+                <RaisedButton style={{margin: '0 10px'}} label={this.props.intl.formatMessage({id: 'editProfile.save'})} primary onClick={this.handleSave} />
               </div>
             </div>
           )}
@@ -341,6 +347,7 @@ class ProfilePage extends React.Component {
   }
 
 }
+const ProfilePage = injectIntl(ProfilePageRaw)
 
 class ProfileOrLoading extends React.Component {
   static propTypes = {
@@ -349,7 +356,7 @@ class ProfileOrLoading extends React.Component {
 
   render () {
     if (this.props.user) return <ProfilePage {...this.props} />
-    else return <div>Just a sec...</div>
+    else return <div><FormattedMessage id='editProfile.pleaseWait' /></div>
   }
 }
 
