@@ -1,10 +1,7 @@
-import createDebug from 'debug'
-import log from './log'
 import axios from 'axios'
 import qs from 'qs'
 import Mixpanel from 'mixpanel'
-
-const debug = createDebug('dhm:Events')
+import log from './log'
 
 export class Events {
   constructor ({console, gaTrackingId, mixpanelToken} = {}) {
