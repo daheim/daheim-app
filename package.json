@@ -1,4 +1,7 @@
 {
+  "name": "daheim-app",
+  "version": "1.0.0-dev",
+  "private": true,
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
     "babel-cli": "^6.8.0",
