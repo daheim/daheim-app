@@ -3,7 +3,7 @@
   "extends": "standard",
   "plugins": ["babel", "standard"],
   "rules": {
-    "linebreak-style": [2, "unix"],
+    "linebreak-style": [0, "unix"],
 
     "arrow-parens": 0,
     "generator-star-spacing": 0,
