@@ -6,14 +6,14 @@
   "main": "lib/app.js",
   "scripts": {
     "start": "NODE_ENV=production node lib/app",
-    "dev": "../../node_modules/.bin/better-npm-run dev",
-    "check": "../../node_modules/.bin/eslint .",
-    "build": "../../node_modules/.bin/babel src/ -d lib/ --copy-files --source-maps true",
+    "dev": "better-npm-run dev",
+    "check": "eslint .",
+    "build": "babel src/ -d lib/ --copy-files --source-maps true",
     "clean": "rm -rf lib"
   },
   "betterScripts": {
     "dev": {
-      "command": "../../node_modules/.bin/babel-watch src/app | ../../node_modules/.bin/bunyan -o short",
+      "command": "babel-watch src/app | bunyan -o short",
       "env": {
         "NODE_ENV": "development"
       }
@@ -50,12 +50,21 @@
     "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.5.8",
     "newrelic": "^1.22.0",
-    "node-uuid": "^1.4.3",
+    "node-uuid": "^1.4.7",
     "passport": "^0.3.0",
     "passport-jwt": "^2.0.0",
     "passport-local": "^1.0.0",
+    "sendgrid": "^4.7.1",
     "source-map-support": "^0.4.0",
     "spdy": "^3.3.2",
     "web-push": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-watch": "^2.0.3",
+    "better-npm-run": "0.0.13",
+    "bunyan": "^1.8.5",
+    "eslint": "^3.10.2"
   }
 }
