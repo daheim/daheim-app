@@ -4,6 +4,33 @@ Welcome home! Willkommen Daheim! [willkommen-daheim.org](https://willkommen-dahe
 
 Daheim is a German non-profit NGO with the mission of teaching language and culture for free to refugees arriving to Germany. We connect German native volunteers with people that would like to learn over an online video platform.
 
+# Getting Started
+
+Prerequisites:
+
+  * node greater than 6.0.0
+  * npm greater than 3.0
+  * docker running and controllable with docker-compose
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Copy `.env.example` file to `.env` in the follwing directories:
+
+  * packages/daheim-app-api
+  * packages/daheim-app-live
+  * packages/daheim-app-ui
+
+Run local development version:
+
+```bash
+npm run dev
+```
+
+
 # Daheim App Monorepo
 
 This repository contains the web application that connects the users through WebRTC. It contains different modules that are organized into microservices. The different modules are wired together by [Lerna](https://lernajs.io/).
