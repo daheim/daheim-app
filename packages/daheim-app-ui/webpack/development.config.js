@@ -48,7 +48,7 @@ var common = {
       },
       {
         test: /\.jsx?$/,
-        loader: (ENV === 'development' ? 'react-hot!' : '') + 'babel?cacheDirectory',
+        loader: 'babel?cacheDirectory',
         exclude: /node_modules/
         // include: PATHS.src
       },
