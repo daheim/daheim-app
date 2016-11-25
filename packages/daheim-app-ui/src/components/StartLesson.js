@@ -99,10 +99,11 @@ class StartLesson extends Component {
       <FlatButton
         key='start'
         className='start'
-        label='Gespräch starten'
+        label={'los geht\'s'}
         primary
         disabled={!!(startLessonPromise || lessonId)}
         onTouchTap={this.handleStartLesson}
+        style={{color: 'white', backgroundColor: '#E61C78', fontWeight: 'bold'}}
       />
     ]
 

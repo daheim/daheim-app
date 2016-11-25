@@ -64,9 +64,10 @@ class InvitedToLessonDialog extends Component {
       <FlatButton
         key='start'
         className='start'
-        label='Gespräch starten'
+        label={'LOS GEHT\'S'}
         primary
         onTouchTap={this.handleAccept}
+        style={{color: 'white', backgroundColor: '#E61C78', fontWeight: 'bold'}}
       />
     ]
 
@@ -76,7 +77,7 @@ class InvitedToLessonDialog extends Component {
           {actions}
         </div>
         <h2>Neues Gespräch</h2>
-        <ProfilePage params={{userId: this.props.lesson.teacherId}} reviewEditable={false} onReportUser={this.handleReportUser} />
+        <ProfilePage params={{userId: this.props.lesson.teacherId}} reviewEditable={false} />
       </Modal>
     )
   }
