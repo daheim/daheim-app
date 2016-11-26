@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node lib/app",
     "dev": "better-npm-run dev",
     "check": "eslint .",
-    "build": "../babel src/ -d lib/ --copy-files --source-maps true",
+    "build": "babel src/ -d lib/ --copy-files --source-maps true",
     "clean": "rm -rf lib"
   },
   "bin": {
