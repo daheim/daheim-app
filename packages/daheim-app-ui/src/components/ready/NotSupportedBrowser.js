@@ -37,8 +37,8 @@ class NotSupportedBrowser extends Component {
           <div style={{textAlign: 'center'}}>
             <div style={{marginBottom: 24}}><FormattedMessage id='browserNotSupported' /></div>
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
-              <div style={{padding: '0 24px'}}><a href={NotSupportedBrowser.FIREFOX_URL} target='_blank'><img src='https://assets.daheimapp.de/media/firefox_logo.png' style={{width: 96, height: 96}} /></a></div>
-              <div style={{padding: '0 24px'}}><a href={NotSupportedBrowser.CHROME_URL} target='_blank'><img src='https://assets.daheimapp.de/media/chrome_logo.svg' style={{width: 96, height: 96}} /></a></div>
+              <div style={{padding: '0 24px'}}><a href={NotSupportedBrowser.FIREFOX_URL} target='_blank'><img src='https://assets.willkommen-daheim.org/media/firefox_logo.png' style={{width: 96, height: 96}} /></a></div>
+              <div style={{padding: '0 24px'}}><a href={NotSupportedBrowser.CHROME_URL} target='_blank'><img src='https://assets.willkommen-daheim.org/media/chrome_logo.svg' style={{width: 96, height: 96}} /></a></div>
             </div>
           </div>
         ) : (
@@ -46,9 +46,9 @@ class NotSupportedBrowser extends Component {
             <div style={{marginBottom: 24}}><FormattedMessage id='browserTooOld' values={{browserName: browser.name}} /></div>
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
               {browser.chrome ? (
-                <div><a href={NotSupportedBrowser.CHROME_URL} target='_blank'><img src='https://assets.daheimapp.de/media/chrome_logo.svg' style={{width: 96, height: 96}} /></a></div>
+                <div><a href={NotSupportedBrowser.CHROME_URL} target='_blank'><img src='https://assets.willkommen-daheim.org/media/chrome_logo.svg' style={{width: 96, height: 96}} /></a></div>
               ) : (
-                <div><a href={NotSupportedBrowser.FIREFOX_URL} target='_blank'><img src='https://assets.daheimapp.de/media/firefox_logo.png' style={{width: 96, height: 96}} /></a></div>
+                <div><a href={NotSupportedBrowser.FIREFOX_URL} target='_blank'><img src='https://assets.willkommen-daheim.org/media/firefox_logo.png' style={{width: 96, height: 96}} /></a></div>
               )}
             </div>
           </div>

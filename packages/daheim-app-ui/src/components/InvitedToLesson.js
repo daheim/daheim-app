@@ -19,7 +19,7 @@ class InvitedToLessonDialog extends Component {
   componentDidMount () {
     if (!this.sound) {
       this.sound = new Howl({
-        src: ['https://assets.daheimapp.de/public/assets/lesson.mp3']
+        src: ['https://assets.willkommen-daheim.org/public/assets/lesson.mp3']
       })
     }
 
