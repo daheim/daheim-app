@@ -27,8 +27,15 @@ class NotYetOpenPage extends Component {
         <h1>Schön, dass du da bist!</h1>
         <div style={{marginBottom: 30}}><img style={{width: 200}} src='https://assets.willkommen-daheim.org/media/Daheim_Baustelle.svg' /></div>
         <div style={{lineHeight: '150%', marginBottom: 30}}>
-          Du willst noch vor Beginn dabei sein und testen?<br />
-          Sag uns gern Bescheid: <a href='mailto:hallo@willkommen-daheim.org'>hallo@willkommen-daheim.org</a>!
+          Je mehr Menschen gleichzeitig auf ‘Daheim’ sind,
+          desto höher ist die Chance, dass viele nette Gespräche entstehen können.<br />
+          Daher wäre es toll, wenn Du zunächst vor allem zu unseren <b>zwei festen Terminen</b> auf 'Daheim' kommen würdest:<br /><br />
+          <b>Jeden Mittwoch, zwischen 18 und 20 Uhr</b><br /><br />
+          und<br /><br />
+          <b>jeden Sonntag, zwischen 16 und 18 Uhr</b><br /><br />
+          könnt Ihr Euch hier treffen und unterhalten!<br /><br />
+          Wir wünschen Dir viel Spaß!<br />
+          Dein 'Daheim'-Team
         </div>
 
         <div style={{lineHeight: '150%', marginBottom: 10}}>
