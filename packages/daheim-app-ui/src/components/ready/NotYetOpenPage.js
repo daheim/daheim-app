@@ -25,7 +25,7 @@ class NotYetOpenPage extends Component {
     return (
       <div style={{textAlign: 'center'}} className='notYetOpen'>
         <h1>Schön, dass du da bist!</h1>
-        <div style={{marginBottom: 30}}><img style={{width: 200}} src='https://assets.willkommen-daheim.org/media/Daheim_Baustelle.svg' /></div>
+        <div style={{marginBottom: 30}}><img style={{width: 200}} src='https://assets.willkommen-daheim.org/media/Newsletter-Bilder_RGB-06-1.png' /></div>
         <div style={{lineHeight: '150%', marginBottom: 30}}>
           Je mehr Menschen gleichzeitig auf ‘Daheim’ sind,
           desto höher ist die Chance, dass viele nette Gespräche entstehen können.<br />
