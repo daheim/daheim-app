@@ -123,5 +123,10 @@
   "notYetOpenPage.welcome": "Schön, dass du da bist!",
   "notYetOpenPage.paragraph": "Je mehr Menschen gleichzeitig auf ‘Daheim’ sind, desto höher ist die Chance, dass viele nette Gespräche entstehen können.<br />Daher wäre es toll, wenn Du zunächst vor allem zu unseren <b>zwei festen Terminen</b> auf 'Daheim' kommen würdest:<br /><br /><b>Jeden Mittwoch, zwischen 18 und 20 Uhr</b><br /><br />und<br /><br /><b>jeden Sonntag, zwischen 16 und 18 Uhr</b><br /><br />könnt Ihr Euch hier treffen und unterhalten!<br /><br />Wir wünschen Dir viel Spaß!<br />Dein 'Daheim'-Team",
   "notYetOpenPage.dontWantToMissTheOfficialStart_signUpForNewsletter": "Du willst den offiziellen Start nicht verpassen? Melde dich für den Newsletter an:",
-  "notYetOpenPage.wantToBrowse_enjoy": "Du willst Dich trotzdem umschauen? Viel Spaß!"
+  "notYetOpenPage.wantToBrowse_enjoy": "Du willst Dich trotzdem umschauen? Viel Spaß!",
+
+  "readyUsers.level": "Stufe: {level} / 5",
+  "readyUsers.letsGo": "Los geht's",
+  "readyUsers.studentsOnline": "SchülerInnen Online",
+  "readyUsers.studentsOffline": "Es tut uns leid, leider sind gerade keine passenden Gesprächspartner online."
 }

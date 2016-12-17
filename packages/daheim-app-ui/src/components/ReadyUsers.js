@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import {FormattedMessage} from 'react-intl'
 
 import StartLesson from './StartLesson'
 import {startLesson} from '../actions/live'
@@ -31,8 +32,10 @@ class ReadyUser extends Component {
         <img className={style.picture} src={picture} />
         <div className={style.content}>
           <div className={style.name}>{name}</div>
-          <div className={style.level}>Stufe: {germanLevel} / 5</div>
-          <div className={style.topic}><a href='#'>Los geht's</a></div>
+          <div className={style.level}>
+            <FormattedMessage id='readyUsers.level' values={{level: germanLevel}} />
+          </div>
+          <div className={style.topic}><a href='#'><FormattedMessage id='readyUsers.letsGo' /></a></div>
         </div>
       </div>
     )
@@ -88,9 +91,9 @@ class ReadyUsers extends Component {
 
     return (
       <div>
-        <h2>SchülerInnen Online</h2>
+        <h2><FormattedMessage id='readyUsers.studentsOnline' /></h2>
         {readyUsers.length === 0 ? (
-          <div>Es tut uns leid, leider sind gerade keine passenden Gesprächspartner online.</div>
+          <div><FormattedMessage id='readyUsers.studentsOffline' /></div>
         ) : (
           readyUsers.map(({id}) => {
             const user = users[id]
