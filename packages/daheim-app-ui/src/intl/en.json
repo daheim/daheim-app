@@ -118,5 +118,10 @@
   "notificationSettings.sendTest": "Send Test Notification",
   "notificationSettings.notSubscribed": "This device is NOT subscribed to receive notifications.",
   "notificationSettings.subscribe": "Enable Notifications",
-  "notificationSettings.description": "We can send you a notification when there is a suitable partner is available for a nice conversation. This way we can notify you even if the Daheim page is closed. Don't forget to open this page on your phone too to enable receiving notification on that device too."
+  "notificationSettings.description": "We can send you a notification when there is a suitable partner is available for a nice conversation. This way we can notify you even if the Daheim page is closed. Don't forget to open this page on your phone too to enable receiving notification on that device too.",
+
+  "notYetOpenPage.welcome": "Schön, dass du da bist!",
+  "notYetOpenPage.paragraph": "Je mehr Menschen gleichzeitig auf ‘Daheim’ sind, desto höher ist die Chance, dass viele nette Gespräche entstehen können.<br />Daher wäre es toll, wenn Du zunächst vor allem zu unseren <b>zwei festen Terminen</b> auf 'Daheim' kommen würdest:<br /><br /><b>Jeden Mittwoch, zwischen 18 und 20 Uhr</b><br /><br />und<br /><br /><b>jeden Sonntag, zwischen 16 und 18 Uhr</b><br /><br />könnt Ihr Euch hier treffen und unterhalten!<br /><br />Wir wünschen Dir viel Spaß!<br />Dein 'Daheim'-Team",
+  "notYetOpenPage.dontWantToMissTheOfficialStart_signUpForNewsletter": "Du willst den offiziellen Start nicht verpassen? Melde dich für den Newsletter an:",
+  "notYetOpenPage.wantToBrowse_enjoy": "Du willst Dich trotzdem umschauen? Viel Spaß!"
 }
