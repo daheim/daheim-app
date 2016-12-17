@@ -128,5 +128,18 @@
   "readyUsers.level": "Stufe: {level} / 5",
   "readyUsers.letsGo": "Los geht's",
   "readyUsers.studentsOnline": "SchülerInnen Online",
-  "readyUsers.studentsOffline": "Es tut uns leid, leider sind gerade keine passenden Gesprächspartner online."
+  "readyUsers.studentsOffline": "Es tut uns leid, leider sind gerade keine passenden Gesprächspartner online.",
+
+  "reviewList.previousConversations": "Vorherige Gespräche",
+  "reviewList.retry": "nochmal versuchen",
+  "reviewList.date": "Datum",
+  "reviewList.partner": "Partner",
+  "reviewList.duration": "Länge",
+  "reviewList.feedback": "Feedback",
+  "reviewList.feedbackReady": "Feedback fertig",
+  "reviewList.postFeedback": "Feedback abgeben",
+  "reviewList.unnamed": "[kein Name]",
+  "reviewList.noPreviousLessons": "Du hast noch keine vorherige Lektionen.",
+  "reviewList.loading": "wird geladen",
+  "reviewList.userAccountClosed": "Benuzter Konto abgeschlossen"
 }
