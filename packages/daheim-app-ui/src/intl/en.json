@@ -193,5 +193,11 @@
   "talkAbout.eatAndDrink": "...Essen und Trinken",
   "talkAbout.bread": "Brot",
   "talkAbout.sausage": "Wurst",
-  "talkAbout.apple": "Apfel"
+  "talkAbout.apple": "Apfel",
+
+  "proficiencyRating.level1": "Einige Wörter",
+  "proficiencyRating.level2": "Einige Sätze",
+  "proficiencyRating.level3": "Fähig, ein fließendes Gespräch über einfache Themen zu führen",
+  "proficiencyRating.level4": "Fähig, ein Gespräch über komplexe Themen zu führen",
+  "proficiencyRating.level5": "Deutsch-Profi"
 }
