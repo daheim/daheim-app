@@ -10,6 +10,7 @@ export default class ProficiencyRating extends Component {
     values: PropTypes.object,
     style: PropTypes.object,
     value: PropTypes.string
+    // TODO , intl: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -19,6 +20,13 @@ export default class ProficiencyRating extends Component {
       3: 'Fähig, ein fließendes Gespräch über einfache Themen zu führen',
       4: 'Fähig, ein Gespräch über komplexe Themen zu führen',
       5: 'Deutsch-Profi'
+      /* TODO ..ok, ok, runtime..
+      1: this.props.intl.formatMessage({id: 'proficiencyRating.level1'}),
+      2: this.props.intl.formatMessage({id: 'proficiencyRating.level2'}),
+      3: this.props.intl.formatMessage({id: 'proficiencyRating.level3'}),
+      4: this.props.intl.formatMessage({id: 'proficiencyRating.level4'}),
+      5: this.props.intl.formatMessage({id: 'proficiencyRating.level5'})
+      */
     }
   }
 
