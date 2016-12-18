@@ -141,5 +141,18 @@
   "reviewList.unnamed": "[kein Name]",
   "reviewList.noPreviousLessons": "Du hast noch keine vorherige Lektionen.",
   "reviewList.loading": "wird geladen",
-  "reviewList.userAccountClosed": "Benuzter Konto abgeschlossen"
+  "reviewList.userAccountClosed": "Benuzter Konto abgeschlossen",
+
+  "talkAbout.whatToTalkAbout": "Über was kann man reden?",
+  "talkAbout.alphabet": "...das Alphabet",
+  "talkAbout.weather": "...das Wetter",
+  "talkAbout.germany": "...Deutschland",
+  "talkAbout.federalStates": "die Bundesländer",
+  "talkAbout.capitalCityBerlin": "Hauptstadt Berlin",
+  "talkAbout.importantStuff": "...wichtige Dinge",
+  "talkAbout.refugeesWelcome": "Flüchtlinge Willkommen",
+  "talkAbout.eatAndDrink": "...Essen und Trinken",
+  "talkAbout.bread": "Brot",
+  "talkAbout.sausage": "Wurst",
+  "talkAbout.apple": "Apfel"
 }
