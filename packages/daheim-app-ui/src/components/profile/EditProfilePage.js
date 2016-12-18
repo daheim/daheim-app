@@ -47,6 +47,30 @@ class LanguagesRaw extends Component {
     'Farsi', 'Französisch', 'Griechisch', 'Hindi', 'Italienisch', 'Kroatisch', 'Kurdisch',
     'Paschtu', 'Polnisch', 'Portugiesisch', 'Rumänisch', 'Russisch', 'Spanisch', 'Serbisch',
     'Türkisch']
+  /* TODO
+  static suggestions = [
+    this.props.intl.formatMessage({id: 'editProfile.lang.ar'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.sq'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.hy'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.zh'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.prs'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.en'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.fa'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.fr'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.gr'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.hi'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.it'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.hr'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.ku'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.ps'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.pl'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.pt'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.ro'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.ru'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.es'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.sr'}),
+    this.props.intl.formatMessage({id: 'editProfile.lang.tr'})]
+  */
 
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 
@@ -105,16 +129,39 @@ class LanguagesRaw extends Component {
 const Languages = injectIntl(LanguagesRaw)
 
 class Topics extends React.Component {
+// TODO class TopicsRaw extends React.Component {
 
   static propTypes = {
     topics: PropTypes.object.isRequired,
     introduction: PropTypes.string.isRequired,
     onChange: PropTypes.func
+    // TODO , intl: PropTypes.object.isRequired
   }
 
   static suggestions = ['Schule / Ausbildung', 'Fotographie', 'Computerspiele', 'Sprachen', 'Kreatives', 'Technik',
     'Essen & Trinken', 'Kunst & Kultur', 'Sport', 'Familie', 'Bücher', 'Natur', 'Prominente',
     'Musik', 'Reisen', 'Politik', 'Filme & Serien', 'Typisch Deutsch']
+  /* TODO
+  static suggestions = [
+    this.props.intl.formatMessage({id: 'editProfile.topic.education'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.photography'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.gaming'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.languages'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.creative'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.tech'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.food'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.artAndCulture'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.sports'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.family'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.literature'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.nature'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.celebrities'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.music'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.travelling'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.politics'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.movies'}),
+    this.props.intl.formatMessage({id: 'editProfile.topic.germanisms'})]
+  */
 
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 
@@ -132,6 +179,7 @@ class Topics extends React.Component {
 
     const leftovers = {...topics}
     Topics.suggestions.forEach((suggestion) => delete leftovers[suggestion])
+    // TODO TopicsRaw.suggestions.forEach((suggestion) => delete leftovers[suggestion])
 
     return (
       <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 20}}>
@@ -142,6 +190,7 @@ class Topics extends React.Component {
           <div style={{fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.likeToTalkAbout' /></div>
           <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 8}}>
             {[...Topics.suggestions, ...Object.keys(leftovers)].map((topic) =>
+            // TODO {[...TopicsRaw.suggestions, ...Object.keys(leftovers)].map((topic) =>
               <div key={topic} style={{flex: '0 0 250px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector={topic} onCheck={this.handleCheck} /></div>)}
           </div>
 
@@ -154,6 +203,7 @@ class Topics extends React.Component {
     )
   }
 }
+// TODO const Topics = injectIntl(TopicsRaw)
 
 class ValuedCheckbox extends React.Component {
 
