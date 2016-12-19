@@ -203,5 +203,8 @@
 
   "invitedToLesson.btnCancel": "Abbrechen",
   "invitedToLesson.btnStart": "LOS GEHT'S",
-  "invitedToLesson.newConversation": "Neues Gespräch"
+  "invitedToLesson.newConversation": "Neues Gespräch",
+
+  "closedLesson.conversationEnded": "Das Gespräch wurde beendet",
+  "closedLesson.reason": "Reason"
 }
