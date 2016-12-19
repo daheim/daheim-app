@@ -206,5 +206,9 @@
   "invitedToLesson.newConversation": "Neues Gespräch",
 
   "closedLesson.conversationEnded": "Das Gespräch wurde beendet",
-  "closedLesson.reason": "Reason"
+  "closedLesson.reason": "Reason",
+
+  "sendReview.pleaseDropAFewLines": "Bitte schreib ein Paar Worte über {name}!",
+  "sendReview.germanLanguageKnowlegde": "Deutschkenntnis",
+  "sendReview.save": "Speichern"
 }

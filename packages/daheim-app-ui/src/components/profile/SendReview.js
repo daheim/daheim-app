@@ -1,13 +1,15 @@
 import React, {PropTypes, Component} from 'react'
 import ProficiencyRating from '../ProficiencyRating'
 import RaisedButton from 'material-ui/RaisedButton'
+import {FormattedMessage} from 'react-intl'
 
 export default class SendReview extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
     onRequestClose: PropTypes.func,
-    sendReview: PropTypes.func.isRequired
+    sendReview: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   constructor (props) {
@@ -53,10 +55,11 @@ export default class SendReview extends Component {
 
     return (
       <form>
-        <div><textarea placeholder={`Bitte schreib ein Paar Worte über ${name}!`} style={{width: '100%', height: 100, borderRadius: 4, fontSize: 14, padding: 6, borderColor: '#AAA', marginTop: 2}} value={text} onChange={this.handleTextChange} /></div>
-        <div style={{marginBottom: 8}}>Deutschkenntnis:</div>
+        <div><textarea placeholder={this.props.intl.formatMessage({id: 'sendReview.pleaseDropAFewLines', values: name})}
+          style={{width: '100%', height: 100, borderRadius: 4, fontSize: 14, padding: 6, borderColor: '#AAA', marginTop: 2}} value={text} onChange={this.handleTextChange} /></div>
+        <div style={{marginBottom: 8}}><FormattedMessage id='sendReview.germanLanguageKnowlegde' />:</div>
         <div style={{marginBottom: 8}}><ProficiencyRating value={String(rating)} onChange={this.handleRatingChange} /></div>
-        <div><RaisedButton label='Speichern' primary onClick={this.handleSend} /></div>
+        <div><RaisedButton label={this.props.intl.formatMessage({id: 'sendReview.save'})} primary onClick={this.handleSend} /></div>
       </form>
     )
   }
