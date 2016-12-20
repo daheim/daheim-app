@@ -25,8 +25,7 @@ class NotYetOpenPage extends Component {
   render () {
     return (
       <div style={{textAlign: 'center'}} className='notYetOpen'>
-        <h1><FormattedMessage id='notYetOpenPage.welcome' /></h1>
-        <div style={{marginBottom: 30}}><img style={{width: 200}} src='https://assets.willkommen-daheim.org/media/Daheim_Baustelle.svg' /></div>
+        <div style={{marginBottom: 30}}><img style={{width: 200}} src='https://assets.willkommen-daheim.org/media/Newsletter-Bilder_RGB-06-1.png' /></div>
         <div style={{lineHeight: '150%', marginBottom: 30}}>
           <FormattedHTMLMessage id='notYetOpenPage.paragraph' />
         </div>
