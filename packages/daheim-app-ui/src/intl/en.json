@@ -210,5 +210,9 @@
 
   "sendReview.pleaseDropAFewLines": "Bitte schreib ein Paar Worte über {name}!",
   "sendReview.germanLanguageKnowlegde": "Deutschkenntnis",
-  "sendReview.save": "Speichern"
+  "sendReview.save": "Speichern",
+
+  "timeToChoose.whatAreYou": "Wer bist du?",
+  "timeToChoose.areYouStudent": "Bist du Sprachschüler?",
+  "timeToChoose.areYouCoach": "Bist du Sprachcoach?"
 }
