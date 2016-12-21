@@ -214,5 +214,11 @@
 
   "timeToChoose.whatAreYou": "Wer bist du?",
   "timeToChoose.areYouStudent": "Bist du Sprachschüler?",
-  "timeToChoose.areYouCoach": "Bist du Sprachcoach?"
+  "timeToChoose.areYouCoach": "Bist du Sprachcoach?",
+
+  "startLesson.waitForPartner": "Warten auf Gesprächspartner",
+  "startLesson.studenDidNotAcceptLesson": "Student did not accept lesson",
+  "startLesson.btnGo": "los geht's",
+  "startLesson.btnCancel": "Abbrechen",
+  "startLesson.running": "Läuft..."
 }
