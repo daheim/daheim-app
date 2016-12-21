@@ -220,5 +220,11 @@
   "startLesson.studenDidNotAcceptLesson": "Student did not accept lesson",
   "startLesson.btnGo": "los geht's",
   "startLesson.btnCancel": "Abbrechen",
-  "startLesson.running": "Läuft..."
+  "startLesson.running": "Läuft...",
+
+  "lessonPage.endConversation": "Gespräch beenden",
+  "lessonPage.joinLesson": "Join Lesson",
+  "lessonPage.closeLesson": "Close Lesson",
+  "lessonPage.waitingForStudentToConnect": "Waiting for student to connect...",
+  "lessonPage.youAreBeingConnected": "Du wirst verbunden..."
 }

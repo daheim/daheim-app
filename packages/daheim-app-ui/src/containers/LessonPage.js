@@ -1,5 +1,6 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
+import {FormattedMessage} from 'react-intl'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -31,7 +32,8 @@ class LessionPage extends React.Component {
   static propTypes = {
     lesson: PropTypes.object.isRequired,
     leave: PropTypes.func.isRequired,
-    join: PropTypes.func.isRequired
+    join: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   state = {
@@ -90,7 +92,7 @@ class LessionPage extends React.Component {
   }
 
   render () {
-    const {lesson} = this.props
+    const {lesson, intl} = this.props
     const {remoteStreamUrl, localStreamUrl} = lesson
     const {remoteVideoWidth, remoteVideoHeight} = this.state
 
@@ -108,11 +110,11 @@ class LessionPage extends React.Component {
         ) : (
           <div>
             <div style={{textAlign: 'center'}}><CircularProgress /></div>
-            <div style={{textAlign: 'center'}}>Du wirst verbunden...</div>
+            <div style={{textAlign: 'center'}}><FormattedMessage id='lessonPage.youAreBeingConnected' /></div>
           </div>
         )}
         <div style={{position: 'absolute', bottom: 10, left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <RaisedButton className='finishLesson' label='Gespräch beenden' primary onClick={this.handleLeave} />
+          <RaisedButton className='finishLesson' label={intl.formatMessage({id: 'lessonPage.endConversation'})} primary onClick={this.handleLeave} />
         </div>
       </div>
     )
@@ -124,7 +126,8 @@ class NotParticipating extends Component {
   static propTypes = {
     lesson: PropTypes.object.isRequired,
     leave: PropTypes.func.isRequired,
-    join: PropTypes.func.isRequired
+    join: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   handleLeave = () => {
@@ -136,12 +139,13 @@ class NotParticipating extends Component {
   }
 
   render () {
+    const {intl} = this.props
     return (
       <div style={{margin: 16}}>
-        <h1>Join Lesson</h1>
+        <h1><FormattedMessage id='lessonPage.joinLesson' /></h1>
         <div>
-          <RaisedButton label='Join Lesson' primary onClick={this.handleJoin} />
-          <FlatButton label='Close Lesson' onClick={this.handleLeave} />
+          <RaisedButton label={intl.formatMessage({id: 'lessonPage.joinLesson'})} primary onClick={this.handleJoin} />
+          <FlatButton label={intl.formatMessage({id: 'lessonPage.closeLesson'})} onClick={this.handleLeave} />
         </div>
       </div>
     )
@@ -151,7 +155,8 @@ class NotParticipating extends Component {
 class NotActive extends Component {
   static propTypes = {
     lesson: PropTypes.object.isRequired,
-    leave: PropTypes.func.isRequired
+    leave: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   handleLeave = () => {
@@ -159,11 +164,12 @@ class NotActive extends Component {
   }
 
   render () {
+    const {intl} = this.props
     return (
       <div style={{margin: 16}}>
-        <h1>Waiting for student to connect...</h1>
+        <h1><FormattedMessage id='lessonPage.waitingForStudentToConnect' /></h1>
         <div>
-          <RaisedButton label='Close Lesson' primary onClick={this.handleLeave} />
+          <RaisedButton label={intl.formatMessage({id: 'lessonPage.closeLesson'})} primary onClick={this.handleLeave} />
         </div>
       </div>
     )
