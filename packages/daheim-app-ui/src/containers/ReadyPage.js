@@ -55,8 +55,9 @@ class ReadyOrNotYetOpen extends Component {
   }
 
   render () {
-    if (this.props.accepted) return <ReadyPage />
-    return <NotYetOpenPage />
+    // if (this.props.accepted) return <ReadyPage />
+    // return <NotYetOpenPage />
+    return <ReadyPage />
   }
 }
 
