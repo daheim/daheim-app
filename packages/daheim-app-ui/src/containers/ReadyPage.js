@@ -8,7 +8,7 @@ import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
 import ReadySwitch from '../components/ready/ReadySwitch'
 import TimeToChoose from '../components/ready/TimeToChoose'
-import NotYetInOperation from '../components/NotYetInOperation'
+// import NotYetInOperation from '../components/NotYetInOperation'
 import NotSupportedBrowser from '../components/ready/NotSupportedBrowser'
 
 class ReadyPageRaw extends React.Component {
@@ -27,7 +27,6 @@ class ReadyPageRaw extends React.Component {
 
         <TimeToChoose />
         <NotSupportedBrowser />
-        <NotYetInOperation />
 
         {role === 'student' ? (
           <ReadySwitch />
