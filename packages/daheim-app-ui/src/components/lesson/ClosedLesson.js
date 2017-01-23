@@ -1,6 +1,8 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
+import {FormattedMessage} from 'react-intl'
+
 import PublicProfilePage from '../profile/PublicProfilePage'
 
 class ClosedLesson extends Component {
@@ -13,9 +15,9 @@ class ClosedLesson extends Component {
     const {closeReason, partnerId} = this.props
     return (
       <div style={{margin: 16}}>
-        <h1>Das Gespräch wurde beendet</h1>
+        <h1><FormattedMessage id='closedLesson.conversationEnded' /></h1>
         {partnerId ? <PublicProfilePage params={{userId: partnerId}} /> : null}
-        <p style={{color: 'rgba(0, 0, 0, 0)'}}>Reason: {closeReason}</p>
+        <p style={{color: 'rgba(0, 0, 0, 0)'}}><FormattedMessage id='closedLesson.reason' />: {closeReason}</p>
       </div>
     )
   }

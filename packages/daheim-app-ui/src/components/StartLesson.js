@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {FormattedMessage} from 'react-intl'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import Modal from '../Modal'
@@ -20,12 +21,12 @@ class LessonGuardRaw extends Component {
       return (
         <div style={{display: 'flex', alignItems: 'center', marginTop: 20, marginLeft: 16}}>
           <CircularProgress />
-          <div style={{margin: 10, fontWeight: 700}}>Warten auf Gesprächspartner</div>
+          <div style={{margin: 10, fontWeight: 700}}><FormattedMessage id='startLesson.waitForPartner' /></div>
         </div>
       )
     } else {
       return (
-        <div style={{background: '#FA8072', border: 'solid 1px darkred', padding: 16, color: 'black', margin: '10px 0', borderRadius: 2}}>Student did not accept lesson</div>
+        <div style={{background: '#FA8072', border: 'solid 1px darkred', padding: 16, color: 'black', margin: '10px 0', borderRadius: 2}}><FormattedMessage id='startLesson.studenDidNotAcceptLesson' /></div>
       )
     }
   }
@@ -42,7 +43,8 @@ class StartLesson extends Component {
     user: PropTypes.object.isRequired,
     onRequestClose: PropTypes.func.isRequired,
     startLesson: PropTypes.func.isRequired,
-    leaveIfNotStarted: PropTypes.func.isRequired
+    leaveIfNotStarted: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   state = {
@@ -86,20 +88,20 @@ class StartLesson extends Component {
   }
 
   render () {
-    const {user, onRequestClose} = this.props
+    const {user, intl, onRequestClose} = this.props
     const {startLessonPromise, error, lessonId} = this.state
 
     const actions = [
       <FlatButton
         key='cancel'
         className='cancel'
-        label='Abbrechen'
+        label={intl.formatMessage({id: 'startLesson.btnCancel'})}
         onTouchTap={onRequestClose}
       />,
       <FlatButton
         key='start'
         className='start'
-        label={'los geht\'s'}
+        label={intl.formatMessage({id: 'startLesson.btnGo'})}
         primary
         disabled={!!(startLessonPromise || lessonId)}
         onTouchTap={this.handleStartLesson}
@@ -121,7 +123,7 @@ class StartLesson extends Component {
         {startLessonPromise ? (
           <div style={{display: 'flex', alignItems: 'center'}}>
             <CircularProgress />
-            <div style={{margin: 10, fontWeight: 700}}>Läuft...</div>
+            <div style={{margin: 10, fontWeight: 700}}><FormattedMessage id='startLesson.running' /></div>
           </div>
         ) : undefined}
 

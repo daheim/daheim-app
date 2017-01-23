@@ -3,6 +3,7 @@ import moment from 'moment'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import {FormattedMessage} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {loadLessons} from '../../actions/lessons'
@@ -26,7 +27,8 @@ class ReviewList extends React.Component {
 
     push: React.PropTypes.func.isRequired,
     loadLessons: React.PropTypes.func.isRequired,
-    loadUser: React.PropTypes.func.isRequired
+    loadUser: React.PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
@@ -84,20 +86,21 @@ class ReviewList extends React.Component {
 
     return (
       <div {...this.props} style={mergedStyle}>
-        <h2>Vorherige Gespräche</h2>
+        <h2><FormattedMessage id='reviewList.previousConversations' /></h2>
         <LoadingPanel loading={lessonList.meta.loading && !lessonList.meta.loaded}>
           {error ? (
-            <p style={{textAlign: 'center', color: 'darkred'}}>{error}. <a href='#' onClick={this.retry}>nochmal versuchen</a></p>
+            <p style={{textAlign: 'center', color: 'darkred'}}>{error}. <a href='#' onClick={this.retry}>
+              <FormattedMessage id='reviewList.retry' /></a></p>
           ) : (
             lessonList.data.length ? (
               <table style={{width: '100%', borderCollapse: 'collapse'}} spacing='0'>
                 <thead>
                   <tr>
-                    <th style={{textAlign: 'left'}}>Datum</th>
+                    <th style={{textAlign: 'left'}}><FormattedMessage id='reviewList.date' /></th>
                     <th>&nbsp;</th>
-                    <th style={{textAlign: 'left'}}>Partner</th>
-                    <th style={{textAlign: 'left'}}>Länge</th>
-                    <th style={{textAlign: 'right'}}>Feedback</th>
+                    <th style={{textAlign: 'left'}}><FormattedMessage id='reviewList.partner' /></th>
+                    <th style={{textAlign: 'left'}}><FormattedMessage id='reviewList.duration' /></th>
+                    <th style={{textAlign: 'right'}}><FormattedMessage id='reviewList.feedback' /></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -105,27 +108,29 @@ class ReviewList extends React.Component {
                     const lesson = lessons[lessonId].data
                     const handler = (e) => this.handleRowClick(e, lesson)
                     const partnerId = lesson.participants.find((id) => id !== profile.id)
-                    const partner = users[partnerId] || {fake: true, name: 'wird geladen...'}
+                    const partner = users[partnerId] || {fake: true, name: this.props.intl.formatMessage({id: 'reviewList.loading'}) + '…'}
                     const partnerMeta = usersMeta[partnerId]
                     const partnerNotFound = partnerMeta && partnerMeta.error && partnerMeta.error.code === 'user_not_found'
                     if (partner.fake && partnerNotFound) {
-                      partner.name = 'Benuzter Konto abgeschlossen'
+                      partner.name = this.props.intl.formatMessage({id: 'reviewList.userAccountClosed'})
                     }
 
                     return (
                       <tr key={lesson.id} className={css.line} onClick={handler}>
                         <td style={{padding: '4px 0'}}>{moment(lesson.createdTime).format('lll')}</td>
                         <td>{partner.picture ? <img src={partner.picture} style={{borderRadius: '50%', width: 32, height: 32}} /> : ' '}</td>
-                        <td>{partner.name ? partner.name : '[kein Name]'}</td>
+                        <td>{partner.name ? partner.name : <FormattedMessage id='reviewList.unnamed' />}</td>
                         <td>{this.msToString(lesson.duration)}</td>
-                        <td style={{textAlign: 'right'}}>{!partner.fake && (partner.myReview ? 'Feedback fertig' : <a href='#'>Feedback abgeben</a>)}</td>
+                        <td style={{textAlign: 'right'}}>{!partner.fake && (partner.myReview
+                          ? <FormattedMessage id='reviewList.feedbackReady' />
+                          : <a href='#'><FormattedMessage id='reviewList.postFeedback' /></a>)}</td>
                       </tr>
                     )
                   })}
                 </tbody>
               </table>
             ) : (
-              <p style={{textAlign: 'center'}}>Du hast noch keine vorherige Lektionen.</p>
+              <p style={{textAlign: 'center'}}><FormattedMessage id='reviewList.noPreviousLessons' /></p>
             )
           )}
         </LoadingPanel>

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import FlatButton from 'material-ui/FlatButton'
 import {Howl} from 'howler'
 import Modal from '../Modal'
+import {FormattedMessage} from 'react-intl'
 
 import {join, leave, ready as setReady} from '../actions/live'
 import ProfilePage from './profile/PublicProfilePage'
@@ -13,7 +14,8 @@ class InvitedToLessonDialog extends Component {
     lesson: PropTypes.object.isRequired,
     join: PropTypes.func.isRequired,
     leave: PropTypes.func.isRequired,
-    setReady: PropTypes.func.isRequired
+    setReady: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   componentDidMount () {
@@ -58,13 +60,13 @@ class InvitedToLessonDialog extends Component {
       <FlatButton
         key='cancel'
         className='cancel'
-        label='Abbrechen'
+        label={this.props.intl.formatMessage({id: 'invitedToLesson.btnCancel'})}
         onTouchTap={this.handleRequestClose}
       />,
       <FlatButton
         key='start'
         className='start'
-        label={'LOS GEHT\'S'}
+        label={this.props.intl.formatMessage({id: 'invitedToLesson.btnStart'})}
         primary
         onTouchTap={this.handleAccept}
         style={{color: 'white', backgroundColor: '#E61C78', fontWeight: 'bold'}}
@@ -76,7 +78,7 @@ class InvitedToLessonDialog extends Component {
         <div className='invitedToLessonDialog' style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
           {actions}
         </div>
-        <h2>Neues Gespräch</h2>
+        <h2><FormattedMessage id='invitedToLesson.newConversation' /></h2>
         <ProfilePage params={{userId: this.props.lesson.teacherId}} reviewEditable={false} />
       </Modal>
     )
