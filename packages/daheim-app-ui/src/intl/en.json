@@ -32,8 +32,12 @@
   "changePasswordPage.newPasswordMismatch": "Not matching new passwords",
   "changePasswordPage.submit": "Change Password",
 
-  "registerPage.buttomText": "Click here to {loginLink}. Please read the {agbLink}.",
-  "registerPage.loginLinkText": "sign in",
+  "registerPage.nameLabel":"Enter your username here",
+  "registerPage.namePlaceholder":"Name",
+  "registerPage.newsletter":"I want to sign up for the newsletter.",
+  "registerPage.agb":"Yes, I accept the Terms and Conditions.",
+  "registerPage.bottomText": "You already have an account?{br}{loginLink}. Please read the {agbLink}",
+  "registerPage.loginLinkText": "Sign in here",
   "registerPage.agbLinkText": "Terms and Conditions",
 
   "userMenu.frontPage": "New Conversation",

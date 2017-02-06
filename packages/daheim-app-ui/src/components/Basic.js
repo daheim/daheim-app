@@ -8,17 +8,20 @@ export class HSpace extends Component {
   render() { return <div style={{ marginRight: this.props.v }}/> }
 }
 export class VSpace extends Component {
+  static propTypes = { v: PropTypes.string.isRequired }
   render() { return <div style={{ marginBottom: this.props.v }}/> }
 }
 
 export class Flex extends Component {
-  // static propTypes = {
-  //   align: PropTypes.string,
-  //   justify: PropTypes.string,
-  //   wrap: PropTypes.boolean,
-  //   column: PropTypes.boolean,
-  //   auto: PropTypes.boolean,
-  // }
+  static propTypes = {
+    align: PropTypes.string,
+    justify: PropTypes.string,
+    wrap: PropTypes.bool,
+    column: PropTypes.bool,
+    auto: PropTypes.bool,
+    style: PropTypes.object,
+    onClick: PropTypes.object,
+  }
 
   render() {
     const {children, align, justify, wrap, column, auto, style} = this.props
@@ -29,17 +32,19 @@ export class Flex extends Component {
     if (column) s['flexDirection'] = 'column'
     if (auto) s['flex'] = '1 1 auto'
     if (style) Object.assign(s, style)
-    return <div style={s}>{children}</div>
+    return <div style={s} onClick={this.props.onClick}>{children}</div>
   }
 }
 export class Box extends Component {
-  // static propTypes = {
-  //   align: PropTypes.string,
-  //   justify: PropTypes.string,
-  //   wrap: PropTypes.boolean,
-  //   column: PropTypes.boolean,
-  //   auto: PropTypes.boolean,
-  // }
+  static propTypes = {
+    align: PropTypes.string,
+    justify: PropTypes.string,
+    wrap: PropTypes.bool,
+    column: PropTypes.bool,
+    auto: PropTypes.bool,
+    style: PropTypes.object,
+    onClick: PropTypes.object,
+  }
 
   render() {
     const {children, align, justify, wrap, column, auto, style} = this.props
@@ -50,7 +55,7 @@ export class Box extends Component {
     if (column) s['flexDirection'] = 'column'
     if (auto) s['flex'] = '1 1 auto'
     if (style) Object.assign(s, style)
-    return <div style={s}>{children}</div>
+    return <div style={s} onClick={this.props.onClick}>{children}</div>
   }
 }
 
@@ -99,9 +104,61 @@ export class TextField extends Component {
   }
 }
 
+const CheckboxContainer = styled.div`
+  cursor: pointer;
+  position: relative;
+  overflow: visible;
+  display: table;
+  height: auto;
+  width: 100%;
+`
+
+const CheckboxBox = styled.div`
+  border-radius: 6px;
+  border: 2.666px solid ${Color.lightGreen};
+  width: 25px;
+  height: 25px;
+  background: ${p => p.checked ? `url('/icons/Icons_ready-30.svg')` : 'none'};
+`
+
+export class Checkbox extends Component {
+  static propTypes = {
+    innerRef: PropTypes.func,
+    label: PropTypes.string,
+    style: PropTypes.object,
+    checked: PropTypes.bool.isRequired,
+    onCheck: PropTypes.func.isRequired,
+  }
+
+  handleChange = (e) => {
+    this.props.onCheck(e)
+  }
+
+  render() {
+    const {label, error} = this.props
+    return (
+      <CheckboxContainer style={this.props.style}>
+        <input
+          ref={this.props.innerRef}
+          type='checkbox'
+          style={{position: 'absolute', opacity: 0, zIndex: -2}}
+          checked={this.props.checked}
+          onChange={this.handleChange}
+        />
+        <Flex onClick={() => this.handleChange({target: {checked: !this.props.checked}})}>
+          <CheckboxBox checked={this.props.checked}/>
+          <HSpace v='12px'/>
+          <span style={{fontSize: Fontsize.m}}>{this.props.label}</span>
+        </Flex>
+      </CheckboxContainer>
+    )
+  }
+}
+
 export const Button = styled.button`
+  cursor: pointer;
   display: block;
-  width: 191px;
+  width: 220px;
   height: 30.641px;
   color: white;
   text-align: center;

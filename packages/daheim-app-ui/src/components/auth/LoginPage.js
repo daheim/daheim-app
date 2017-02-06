@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import LoadingPanel from '../LoadingPanel'
 import {login} from '../../actions/auth'
 import FacebookLogin from './FacebookLogin'
-import {VSpace, Button, TextField as TextField2} from '../Basic'
+import {VSpace, Button, TextField} from '../Basic'
 import {Padding, Fontsize, Color} from '../../styles'
 
 const InputHelp = styled.div`
@@ -120,7 +120,7 @@ class LoginFormRaw extends Component {
       <LoadingPanel loading={this.state.loading}>
         <form noValidate onSubmit={this.handleLoginClick} className='loginForm'>
           {error}
-          <TextField2
+          <TextField
             innerRef={r => this.emailRef = r}
             type='email'
             placeholder={intl.formatMessage({id: 'loginPage.emailPlaceholder'})}
@@ -130,7 +130,7 @@ class LoginFormRaw extends Component {
             onChange={this.handleEmailChange}
           />
           <VSpace v={Padding.s}/>
-          <TextField2
+          <TextField
             innerRef={r => this.passwordRef = r}
             type='password'
             placeholder={intl.formatMessage({id: 'loginPage.passwordPlaceholder'})}
