@@ -1,4 +1,5 @@
-
+@import url(https://fonts.googleapis.com/css?family=Indie+Flower|Lato:400i,400,700,900);
+@import url(https://fonts.googleapis.com/css?family=Rambla:400,700,700i);
 
 * {
 	-ms-box-sizing: border-box;
@@ -10,9 +11,8 @@
 body, html {
 	margin: 0;
 	padding: 0;
-	font-family: 'Open Sans', sans-serif;
-/*	font-size: 16px;
-	color: #4A4A4A;*/
+	font-family: 'Rambla', sans-serif ;
+	font-size: 16px;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	height: 100%;
@@ -40,9 +40,9 @@ html {
 
 a {
 	text-decoration: none;
-	color: #3F51B5;
+	color: #E61C78;
 }
 
 a:visited {
-	color: #3F51B5;
+	color: #7B3655;
 }

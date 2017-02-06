@@ -11,6 +11,10 @@
   "forgotPasswordPage.submitLabel": "Next",
   "forgotPasswordPage.emailSent": "We have sent you an email.",
 
+  "loginPage.emailPlaceholder":"Email",
+  "loginPage.passwordPlaceholder":"Password",
+  "loginPage.emailLabel":"Enter your email address",
+  "loginPage.passwordLabel":"Enter your password",
   "loginPage.invalidPassword": "Invalid username or password",
   "loginPage.userNotFound": "We do not have a registered user with a given email address",
   "loginPage.signInWithFacebook": "Sign in with Facebook",

@@ -9,3 +9,4 @@ lerna-debug.log
 npm-debug.log*
 newrelic_agent.log
 mongodb-data
+.idea

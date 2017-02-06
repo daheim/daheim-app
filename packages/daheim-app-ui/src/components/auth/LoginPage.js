@@ -1,14 +1,29 @@
 import React, {Component, PropTypes} from 'react'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import {injectIntl} from 'react-intl'
+import styled from 'styled-components'
 
 import LoadingPanel from '../LoadingPanel'
 import {login} from '../../actions/auth'
 import FacebookLogin from './FacebookLogin'
+import {VSpace, Button, TextField as TextField2} from '../Basic'
+import {Padding, Fontsize, Color} from '../../styles'
+
+const InputHelp = styled.div`
+  font-size: ${Fontsize.m};
+  color: ${Color.black};
+`
+
+const Input = styled.input`
+  height: 33px;
+  width: 100%;
+  padding-left: 5px;
+  color: ${Color.green};
+  border-radius: 6px;
+  border: 2.666px solid ${Color.green};
+`
 
 class LoginFormRaw extends Component {
 
@@ -80,10 +95,6 @@ class LoginFormRaw extends Component {
     return !valid.hasErrors
   }
 
-  componentDidMount () {
-    (this.state.email ? this.refs.password : this.refs.email).focus()
-  }
-
   handleEmailChange = (e) => this.setState({email: e.target.value})
   handlePasswordChange = (e) => this.setState({password: e.target.value})
 
@@ -103,15 +114,40 @@ class LoginFormRaw extends Component {
       )
     }
 
+    const intl = this.props.intl
+
     return (
       <LoadingPanel loading={this.state.loading}>
         <form noValidate onSubmit={this.handleLoginClick} className='loginForm'>
           {error}
-          <TextField className='email' ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
-          <TextField className='password' ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
-          <div style={{textAlign: 'center'}}><RaisedButton className='submit' type='submit' style={{marginTop: 20}} fullWidth primary label='Einloggen' /></div>
-          <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
-            <Link to={{pathname: '/auth/forgot', query: {username: this.state.email || undefined}}}>Passwort vergessen?</Link> oder <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>Neu registrieren</Link>
+          <TextField2
+            innerRef={r => this.emailRef = r}
+            type='email'
+            placeholder={intl.formatMessage({id: 'loginPage.emailPlaceholder'})}
+            label={intl.formatMessage({id: 'loginPage.emailLabel'})}
+            error={this.state.errorEmail}
+            value={this.state.email}
+            onChange={this.handleEmailChange}
+          />
+          <VSpace v={Padding.s}/>
+          <TextField2
+            innerRef={r => this.passwordRef = r}
+            type='password'
+            placeholder={intl.formatMessage({id: 'loginPage.passwordPlaceholder'})}
+            label={intl.formatMessage({id: 'loginPage.passwordLabel'})}
+            error={this.state.errorPassword}
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+          />
+          <VSpace v={Padding.m}/>
+          <Button primary type='submit' style={{margin: '0 auto', textAlign: 'center'}}>Einloggen</Button>
+          <VSpace v={Padding.m}/>
+          <div style={{fontSize: Fontsize.m, textAlign: 'center', width: '80%', margin: '0 auto'}}>
+            Hast Du Dein&nbsp;
+            <Link to={{pathname: '/auth/forgot', query: {username: this.state.email || undefined}}}>Passwort vergessen</Link>
+            &nbsp;oder möchtest Du Dich&nbsp;
+            <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>neu registrieren</Link>
+            ?
           </div>
         </form>
       </LoadingPanel>
@@ -139,10 +175,15 @@ class LoginPage extends Component {
 
   render () {
     return (
-      <div style={{maxWidth: 400, padding: '16px 10px'}}>
+      <div style={{width: 340}}>
         <div>
-          <div style={{paddingBottom: 16, marginBottom: 4, borderBottom: 'dashed 1px gray'}}><FacebookLogin onLogin={this.handleLogin} /></div>
-          <LoginForm onLogin={this.handleLogin} login={this.props.login} defaultUsername={this.props.location.query.username} />
+          <FacebookLogin onLogin={this.handleLogin} />
+          <VSpace v={Padding.l}/>
+          <LoginForm
+            onLogin={this.handleLogin}
+            login={this.props.login}
+            defaultUsername={this.props.location.query.username}
+          />
         </div>
       </div>
     )

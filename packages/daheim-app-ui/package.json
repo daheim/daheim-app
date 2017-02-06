@@ -116,6 +116,7 @@
     "serialize-javascript": "^1.2.0",
     "socket.io-client": "^1.4.6",
     "spdy": "^3.3.2",
+    "styled-components": "^1.4.3",
     "webpack-isomorphic-tools": "^2.2.50",
     "webrtc-adapter": "^2.0.2",
     "whatwg-fetch": "^1.0.0"

@@ -4,7 +4,9 @@ import {FormattedMessage} from 'react-intl'
 
 import {facebookLogin} from '../../actions/auth'
 import {login, init} from '../../actions/facebook'
-import css from './FacebookLogin.style'
+
+import {Color, Padding} from '../../styles'
+import {Button, Flex, HSpace} from '../Basic'
 
 const alert = window.alert
 
@@ -39,7 +41,18 @@ class FacebookLogin extends Component {
 
   render () {
     if (!this.state.inited) return null
-    return <a className={css.fbLoginButton} onClick={this.login}><FormattedMessage id='loginPage.signInWithFacebook' /></a>
+    return (
+      <Button style={{background: Color.facebook, width: '100%'}} onClick={this.login}>
+        <Flex style={{height: '100%'}} justify='center'>
+          <img
+            style={{height: '100%', filter: 'brightness(100)', objectFit: 'contain'}}
+            src='/icons/Icons_ready-04.svg'
+          />
+          <HSpace v={Padding.s}/>
+          <FormattedMessage id='loginPage.signInWithFacebook'/>
+        </Flex>
+      </Button>
+    )
   }
 
 }
