@@ -4,6 +4,7 @@ import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import md5 from 'md5'
 import Dropzone from 'react-dropzone'
+import styled from 'styled-components'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Checkbox from 'material-ui/Checkbox'
@@ -17,6 +18,9 @@ import {FormattedMessage, injectIntl} from 'react-intl'
 import {saveProfile} from '../../actions/profile'
 import ProficiencyRating from '../ProficiencyRating'
 import TimeToChoose from '../ready/TimeToChoose'
+
+import {Padding, Color, Fontsize} from '../../styles'
+import {H1, Text, VSpace} from '../Basic'
 
 const avatars = {
   avatar1: 'https://assets.willkommen-daheim.org/public/assets/avatar-1.svg',
@@ -177,6 +181,48 @@ class ValuedCheckbox extends React.Component {
   }
 }
 
+const HeaderContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding-top: ${Padding.xl};
+  flex-direction: column;
+  align-items: center;
+`
+
+const ProgressBarBg = styled.div`
+  position: relative;
+  height: 30px;
+  background: ${Color.lightBlue};
+  border-radius: 6px;
+`
+
+const ProgressBarFg = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: ${Color.blue};
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: ${Fontsize.l};
+`
+
+const ProgressBar = ({v}) => {
+  return (
+    <div style={{width: '47%'}}>
+      <Text><FormattedMessage id='editProfile.progress' values={{percent: v.toString()}}/></Text>
+      <VSpace v={Padding.s}/>
+      <ProgressBarBg>
+        <ProgressBarFg style={{width: `${v}%`}}>
+          {v}%
+        </ProgressBarFg>
+      </ProgressBarBg>
+    </div>
+  )
+}
+
 class ProfilePageRaw extends React.Component {
 
   static propTypes = {
@@ -285,10 +331,17 @@ class ProfilePageRaw extends React.Component {
     const {name, picture, topics, languages, inGermanySince, germanLevel, introduction} = this.state
     const {role} = this.props.user.profile
     const roleValid = role === 'student' || role === 'teacher'
+    let progress = 25
+    if (roleValid) progress = 50
 
     return (
-      <div style={{margin: 16}}>
-        <h1><FormattedMessage id='editProfile.title' /></h1>
+      <div>
+        <HeaderContainer>
+          <H1><FormattedMessage id='editProfile.title'/></H1>
+          <VSpace v={Padding.m}/>
+          <ProgressBar v={progress}/>
+        </HeaderContainer>
+        <VSpace v={Padding.xl}/>
         <div>
 
           {!roleValid ? (

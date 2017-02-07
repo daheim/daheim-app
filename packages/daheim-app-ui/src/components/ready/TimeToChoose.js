@@ -1,9 +1,12 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import RaisedButton from 'material-ui/RaisedButton'
 
 import {switchRole} from '../../actions/profile'
 import {connect as liveConnect} from '../../actions/live'
+import {Padding} from '../../styles'
+import {Button, H1, H2, Flex, VSpace, HSpace} from '../Basic'
+
+import {FormattedMessage} from 'react-intl'
 
 class TimeToChoose extends Component {
   static propTypes = {
@@ -22,26 +25,30 @@ class TimeToChoose extends Component {
     this.props.liveConnect()
   }
 
+  renderOption = (primary, id1, id2, onClick) => {
+    return (
+      <Flex column align='center' style={{width: '350px'}}>
+        <Button primary={primary} neg={!primary} style={{width: '100%'}} onClick={onClick}>
+          <H1><FormattedMessage id={id1}/></H1>
+        </Button>
+        <VSpace v={Padding.m}/>
+        <H2 style={{textAlign: 'center', width: '80%'}}>
+          <FormattedMessage id={id2}/>
+        </H2>
+      </Flex>
+    )
+  }
+
   render () {
     if (!this.props.profile) return null
-
     const {profile: {role} = {}} = this.props.profile || {}
     if (role === 'teacher' || role === 'student') return null
-
     return (
-      <div>
-        <h2>Wer bist du?</h2>
-        <div style={{display: 'flex'}}>
-          <div style={{flex: '0 0 auto', fontSize: 20, fontWeight: 700, margin: 20, padding: 20}}>
-            <div style={{textAlign: 'center', marginBottom: 10}}>Bist du Sprachschüler?</div>
-            <div style={{textAlign: 'center'}}><RaisedButton label='Schüler' primary onClick={this.student} /></div>
-          </div>
-          <div style={{flex: '0 0 auto', fontSize: 20, fontWeight: 700, margin: 20, padding: 20}}>
-            <div style={{textAlign: 'center', marginBottom: 10}}>Bist du Sprachcoach?</div>
-            <div style={{textAlign: 'center'}}><RaisedButton label='Sprachcoach' primary onClick={this.teacher} /></div>
-          </div>
-        </div>
-      </div>
+      <Flex justify='center' wrap style={{width: '100%'}}>
+        {this.renderOption(true, 'editProfile.student', 'editProfile.studentExplanation', this.student)}
+        <HSpace v={Padding.m}/>
+        {this.renderOption(false, 'editProfile.teacher', 'editProfile.teacherExplanation', this.teacher)}
+      </Flex>
     )
   }
 }

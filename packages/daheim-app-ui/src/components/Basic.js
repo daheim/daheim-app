@@ -104,6 +104,24 @@ export class TextField extends Component {
   }
 }
 
+export const H1 = styled.div`
+  font-size: ${Fontsize.xl};
+  font-weight: bold;
+  font-family: 'Rambla';
+`
+
+export const H2 = styled.div`
+  font-size: ${Fontsize.l};
+  font-weight: bold;
+  font-family: 'Rambla';
+`
+
+export const Text = styled.div`
+  font-size: ${Fontsize.m};
+  font-weight: normal;
+  font-family: 'Rambla';
+`
+
 const CheckboxContainer = styled.div`
   cursor: pointer;
   position: relative;
@@ -161,7 +179,8 @@ export const Button = styled.button`
   cursor: pointer;
   display: block;
   width: 220px;
-  height: 30.641px;
+  minHeight: 30.641px;
+  padding: 5px;
   color: white;
   text-align: center;
   font-size: 20px;

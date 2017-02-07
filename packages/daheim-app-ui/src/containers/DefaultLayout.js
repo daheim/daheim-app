@@ -5,6 +5,7 @@ import {loadProfile} from '../actions/profile'
 
 import Header from '../components/Header'
 import InvitedToLesson from '../components/InvitedToLesson'
+import {Layout} from '../styles'
 
 import {Link} from 'react-router'
 import {FormattedMessage} from 'react-intl'
@@ -17,7 +18,7 @@ export class DefaultLayoutWithBreadcrumbs extends React.Component {
   render () {
     return (
       <div>
-        <div style={{fontSize: 14, margin: '12px 16px'}}><Link to='/'>◀ <FormattedMessage id='backToConversations' /></Link></div>
+        {/*<div style={{fontSize: 14, margin: '12px 16px'}}><Link to='/'>◀ <FormattedMessage id='backToConversations' /></Link></div>*/}
         {this.props.children}
       </div>
     )
@@ -37,12 +38,21 @@ class DefaultLayout extends React.Component {
 
   render () {
     return (
-      <div style={{flex: '1 1 auto', marginBottom: 30}}>
-        <Header />
-        <div style={{clear: 'both', minHeight: 200, background: 'white', maxWidth: 960, margin: '0 auto', border: 'solid 1px #DDD', position: 'relative'}}>
-          {this.props.children}
+      <div>
+        <Header/>
+        <div style={{flex: '1 1 auto', marginBottom: 30}}>
+          <div style={{
+            clear: 'both',
+            minHeight: 200,
+            background: 'white',
+            maxWidth: 960,
+            margin: `${Layout.topbarHeight} auto 0 auto`,
+            position: 'relative'
+            }}>
+            {this.props.children}
+          </div>
+          <InvitedToLesson />
         </div>
-        <InvitedToLesson />
       </div>
     )
   }

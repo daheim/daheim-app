@@ -22,3 +22,8 @@ export class Color {
   static red = '#E61C78'
   static black = '#323232'
 }
+
+export class Layout {
+  static width = '900px'
+  static topbarHeight = '60px'
+}

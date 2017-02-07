@@ -1,31 +1,39 @@
 import React from 'react'
 import {Link} from 'react-router'
+import styled from 'styled-components'
 
 import Logo from './Logo'
 import UserMenu from './UserMenu'
-import style from './Header.style'
+import {Layout} from '../styles'
+import {Box} from './Basic'
+
+const BgArea = styled.div`
+  position: fixed;
+  z-index: 999;
+  margin-top: -${Layout.topbarHeight};
+  width: 100%;
+  background: white;
+  height: ${Layout.topbarHeight};
+`
+
+const MainArea = styled.div`
+  maxWidth: ${Layout.width};
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+`
 
 export default class Header extends React.Component {
   render () {
     return (
-      <div>
-        <div className={style.head2}>
-          <div className={style.topbar}>
-            <div className={style.logo}>
-              <Link to='/'><Logo /></Link>
-            </div>
-            <div className={style.spacer} />
-            <div className={style.profile}>
-              <UserMenu />
-            </div>
-          </div>
-        </div>
-        <div className={style.topbarSpacing} />
-        <div className={style.cover2}>
-          <div className={style.photo} />
-          <div className={style.title}>Presse</div>
-        </div>
-      </div>
+      <BgArea>
+        <MainArea>
+          <Link to='/'><Logo/></Link>
+          <Box auto/>
+          <UserMenu/>
+        </MainArea>
+      </BgArea>
     )
   }
 }

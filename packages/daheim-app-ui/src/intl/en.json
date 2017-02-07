@@ -71,7 +71,12 @@
   "profile.feedback": "Feedback",
   "profile.noFeedback": "User has no feedback yet",
 
-  "editProfile.title": "Profile",
+  "editProfile.title": "Create Your Daheim-Profile",
+  "editProfile.progress":"You have already completed {percent}% of your registration.",
+  "editProfile.student":"Newcomer / Refugee",
+  "editProfile.studentExplanation":"I am new in Germany and I want to learn German.",
+  "editProfile.teacher":"Local / Native Speaker",
+  "editProfile.teacherExplanation":"I want to promote language practice.",
   "editProfile.name": "Name",
   "editProfile.language": "Language",
   "editProfile.sinceWhen": "Since when do you live in Germany?",
