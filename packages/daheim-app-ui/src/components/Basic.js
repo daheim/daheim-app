@@ -118,6 +118,8 @@ const CheckboxBox = styled.div`
   border: 2.666px solid ${Color.lightGreen};
   width: 25px;
   height: 25px;
+  flex-grow: 0;
+  flex-shrink: 0;
   background: ${p => p.checked ? `url('/icons/Icons_ready-30.svg')` : 'none'};
 `
 
