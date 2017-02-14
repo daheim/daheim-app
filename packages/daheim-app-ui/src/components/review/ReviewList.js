@@ -78,12 +78,12 @@ class ReviewList extends React.Component {
   }
 
   render () {
-    const {lessonList, lessons, users, usersMeta, profile, style} = this.props
+    const {lessonList, lessons, users, usersMeta, profile, style, loadLessons, loadUser, push, ...restProps} = this.props
     const error = !lessonList.meta.loaded && lessonList.meta.error
     const mergedStyle = {maxWidth: 600, ...style}
 
     return (
-      <div {...this.props} style={mergedStyle}>
+      <div {...restProps} style={mergedStyle}>
         <h2>Vorherige Gespräche</h2>
         <LoadingPanel loading={lessonList.meta.loading && !lessonList.meta.loaded}>
           {error ? (

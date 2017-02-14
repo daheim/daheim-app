@@ -5,13 +5,7 @@ import {connect} from 'react-redux'
 import md5 from 'md5'
 import Dropzone from 'react-dropzone'
 import styled from 'styled-components'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-import Checkbox from 'material-ui/Checkbox'
 import {push} from 'react-router-redux'
-import DropDownMenu from 'material-ui/DropDownMenu'
-import MenuItem from 'material-ui/MenuItem'
-import FlatButton from 'material-ui/FlatButton'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {FormattedMessage, injectIntl} from 'react-intl'
 
@@ -19,8 +13,9 @@ import {saveProfile} from '../../actions/profile'
 import ProficiencyRating from '../ProficiencyRating'
 import TimeToChoose from '../ready/TimeToChoose'
 
-import {Padding, Color, Fontsize} from '../../styles'
-import {H1, Text, VSpace} from '../Basic'
+import {Layout, Padding, Color, Fontsize} from '../../styles'
+import {H1, H2, DropDownMenu, Text, Button, HSpace, VSpace, TextField, Flex, Box,
+        Checkbox, InterestType, Interest} from '../Basic'
 
 const avatars = {
   avatar1: 'https://assets.willkommen-daheim.org/public/assets/avatar-1.svg',
@@ -47,19 +42,45 @@ class LanguagesRaw extends Component {
     onChange: PropTypes.func
   }
 
-  static suggestions = ['Arabisch', 'Albanisch', 'Armenisch', 'Chinesisch', 'Dari', 'Englisch',
-    'Farsi', 'Französisch', 'Griechisch', 'Hindi', 'Italienisch', 'Kroatisch', 'Kurdisch',
-    'Paschtu', 'Polnisch', 'Portugiesisch', 'Rumänisch', 'Russisch', 'Spanisch', 'Serbisch',
-    'Türkisch']
+  static suggestions = [
+    'Arabisch – AR', 'Albanisch – SQ', 'Armenisch – HY', 'Chinesisch – ZH', 'Dari – FA', 'Englisch – EN',
+    'Farsi – FA', 'Französisch – FR', 'Griechisch – EL', 'Hindi – HI', 'Italienisch – IT', 'Kroatisch – HR',
+    'Kurdisch – KU', 'Paschtu – FA', 'Polnisch – PL', 'Portugiesisch – PT', 'Rumänisch – RM', 'Russisch – RU',
+    'Spanisch – ES', 'Serbisch – SR', 'Türkisch – TR'
+  ]
+
+  state = {
+    extraLanguage: '',
+    extraLanguageChecked: false,
+  }
 
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 
-  handleInGermanySinceChange = (e, key, inGermanySince) => {
+  handleInGermanySinceChange = (inGermanySince) => {
     if (this.props.onChange) this.props.onChange({inGermanySince})
   }
 
   handleLanguageCheck = (languages) => {
     if (this.props.onChange) this.props.onChange({languages})
+  }
+
+  handleExtraLanguage = (e) => {
+    const oldExtraLanguage = this.state.extraLanguage
+    const extraLanguage = e.target.value
+    this.setState({extraLanguage})
+    if (!this.state.extraLanguageChecked) return
+    const languages = {...this.props.languages}
+    delete languages[oldExtraLanguage]
+    languages[extraLanguage] = true
+    this.setState({extraLanguageChecked: false, extraLanguage: ''})
+    this.handleLanguageCheck(languages)
+  }
+
+  handleExtraLanguageCheck = () => {
+    const newChecked = !this.state.extraLanguageChecked
+    this.setState({extraLanguageChecked: newChecked})
+    this.state.extraLanguageChecked = newChecked // setState is async...
+    this.handleExtraLanguage({target: {value: this.state.extraLanguage}})
   }
 
   handleGermanLevelChange = (e) => {
@@ -68,47 +89,79 @@ class LanguagesRaw extends Component {
   }
 
   render () {
-    const {inGermanySince, germanLevel, languages, role} = this.props
+    const {intl, inGermanySince, germanLevel, languages, role} = this.props
     const showStudentFields = role !== 'teacher'
 
     const leftovers = {...languages}
     LanguagesRaw.suggestions.forEach((suggestion) => delete leftovers[suggestion])
+    const ls = [...LanguagesRaw.suggestions, ...Object.keys(leftovers)]
 
     return (
-      <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 20}}>
-        <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-          <FormattedMessage id='editProfile.language' />
-        </div>
-
-        <div style={{flex: '1 1 400px'}}>
-          {showStudentFields ? (
+      <Flex column wrap>
+        {showStudentFields ? (
+          <div>
+            <H2><FormattedMessage id='editProfile.sinceWhen'/></H2>
+            <VSpace v={Padding.m}/>
             <div>
-              <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.sinceWhen' /></div>
-              <div>
-                <DropDownMenu value={inGermanySince} style={{marginTop: -10, marginLeft: -20}} onChange={this.handleInGermanySinceChange}>
-                  <MenuItem value='2016' primaryText='2016' />
-                  <MenuItem value='2015' primaryText='2015' />
-                  <MenuItem value='2014' primaryText='2014' />
-                  <MenuItem value='earlier' primaryText={this.props.intl.formatMessage({id: 'editProfile.earlierThan2004'})} />
-                </DropDownMenu>
-              </div>
-              <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.germanLevel' /></div>
-              <div><ProficiencyRating value={'' + germanLevel} onChange={this.handleGermanLevelChange} /></div>
+              <DropDownMenu
+                items={[
+                  {value: '2017', label: '2017'},
+                  {value: '2016', label: '2016'},
+                  {value: '2015', label: '2015'},
+                  {value: '2014', label: '2014'},
+                  {value: 'earlier', label: intl.formatMessage({id: 'editProfile.earlierThan2004'})},
+                ]}
+                selected={inGermanySince}
+                onSelect={(e) => this.handleInGermanySinceChange(e.value)}
+              />
             </div>
-          ) : null}
-          <div style={{marginBottom: 8, marginTop: showStudentFields ? 16 : 0, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.otherLanguages' /></div>
-          <div style={{display: 'flex', flexWrap: 'wrap'}}>
-            {[...LanguagesRaw.suggestions, ...Object.keys(leftovers)].map((language) =>
-              <div key={language} style={{flex: '0 0 250px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector={language} onCheck={this.handleLanguageCheck} /></div>)}
+            <VSpace v={Padding.l}/>
+
+            <H2><FormattedMessage id='editProfile.germanLevel'/></H2>
+            <VSpace v={Padding.m}/>
+            <ProficiencyRating
+              style={{marginLeft: Padding.m}}
+              value={germanLevel.toString()}
+              onChange={this.handleGermanLevelChange}
+            />
+            <VSpace v={Padding.l}/>
           </div>
-        </div>
-      </div>
+        ) : null}
+
+        <H2><FormattedMessage id='editProfile.otherLanguages'/></H2>
+        <VSpace v={Padding.m}/>
+        <Flex wrap style={{marginLeft: Padding.m}}>
+          {ls.map(language =>
+            <div key={language} style={{flex: '0 0 250px', margin: '4px 0'}}>
+              <ValuedCheckbox
+                values={languages}
+                selector={language}
+                onCheck={this.handleLanguageCheck}
+              />
+            </div>
+          )}
+        </Flex>
+        <Flex align='center'>
+          <Checkbox
+            type='neutral'
+            style={{marginLeft: Padding.m, marginTop: '4px'}}
+            checked={this.state.extraLanguageChecked}
+            onCheck={this.handleExtraLanguageCheck}
+          />
+          <TextField
+            small neutral
+            placeholder={intl.formatMessage({id: 'profile.additionalLanguage'})}
+            value={this.state.extraLanguage}
+            onChange={this.handleExtraLanguage}
+          />
+        </Flex>
+      </Flex>
     )
   }
 }
 const Languages = injectIntl(LanguagesRaw)
 
-class Topics extends React.Component {
+class TopicsRaw extends React.Component {
 
   static propTypes = {
     topics: PropTypes.object.isRequired,
@@ -116,9 +169,7 @@ class Topics extends React.Component {
     onChange: PropTypes.func
   }
 
-  static suggestions = ['Schule / Ausbildung', 'Fotographie', 'Computerspiele', 'Sprachen', 'Kreatives', 'Technik',
-    'Essen & Trinken', 'Kunst & Kultur', 'Sport', 'Familie', 'Bücher', 'Natur', 'Prominente',
-    'Musik', 'Reisen', 'Politik', 'Filme & Serien', 'Typisch Deutsch']
+  static suggestions = Object.keys(InterestType)
 
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 
@@ -132,32 +183,49 @@ class Topics extends React.Component {
   }
 
   render () {
-    const {topics, introduction} = this.props
+    const {intl, topics, introduction} = this.props
 
     const leftovers = {...topics}
-    Topics.suggestions.forEach((suggestion) => delete leftovers[suggestion])
+    TopicsRaw.suggestions.forEach((suggestion) => delete leftovers[suggestion])
 
     return (
-      <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 20}}>
-        <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-          <FormattedMessage id='editProfile.topics' />
-        </div>
-        <div style={{flex: '1 1 400px'}}>
-          <div style={{fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.likeToTalkAbout' /></div>
-          <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 8}}>
-            {[...Topics.suggestions, ...Object.keys(leftovers)].map((topic) =>
-              <div key={topic} style={{flex: '0 0 250px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector={topic} onCheck={this.handleCheck} /></div>)}
-          </div>
+      <Flex column>
+        <H2><FormattedMessage id='editProfile.likeToTalkAbout'/></H2>
+        <VSpace v={Padding.m}/>
+        <Flex wrap style={{marginLeft: Padding.m}}>
+          {[...TopicsRaw.suggestions, ...Object.keys(leftovers)].map((topic) =>
+            <div key={topic} style={{flex: '0 0 250px', margin: '4px 0'}}>
+              <ValuedCheckbox values={topics} selector={topic} onCheck={this.handleCheck} />
+            </div>
+          )}
+        </Flex>
 
-          <div style={{marginTop: 16, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.aboutYou' /></div>
-          <div style={{maxWidth: 450, marginTop: 8}}>
-            <textarea style={{width: '100%', height: 150, borderRadius: 4, fontSize: 14, padding: 6, borderColor: '#AAA'}} value={introduction} onChange={this.handleIntroductionChage} />
-          </div>
+        <VSpace v={Padding.l}/>
+
+        <H2><FormattedMessage id='editProfile.aboutYou'/></H2>
+        <VSpace v={Padding.m}/>
+        <div style={{maxWidth: 550}}>
+          <textarea
+            style={{
+              width: '100%',
+              height: 150,
+              color: Color.lightBlue,
+              border: `2.666px solid ${Color.lightBlue}`,
+              borderRadius: 4,
+              fontSize: Fontsize.m,
+              fontFamily: 'Rambla',
+              padding: 4,
+            }}
+            value={introduction}
+            placeholder={intl.formatMessage({id: 'editProfile.aboutYouPlaceholder'})}
+            onChange={this.handleIntroductionChage}
+          />
         </div>
-      </div>
+      </Flex>
     )
   }
 }
+const Topics = injectIntl(TopicsRaw)
 
 class ValuedCheckbox extends React.Component {
 
@@ -177,7 +245,20 @@ class ValuedCheckbox extends React.Component {
 
   render () {
     const {values, selector} = this.props
-    return <Checkbox checked={!!values[selector]} label={selector} onCheck={this.handleCheck} />
+    const isPredefinedInterest = InterestType[selector] != null
+    return (
+      <Checkbox
+        type='neutral'
+        checked={!!values[selector]}
+        onCheck={this.handleCheck}
+      >
+        {isPredefinedInterest ? (
+          <Interest interest={selector}/>
+        ) : (
+          selector
+        )}
+      </Checkbox>
+    )
   }
 }
 
@@ -237,8 +318,15 @@ class ProfilePageRaw extends React.Component {
 
     const {profile} = this.props.user
 
+    let step
+    if (profile.completed) step = 'complete'
+    else if (profile.role == null || profile.role === '') step = 'role'
+    else step = 'basic'
+
     this.state = {
+      step: step,
       picture: profile.picture,
+      gender: profile.gender,
       name: profile.name || '',
       topics: profile.topics || {},
       languages: profile.languages || {},
@@ -257,11 +345,34 @@ class ProfilePageRaw extends React.Component {
     const {username = ''} = user
     const hash = md5(username.trim().toLowerCase())
     // const {devicePixelRatio = 1} = window || {}
-    const gr = `https://secure.gravatar.com/avatar/${hash}?s=256&d=monsterid&r=x`
-    return gr
+    return `https://secure.gravatar.com/avatar/${hash}?s=256&d=monsterid&r=x`
   })()
 
-  handleSave = async (e) => {
+  handleContinue = () => {
+    const step = this.state.step
+    if (step === 'role') this.setState({step: 'basic'})
+    else if (step === 'basic') this.setState({step: 'languages'})
+    else if (step === 'languages') this.setState({step: 'interests'})
+    else this.handleSave().then()
+  }
+
+  handleBack = () => {
+    const step = this.state.step
+    if (step === 'basic') this.setState({step: 'role'})
+    else if (step === 'languages') this.setState({step: 'basic'})
+    else if (step === 'interests') this.setState({step: 'languages'})
+  }
+
+  stepToProgress = () => {
+    switch (this.state.step) {
+      case 'role': return 25
+      case 'basic': return 50
+      case 'languages': return 75
+      default: return 100
+    }
+  }
+
+  handleSave = async () => {
     const prof = {
       ...this.state,
       picture: undefined,
@@ -275,10 +386,6 @@ class ProfilePageRaw extends React.Component {
     } catch (err) {
       console.error(err) // TODO: handle error
     }
-  }
-
-  handleBack = (e) => {
-    this.props.push('/')
   }
 
   handleGravatarClick = (e) => {
@@ -327,13 +434,123 @@ class ProfilePageRaw extends React.Component {
     fr.readAsDataURL(file)
   }
 
-  render () {
-    const {name, picture, topics, languages, inGermanySince, germanLevel, introduction} = this.state
-    const {role} = this.props.user.profile
-    const roleValid = role === 'student' || role === 'teacher'
-    let progress = 25
-    if (roleValid) progress = 50
+  renderStepRole() {
+    return <TimeToChoose onFinished={this.handleContinue}/>
+  }
 
+  renderStepBasic() {
+    const intl = this.props.intl
+    const {name, gender, picture} = this.state
+    return (
+      <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        <div style={{flex: '1 1 400px'}}>
+          <Box auto style={{maxWidth: Layout.widthPx / 2}}>
+            <TextField
+              neutral
+              bigLabel
+              placeholder={intl.formatMessage({id: 'editProfile.namePlaceholder' })}
+              label={intl.formatMessage({id: 'editProfile.nameLabel' })}
+              value={name}
+              onChange={this.handleNameChange}
+            />
+            <VSpace v={Padding.m}/>
+
+            <H2><FormattedMessage id='editProfile.genderLabel'/></H2>
+            <VSpace v={Padding.s}/>
+            <Flex auto>
+              <Checkbox
+                type='neutral'
+                label={intl.formatMessage({id: 'editProfile.genderW'})}
+                checked={gender === 'w'}
+                onCheck={() => this.setState({ gender: 'w' })}
+              />
+              <HSpace v={Padding.m}/>
+              <Checkbox
+                type='neutral'
+                label={intl.formatMessage({id: 'editProfile.genderM'})}
+                checked={gender === 'm'}
+                onCheck={() => this.setState({ gender: 'm' })}
+              />
+              <HSpace v={Padding.m}/>
+              <Checkbox
+                type='neutral'
+                label={intl.formatMessage({id: 'editProfile.genderX'})}
+                checked={gender !== 'm' && gender !== 'w'}
+                onCheck={() => this.setState({ gender: 'x' })}
+              />
+            </Flex>
+          </Box>
+
+          <VSpace v={Padding.l}/>
+
+          <H2><FormattedMessage id='editProfile.profilePicture'/></H2>
+          <VSpace v={Padding.m}/>
+          <div style={{display: 'flex'}}>
+            <Dropzone
+              accept='image/*'
+              style={{cursor: 'pointer', flex: '0 0 auto', margin: 5, padding: 5}}
+              activeStyle={{backgroundColor: '#eee'}}
+              onDrop={this.handleDrop}
+            >
+              <div>
+                <img style={{borderRadius: '50%', width: 128, height: 128}} src={picture} />
+              </div>
+              <div style={{textAlign: 'center'}}>
+                <a href='#' onClick={this.cancel}><FormattedMessage id='editProfile.uploadPicture' /></a>
+              </div>
+            </Dropzone>
+            <div style={{margin: 10}}>
+              <div>
+                <a style={{margin: 5}} href='#' title='Use gravatar' onClick={this.handleGravatarClick}><img src={this.gravatarUrl} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
+                {Object.keys(avatars).map((key) => {
+                  const handler = (e) => this.handleAvatarClick(e, key)
+                  return <a key={key} style={{margin: 5}} href='#' title='Use avatar' onClick={handler}><img src={avatars[key]} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderStepLanguages() {
+    const {languages, inGermanySince, germanLevel} = this.state
+    const {role} = this.props.user.profile
+    return (
+      <Languages
+        role={role}
+        languages={languages}
+        inGermanySince={inGermanySince}
+        germanLevel={germanLevel}
+        onChange={this.handleChange}
+      />
+    )
+  }
+
+  renderStepInterests() {
+    const {topics, introduction} = this.state
+    return (
+      <Topics
+        topics={topics}
+        introduction={introduction}
+        onChange={this.handleChange}
+      />
+    )
+  }
+
+  renderFirstTime() {
+    const {step, languages} = this.state
+    const {role} = this.props.user.profile
+    const progress = this.stepToProgress(step)
+    const continueId = step === 'complete'
+      ? 'editProfile.save'
+      : progress === 100 ? 'editProfile.finished' : 'editProfile.continue'
+    let inner
+    if (step === 'role') inner = this.renderStepRole()
+    else if (step === 'basic') inner = this.renderStepBasic()
+    else if (step === 'languages') inner = this.renderStepLanguages()
+    else inner = this.renderStepInterests()
     return (
       <div>
         <HeaderContainer>
@@ -342,59 +559,55 @@ class ProfilePageRaw extends React.Component {
           <ProgressBar v={progress}/>
         </HeaderContainer>
         <VSpace v={Padding.xl}/>
+        <VSpace v={Padding.l}/>
+        {inner}
+        {step !== 'role' &&
+          <div>
+            <VSpace v={Padding.l}/>
+            <Flex style={{width: '100%'}} justify='center'>
+              <Button onClick={this.handleBack}>
+                <FormattedMessage id='editProfile.back'/>
+              </Button>
+              <HSpace v={Padding.s}/>
+              <Button primary onClick={this.handleContinue}>
+                <FormattedMessage id={continueId}/>
+              </Button>
+            </Flex>
+          </div>
+        }
+      </div>
+    )
+  }
+
+  render () {
+    const {step} = this.state
+    if (step !== 'complete') return this.renderFirstTime()
+    const {role} = this.props.user.profile
+    const progress = this.stepToProgress(step)
+    return (
+      <div>
+        <HeaderContainer>
+          <H1><FormattedMessage id='editProfile.titleComplete'/></H1>
+          <VSpace v={Padding.m}/>
+        </HeaderContainer>
+        <VSpace v={Padding.l}/>
+        {this.renderStepBasic()}
+        <VSpace v={Padding.l}/>
+        {this.renderStepLanguages()}
+        <VSpace v={Padding.l}/>
+        {this.renderStepInterests()}
         <div>
-
-          {!roleValid ? (
-            <TimeToChoose />
-          ) : (
-            <div>
-
-              <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630}}>
-                <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-                  <FormattedMessage id='editProfile.personalDetails' />
-                </div>
-                <div style={{flex: '1 1 400px'}}>
-                  <div style={{marginTop: -14}}>
-                    <TextField fullWidth floatingLabelText={this.props.intl.formatMessage({id: 'editProfile.name'})} value={name} onChange={this.handleNameChange} />
-                  </div>
-                  <div style={{marginTop: 16, marginBottom: 8, fontWeight: 700, fontSize: 14}}><FormattedMessage id='editProfile.profilePicture' /></div>
-                  <div style={{display: 'flex'}}>
-                    <Dropzone accept='image/*' style={{cursor: 'pointer', flex: '0 0 auto', margin: 5, padding: 5}} activeStyle={{backgroundColor: '#eee'}} onDrop={this.handleDrop}>
-                      <div>
-                        <img style={{borderRadius: '50%', width: 128, height: 128}} src={picture} />
-                      </div>
-                      <div style={{textAlign: 'center'}}>
-                        <a href='#' onClick={this.cancel}><FormattedMessage id='editProfile.uploadPicture' /></a>
-                      </div>
-                    </Dropzone>
-                    <div style={{margin: 10}}>
-                      <div style={{marginBottom: 10}}>
-                        <FormattedMessage id='editProfile.chooseAvatar' />
-                      </div>
-                      <div>
-                        <a style={{margin: 5}} href='#' title='Use gravatar' onClick={this.handleGravatarClick}><img src={this.gravatarUrl} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
-                        {Object.keys(avatars).map((key) => {
-                          const handler = (e) => this.handleAvatarClick(e, key)
-                          return <a key={key} style={{margin: 5}} href='#' title='Use avatar' onClick={handler}><img src={avatars[key]} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <Languages role={role} languages={languages} inGermanySince={inGermanySince} germanLevel={germanLevel} onChange={this.handleChange} />
-              <Topics topics={topics} introduction={introduction} onChange={this.handleChange} />
-
-              <div style={{marginTop: 20, maxWidth: 630, display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
-                <FlatButton style={{margin: '0 10px'}} label={this.props.intl.formatMessage({id: 'editProfile.back'})} onClick={this.handleBack} />
-                <RaisedButton style={{margin: '0 10px'}} label={this.props.intl.formatMessage({id: 'editProfile.save'})} primary onClick={this.handleSave} />
-              </div>
-            </div>
-          )}
-
+          <VSpace v={Padding.l}/>
+          <Flex style={{width: '100%'}} justify='center'>
+            <Button onClick={() => this.props.push('/')}>
+              <FormattedMessage id='editProfile.back'/>
+            </Button>
+            <HSpace v={Padding.s}/>
+            <Button primary onClick={this.handleSave}>
+              <FormattedMessage id={'editProfile.save'}/>
+            </Button>
+          </Flex>
         </div>
-
       </div>
     )
   }

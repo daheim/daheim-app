@@ -25,5 +25,6 @@ export class Color {
 
 export class Layout {
   static width = '900px'
+  static widthPx = 900
   static topbarHeight = '60px'
 }

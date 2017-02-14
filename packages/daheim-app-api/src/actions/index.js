@@ -229,12 +229,14 @@ def('/auth.closeAccount', async (req, res) => {
 
 def('/profile.saveProfile', async (req) => {
   const {user, body} = req
-  const {name, topics, languages, inGermanySince, germanLevel, introduction, pictureType, pictureData} = body
+  const {name, gender, topics, languages, inGermanySince, germanLevel, introduction, pictureType, pictureData} = body
 
   const rollback = []
   const commit = []
 
+  user.profile.completed = true
   if (name != null) user.profile.name = name
+  if (gender != null) user.profile.gender = gender
   if (inGermanySince != null) user.profile.inGermanySince = inGermanySince
   if (germanLevel != null) user.profile.germanLevel = germanLevel
   if (introduction != null) user.profile.introduction = introduction

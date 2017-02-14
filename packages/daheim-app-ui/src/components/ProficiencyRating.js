@@ -1,7 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import RadioButton, {RadioButtonGroup} from 'material-ui/RadioButton'
 
-export default class ProficiencyRating extends Component {
+import {Checkbox} from './Basic'
+
+import {injectIntl} from 'react-intl'
+
+class ProficiencyRating extends Component {
 
   static propTypes = {
     onChange: PropTypes.func,
@@ -12,14 +15,26 @@ export default class ProficiencyRating extends Component {
     value: PropTypes.string
   }
 
-  static defaultProps = {
-    values: {
-      1: 'Einige Wörter',
-      2: 'Einige Sätze',
-      3: 'Fähig, ein fließendes Gespräch über einfache Themen zu führen',
-      4: 'Fähig, ein Gespräch über komplexe Themen zu führen',
-      5: 'Deutsch-Profi'
+  state = {
+    values: null
+  }
+
+  constructor(props) {
+    super(props)
+    if (props.values == null) {
+      const m = id => props.intl.formatMessage({id})
+      this.state.values = {
+        1: m('profile.proficiencyA1'),
+        2: m('profile.proficiencyA2'),
+        3: m('profile.proficiencyB1'),
+        4: m('profile.proficiencyB2'),
+        5: m('profile.proficiencyC1'),
+      }
     }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.values) this.setState({values: props.values})
   }
 
   handleChange = (e) => {
@@ -27,18 +42,28 @@ export default class ProficiencyRating extends Component {
   }
 
   render () {
+    const value = this.props.value
     if (this.props.readOnly) {
-      return <div style={this.props.itemStyle}>{this.props.values[this.props.value] || 'N/A'}</div>
+      return <div style={this.props.itemStyle}>{this.state.values[value] || 'N/A'}</div>
     }
 
-    const itemStyle = this.props.itemStyle || {margin: '4px 0'}
+    const itemStyle = this.props.itemStyle || {margin: '8px 0'}
 
     return (
-      <RadioButtonGroup style={this.props.style} name='shipSpeed' valueSelected={this.props.value} onChange={this.handleChange}>
-        {Object.keys(this.props.values).map((key) =>
-          <RadioButton key={key} style={itemStyle} value={key} label={this.props.values[key]} />
+      <div style={this.props.style}>
+        {Object.keys(this.state.values).map(key =>
+          <Checkbox
+            key={key}
+            type='neutral'
+            style={itemStyle}
+            label={this.state.values[key]}
+            checked={key === value}
+            onCheck={() => this.handleChange({target: {value: key}})}
+          />
         )}
-      </RadioButtonGroup>
+      </div>
     )
   }
 }
+
+export default injectIntl(ProficiencyRating)

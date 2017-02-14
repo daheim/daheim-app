@@ -71,8 +71,6 @@ class ProfilePage extends Component {
   }
 
   render () {
-    console.log(this.props)
-
     const {user, userMeta, me, reviewEditable} = this.props
 
     const userNotFound = userMeta && userMeta.error && userMeta.error.code === 'user_not_found'

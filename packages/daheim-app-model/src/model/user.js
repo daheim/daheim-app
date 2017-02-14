@@ -35,8 +35,10 @@ let UserSchema = new Schema({
   lockUntil: {type: Date},
 
   profile: {
+    completed: Boolean,
     name: String,
     role: String,
+    gender: String,
     languages2: [String],
     topics2: [String],
     inGermanySince: String,

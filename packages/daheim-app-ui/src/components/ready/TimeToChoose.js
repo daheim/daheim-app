@@ -12,17 +12,20 @@ class TimeToChoose extends Component {
   static propTypes = {
     switchRole: PropTypes.func.isRequired,
     liveConnect: PropTypes.func.isRequired,
-    profile: PropTypes.object
+    profile: PropTypes.object,
+    onFinished: PropTypes.func,
   }
 
   student = async () => {
     await this.props.switchRole('student')
     this.props.liveConnect()
+    if (this.props.onFinished) this.props.onFinished()
   }
 
   teacher = async () => {
     await this.props.switchRole('teacher')
     this.props.liveConnect()
+    if (this.props.onFinished) this.props.onFinished()
   }
 
   renderOption = (primary, id1, id2, onClick) => {
@@ -41,8 +44,6 @@ class TimeToChoose extends Component {
 
   render () {
     if (!this.props.profile) return null
-    const {profile: {role} = {}} = this.props.profile || {}
-    if (role === 'teacher' || role === 'student') return null
     return (
       <Flex justify='center' wrap style={{width: '100%'}}>
         {this.renderOption(true, 'editProfile.student', 'editProfile.studentExplanation', this.student)}
