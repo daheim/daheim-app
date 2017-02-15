@@ -1,11 +1,14 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
+import styled from 'styled-components'
 import CircularProgress from 'material-ui/CircularProgress'
-import RaisedButton from 'material-ui/RaisedButton'
 import {FormattedMessage, injectIntl} from 'react-intl'
 
 import {ready as setReady} from '../../actions/live'
 import style from './ReadySwitch.style'
+
+import {Button, H1, Flex, HSpace} from '../Basic'
+import {Layout, Padding} from '../../styles'
 
 class Connecting extends Component {
   static propTypes = {
@@ -28,6 +31,12 @@ class Connecting extends Component {
     )
   }
 }
+
+const ButtonIcon = styled.img`
+  height: 40px;
+  object-fit: contain;
+  filter: brightness(100);
+`
 
 class ReadySwitch extends Component {
 
@@ -78,16 +87,20 @@ class ReadySwitch extends Component {
   }
 
   render () {
-    const {ready, connected, intl} = this.props
+    const {ready, connected} = this.props
     const {busy} = this.state
 
     if (!connected) return <Connecting {...this.props} />
 
     if (!ready && !busy) {
       return (
-        <div style={{textAlign: 'center', margin: '40px 20px'}}>
-          <RaisedButton className='readySwitch' label={intl.formatMessage({id: 'ready.buttonCaption'})} primary onClick={this.goOnline} />
-        </div>
+        <Button primary onClick={this.goOnline} style={{width: '100%', maxWidth: Layout.widthPx * 0.75}}>
+          <Flex align='center' justify='center'>
+            <ButtonIcon src='/icons/Icons_ready-02.svg'/>
+            <HSpace v={Padding.s}/>
+            <H1><FormattedMessage id='ready.buttonCaption'/></H1>
+          </Flex>
+        </Button>
       )
     } else {
       return (

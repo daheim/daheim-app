@@ -21,6 +21,7 @@ const MainArea = styled.div`
   maxWidth: ${Layout.headerWidth};
   height: 100%;
   margin: 0 auto;
+  padding: 0 ${Padding.s};
   display: flex;
   align-items: center;
 `
@@ -33,21 +34,22 @@ const Logo = styled.img`
 
 const LogoDesktop = styled(Logo)`
   margin-left: -3px;
-  @media (min-width: 600px) {
+  @media (min-width: ${Layout.mobileBreakpoint}) {
     display: block;
   }
 `
 
 const LogoMobile = styled(Logo)`
-  @media (max-width: 599px) {
+  @media (max-width: ${Layout.mobileBreakpointPx-1}px) {
     display: block;
   }
 `
 
-const Name = styled.span`
-  display: none;
-  @media (min-width: 600px) {
-    display: inline;
+const HiddenOnMobile = styled.div`
+  display: flex;
+  align-items: center;
+  @media (max-width: ${Layout.mobileBreakpoint}) {
+    display: none;
   }
 `
 
@@ -61,16 +63,18 @@ class Header extends React.Component {
             <LogoDesktop src='/daheim-logo_2.svg'/>
           </Link>
           <Box auto/>
-          <ProfileNamePic user={this.props.user}/>
-          <HSpace v={Padding.m}/>
-          <Link to='/'>
-            <Flex align='center'>
-              <img style={{height: '20px', marginBottom: '5px'}} src='/icons/Icons_ready-32.svg'/>
-              <HSpace v='3px'/>
-              <H2 style={{color: Color.black}}>START</H2>
-            </Flex>
-          </Link>
-          <HSpace v={Padding.m}/>
+          <HiddenOnMobile>
+            <ProfileNamePic user={this.props.user}/>
+            <HSpace v={Padding.m}/>
+            <Link to='/'>
+              <Flex align='center'>
+                <img style={{height: '20px', marginBottom: '5px'}} src='/icons/Icons_ready-32.svg'/>
+                <HSpace v='3px'/>
+                <H2 style={{color: Color.black}}>START</H2>
+              </Flex>
+            </Link>
+            <HSpace v={Padding.m}/>
+          </HiddenOnMobile>
           <UserMenu/>
         </MainArea>
       </BgArea>
@@ -83,7 +87,7 @@ class ProfileNamePic extends React.Component {
     const {user: {profile: {name, picture} = {}} = {}} = this.props
     return (
       <Flex align='center'>
-        <H2><Name>{name}</Name></H2>
+        <H2>{name}</H2>
         <HSpace v='12px'/>
         <Avatar size='32px' src={picture} />
       </Flex>

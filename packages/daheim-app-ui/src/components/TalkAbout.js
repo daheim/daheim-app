@@ -1,43 +1,94 @@
 import React from 'react'
+import {FormattedMessage} from 'react-intl'
+import styled from 'styled-components'
 
-import Weather from './Weather'
+import {H2, H3, Flex, VSpace, Text} from './Basic'
+import {Layout, Padding} from '../styles'
+
+const Image = styled.img`
+  height: 240px;
+  object-fit: contain;
+`
+
+const rowSpacing = Padding.l
+const colSpacing = Padding.l
+
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: -${rowSpacing};
+  margin-right: -${colSpacing};
+  @media (max-width: ${Layout.mobileBreakpoint}) {
+    justify-content: center;
+  }
+`
 
 export default class TalkAbout extends React.Component {
+  renderEntry(image, title, body) {
+    return (
+      <Flex
+        column align='center' justify='start'
+        style={{width: Layout.widthPx / 3.9, marginBottom: rowSpacing, marginRight: colSpacing}}
+        >
+        <H3>{title}</H3>
+        <VSpace v={Padding.s}/>
+        <Image src={`/talk/Gesprächsseite_Icons-${image}.svg`}/>
+        <VSpace v={Padding.s}/>
+        <div style={{width: '100%'}}>
+          {body}
+        </div>
+      </Flex>
+    )
+  }
+
   render () {
     return (
-      <div {...this.props}>
-        <h2>Über was kann man reden?</h2>
-        <div style={{display: 'flex', flexWrap: 'wrap'}}>
-          <div style={{flex: '0 0 200px', margin: 8}}>
-            <h3>...das Alphabet</h3>
-            <div style={{fontSize: 30, fontFamily: 'monospace'}}>A B C D E<br />F G H I J<br />K L M N O<br />P Q R S T<br />U V W X Y<br />Z Ä Ö Ü ß</div>
-          </div>
-          <div style={{flex: '1 1 500px', margin: 8}}>
-            <h3>...das Wetter</h3>
-            <Weather />
-          </div>
-          <div style={{flex: '1 1 200px', margin: 8}}>
-            <h3>...Deutschland</h3>
-            <div>
-              <li>die Bundesländer</li>
-              <li>Hauptstadt Berlin</li>
-            </div>
-          </div>
-          <div style={{flex: '1 1 200px', margin: 8}}>
-            <h3>...wichtige Dinge</h3>
-            <div>
-              <li><a href='http://www.fluechtlinge-willkommen.de/' target='_blank'>Flüchtlinge Willkommen</a></li>
-            </div>
-          </div>
-          <div style={{flex: '1 1 200px', margin: 8}}>
-            <h3>...Essen und Trinken</h3>
-            <div>
-              <li>Brot</li>
-              <li>Wurst</li>
-              <li>Apfel</li>
-            </div>
-          </div>
-        </div>
+      <div style={{width: '100%'}}>
+        <H2><FormattedMessage id='ready.talk.about'/></H2>
+        <VSpace v={Padding.m}/>
+        <Container>
+          {this.renderEntry('01', 'Dein Tag',<Text>
+            Wie geht es Dir?<br/>
+            Was machst Du heute?<br/>
+            Was machst Du heute Abend?
+          </Text>)}
+
+          {this.renderEntry('02', 'Deutschland',<Text>
+            Wie gefällt Dir Deutschland?<br/>
+            Was ist neu für Dich?<br/>
+            Was ist anders?<br/>
+            Aktuelle Themen
+          </Text>)}
+          {this.renderEntry('05', 'Alltag',<Text>
+            Im Bus<br/>
+            Beim Bäcker<br/>
+            Im Supermarkt<br/>
+            Beim Arzt
+          </Text>)}
+          {this.renderEntry('06', 'Sprich doch über',<Text>
+            Was isst Du gerne?<br/>
+            Kochst Du gerne?<br/>
+            Welches Essen ist neu für Dich?<br/>
+            Welches Essen fehlt Dir?<br/>
+            Was isst Du heute Abend?
+          </Text>)}
+          {this.renderEntry('04', 'Fest und Feiertage',<Text>
+            Geburtstag<br/>
+            Namenstag<br/>
+            Weihnachten<br/>
+            Ramadan<br/>
+            Ostern<br/>
+            Chanukka<br/>
+            Andere Feiertage?
+          </Text>)}
+          {this.renderEntry('03', 'Essen und Trinken',<Text>
+            Deine Schule<br/>
+            Deine Freunde<br/>
+            Deinen Beruf<br/>
+            Deine Kultur
+          </Text>)}
+        </Container>
       </div>
     )
   }

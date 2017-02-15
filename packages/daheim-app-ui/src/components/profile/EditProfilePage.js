@@ -349,14 +349,22 @@ class ProfilePageRaw extends React.Component {
   })()
 
   handleContinue = () => {
+    let scrollToTop = true
     const step = this.state.step
     if (step === 'role') this.setState({step: 'basic'})
     else if (step === 'basic') this.setState({step: 'languages'})
     else if (step === 'languages') this.setState({step: 'interests'})
-    else this.handleSave().then()
+    else {
+      scrollToTop = false
+      this.handleSave().then()
+    }
+    if (scrollToTop) {
+      window.scrollY = 0
+    }
   }
 
   handleBack = () => {
+    window.scrollY = 0
     const step = this.state.step
     if (step === 'basic') this.setState({step: 'role'})
     else if (step === 'languages') this.setState({step: 'basic'})
@@ -582,8 +590,6 @@ class ProfilePageRaw extends React.Component {
   render () {
     const {step} = this.state
     if (step !== 'complete') return this.renderFirstTime()
-    const {role} = this.props.user.profile
-    const progress = this.stepToProgress(step)
     return (
       <div>
         <HeaderContainer>

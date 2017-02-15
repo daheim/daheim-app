@@ -43,9 +43,9 @@ class FacebookLogin extends Component {
     if (!this.state.inited) return null
     return (
       <Button style={{background: Color.facebook, width: '100%'}} onClick={this.login}>
-        <Flex style={{height: '100%'}} justify='center'>
+        <Flex style={{height: '100%'}} justify='center' align='center'>
           <img
-            style={{height: '100%', filter: 'brightness(100)', objectFit: 'contain'}}
+            style={{height: '22px', filter: 'brightness(100)', objectFit: 'contain'}}
             src='/icons/Icons_ready-04.svg'
           />
           <HSpace v={Padding.s}/>

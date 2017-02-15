@@ -122,6 +122,12 @@ export const H2 = styled.div`
   font-family: 'Rambla';
 `
 
+export const H3 = styled.div`
+  font-size: ${Fontsize.m};
+  font-weight: bold;
+  font-family: 'Rambla';
+`
+
 export const Text = styled.div`
   font-size: ${Fontsize.m};
   font-weight: normal;

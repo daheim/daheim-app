@@ -5,15 +5,16 @@ import styled from 'styled-components'
 import {FormattedMessage} from 'react-intl'
 
 import {Layout, Color, Padding} from '../styles'
-import {Box, Flex, H1, H2, HSpace, VSpace, Avatar} from './Basic'
+import {Flex, H1, H2, VSpace} from './Basic'
 
 const PopupBg = styled.div`
   position: absolute;
-  right: 0;
+  right: ${Padding.s};
   width: ${Layout.headerWidthPx / 2}px;
   margin-top: ${Padding.m};
-  @media (max-width: ${Layout.headerWidthPx / 2}px) {
-    width: 100%;
+  @media (max-width: ${Layout.headerWidthPx / 2 + 4 * Padding.sPx}px) {
+    left: ${Padding.s};
+    width: auto;
   }
   display: flex;
   flex-direction: column;
@@ -55,8 +56,7 @@ class UserItemRaw extends React.Component {
     })
   }
 
-  handleLinkClick = (e) => {
-    const open = this.state.open
+  handleLinkClick = () => {
     this.setState({
       open: false,
     })

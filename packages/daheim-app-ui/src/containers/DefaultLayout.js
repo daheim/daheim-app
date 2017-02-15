@@ -5,10 +5,7 @@ import {loadProfile} from '../actions/profile'
 
 import Header from '../components/Header'
 import InvitedToLesson from '../components/InvitedToLesson'
-import {Layout} from '../styles'
-
-import {Link} from 'react-router'
-import {FormattedMessage} from 'react-intl'
+import {Layout, Padding} from '../styles'
 
 export class DefaultLayoutWithBreadcrumbs extends React.Component {
   static propTypes = {
@@ -47,6 +44,7 @@ class DefaultLayout extends React.Component {
             background: 'white',
             maxWidth: Layout.width,
             margin: `${Layout.topbarHeight} auto 0 auto`,
+            padding: Padding.s,
             position: 'relative'
             }}>
             {this.props.children}

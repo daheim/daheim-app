@@ -2,7 +2,8 @@ export class Padding {
   static xl = '75px'
   static l = '45px'
   static m = '23px'
-  static s = '7px'
+  static sPx = 7
+  static s = `${Padding.sPx}px`
 }
 
 export class Fontsize {
@@ -24,9 +25,11 @@ export class Color {
 }
 
 export class Layout {
-  static width = '780px'
   static widthPx = 780
-  static headerWidth = '1000px'
+  static width = `${Layout.widthPx}px`
   static headerWidthPx = 1000
+  static headerWidth = `${Layout.headerWidthPx}px`
   static topbarHeight = '60px'
+  static mobileBreakpointPx = 700
+  static mobileBreakpoint = `${Layout.mobileBreakpointPx}px`
 }
