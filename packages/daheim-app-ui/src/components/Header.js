@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router'
 import styled from 'styled-components'
 
-import Logo from './Logo'
 import UserMenu from './UserMenu'
 import {Layout} from '../styles'
 import {Box} from './Basic'
@@ -29,7 +28,9 @@ export default class Header extends React.Component {
     return (
       <BgArea>
         <MainArea>
-          <Link to='/'><Logo/></Link>
+          <Link to='/'>
+            <img style={{width: '250px'}} src='/daheim-logo_2.svg'/>
+          </Link>
           <Box auto/>
           <UserMenu/>
         </MainArea>
