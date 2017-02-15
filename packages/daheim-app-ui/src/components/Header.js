@@ -25,13 +25,40 @@ const MainArea = styled.div`
   align-items: center;
 `
 
+const Logo = styled.img`
+  display: none;
+  height: 25px;
+  object-fit: contain;
+`
+
+const LogoDesktop = styled(Logo)`
+  margin-left: -3px;
+  @media (min-width: 600px) {
+    display: block;
+  }
+`
+
+const LogoMobile = styled(Logo)`
+  @media (max-width: 599px) {
+    display: block;
+  }
+`
+
+const Name = styled.span`
+  display: none;
+  @media (min-width: 600px) {
+    display: inline;
+  }
+`
+
 class Header extends React.Component {
   render () {
     return (
       <BgArea>
         <MainArea>
           <Link to='/'>
-            <img style={{width: '250px', marginLeft: '-3px'}} src='/daheim-logo_2.svg'/>
+            <LogoMobile src='/daheim-logo_3.svg'/>
+            <LogoDesktop src='/daheim-logo_2.svg'/>
           </Link>
           <Box auto/>
           <ProfileNamePic user={this.props.user}/>
@@ -56,7 +83,7 @@ class ProfileNamePic extends React.Component {
     const {user: {profile: {name, picture} = {}} = {}} = this.props
     return (
       <Flex align='center'>
-        <H2>{name}</H2>
+        <H2><Name>{name}</Name></H2>
         <HSpace v='12px'/>
         <Avatar size='32px' src={picture} />
       </Flex>
