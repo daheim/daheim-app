@@ -40,11 +40,15 @@
   "registerPage.loginLinkText": "Sign in here",
   "registerPage.agbLinkText": "Terms and Conditions",
 
-  "userMenu.frontPage": "New Conversation",
-  "userMenu.myProfile": "My Profile",
-  "userMenu.settings": "Settings",
-  "userMenu.help": "Help",
-  "userMenu.signOut": "Sign out",
+  "userMenu.label":"MENU",
+  "userMenu.frontPage":"My Daheim",
+  "userMenu.myProfile":"My Profile",
+  "userMenu.settings":"Settings",
+  "userMenu.help":"Help",
+  "userMenu.signOut":"Sign out",
+  "userMenu.agb":"Terms",
+  "userMenu.privacy":"Privacy",
+  "userMenu.imprint":"Imprint",
 
   "backToConversations": "back to conversations",
 

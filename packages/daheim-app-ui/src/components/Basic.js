@@ -378,3 +378,9 @@ export const Interest = ({interest}) => {
     </InterestBox>
   )
 }
+
+export const Avatar = styled.img`
+  width: ${p => p.size || 'auto'};
+  height: ${p => p.size || '100%'};
+  border-radius: 50%;
+`
