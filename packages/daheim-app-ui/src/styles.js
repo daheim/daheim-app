@@ -24,7 +24,9 @@ export class Color {
 }
 
 export class Layout {
-  static width = '900px'
-  static widthPx = 900
+  static width = '780px'
+  static widthPx = 780
+  static headerWidth = '1000px'
+  static headerWidthPx = 1000
   static topbarHeight = '60px'
 }

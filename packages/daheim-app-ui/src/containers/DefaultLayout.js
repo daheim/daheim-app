@@ -45,7 +45,7 @@ class DefaultLayout extends React.Component {
             clear: 'both',
             minHeight: 200,
             background: 'white',
-            maxWidth: 960,
+            maxWidth: Layout.width,
             margin: `${Layout.topbarHeight} auto 0 auto`,
             position: 'relative'
             }}>

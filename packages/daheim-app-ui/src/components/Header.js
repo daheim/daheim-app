@@ -16,7 +16,7 @@ const BgArea = styled.div`
 `
 
 const MainArea = styled.div`
-  maxWidth: ${Layout.width};
+  maxWidth: ${Layout.headerWidth};
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -29,7 +29,7 @@ export default class Header extends React.Component {
       <BgArea>
         <MainArea>
           <Link to='/'>
-            <img style={{width: '250px'}} src='/daheim-logo_2.svg'/>
+            <img style={{width: '250px', marginLeft: '-3px'}} src='/daheim-logo_2.svg'/>
           </Link>
           <Box auto/>
           <UserMenu/>
