@@ -2,7 +2,6 @@
 
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import md5 from 'md5'
 import styled from 'styled-components'
 import {push} from 'react-router-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
@@ -339,14 +338,6 @@ class ProfilePageRaw extends React.Component {
     this.setState(opt)
   }
 
-  gravatarUrl = (() => {
-    const {user = {}} = this.props
-    const {username = ''} = user
-    const hash = md5(username.trim().toLowerCase())
-    // const {devicePixelRatio = 1} = window || {}
-    return `https://secure.gravatar.com/avatar/${hash}?s=256&d=monsterid&r=x`
-  })()
-
   handleContinue = () => {
     let scrollToTop = true
     const step = this.state.step
@@ -393,12 +384,6 @@ class ProfilePageRaw extends React.Component {
     } catch (err) {
       console.error(err) // TODO: handle error
     }
-  }
-
-  handleGravatarClick = (e) => {
-    e.preventDefault()
-    this.pictureType = 'gravatar'
-    this.setState({picture: this.gravatarUrl})
   }
 
   handleAvatarClick = (e, key) => {
@@ -473,7 +458,6 @@ class ProfilePageRaw extends React.Component {
             </div>
             <div style={{margin: 10}}>
               <div>
-                <a style={{margin: 5}} href='#' title='Use gravatar' onClick={this.handleGravatarClick}><img src={this.gravatarUrl} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
                 {Object.keys(avatars).map((key) => {
                   const handler = (e) => this.handleAvatarClick(e, key)
                   return <a key={key} style={{margin: 5}} href='#' title='Use avatar' onClick={handler}><img src={avatars[key]} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
