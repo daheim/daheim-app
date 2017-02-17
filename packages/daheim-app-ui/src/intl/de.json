@@ -24,6 +24,8 @@
   "ready.cancel":"ABBRECHEN",
   "ready.talk.about":"Worüber ihr reden könntet:",
   "ready.previous":"Das sind Deine letzten Gespräche:",
+  "ready.users.title":"Diese Nutzer sind gerade auf der Suche nach einem Gespräch.",
+  "ready.users.empty":"Tut uns leid. Momentan ist kein geeigneter Gesprächspartner online.",
   "changePasswordPage.title":"Passwort ändern",
   "changePasswordPage.currentPassword":"Aktuelles Passwort",
   "changePasswordPage.newPassword":"Neues Passwort",

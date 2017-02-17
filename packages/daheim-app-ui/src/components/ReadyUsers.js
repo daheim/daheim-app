@@ -1,12 +1,27 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import {FormattedMessage} from 'react-intl'
+import styled from 'styled-components'
 
 import StartLesson from './StartLesson'
 import {startLesson} from '../actions/live'
 import {loadUser} from '../actions/users'
 
-import style from './ReadyUsers.style'
+import {H2, H3, Text, Flex, VSpace, Avatar, Button} from './Basic'
+import {Layout, Padding, Color} from '../styles'
+
+const rowSpacing = Padding.l
+const entryStyle = { width: Layout.widthPx / 4.5, marginRight: Padding.m, marginBottom: rowSpacing }
+
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: -${rowSpacing};
+  @media (max-width: ${Layout.mobileBreakpoint}) {
+    justify-content: center;
+  }
+`
 
 class ReadyUser extends Component {
 
@@ -23,18 +38,22 @@ class ReadyUser extends Component {
     if (this.props.onSelect) this.props.onSelect(this.props.user)
   }
 
+  handleProfile = () => {
+    alert('TODO: show profile of ' + JSON.stringify(this.props.user))
+  }
+
   render () {
-    const {user, ...props} = this.props
-    const {picture, name, germanLevel} = user
+    const {user} = this.props
+    const {picture, name} = user
     return (
-      <div href='#' className={`readyUser ${style.readyUser}`} onClick={this.handleClick} {...props}>
-        <img className={style.picture} src={picture} />
-        <div className={style.content}>
-          <div className={style.name}>{name}</div>
-          <div className={style.level}>Stufe: {germanLevel} / 5</div>
-          <div className={style.topic}><a href='#'>Los geht's</a></div>
-        </div>
-      </div>
+      <Flex column align='center' style={entryStyle}>
+        <Avatar size='100px' src={picture} onClick={this.handleClick} style={{cursor: 'pointer'}}/>
+        <Text onClick={this.handleClick} style={{cursor: 'pointer'}}>{name}</Text>
+        <VSpace v={Padding.m}/>
+        <Button primary onClick={this.handleProfile} style={{width: '100%'}}>
+          <H3>Profil ansehen</H3>
+        </Button>
+      </Flex>
     )
   }
 }
@@ -87,16 +106,22 @@ class ReadyUsers extends Component {
     const {selectedUser} = this.state
 
     return (
-      <div>
-        <h2>SchülerInnen Online</h2>
+      <div style={{width: '100%'}}>
+        <H2><FormattedMessage id='ready.users.title'/></H2>
+        <VSpace v={Padding.m}/>
         {readyUsers.length === 0 ? (
-          <div>Es tut uns leid, leider sind gerade keine passenden Gesprächspartner online.</div>
+          <Flex column style={{maxWidth: Layout.widthPx * 0.4, margin: '0 auto'}}>
+            <VSpace v={Padding.m}/>
+            <Text style={{color: Color.red}}><FormattedMessage id='ready.users.empty'/></Text>
+          </Flex>
         ) : (
-          readyUsers.map(({id}) => {
-            const user = users[id]
-            if (!user) return
-            return <ReadyUser key={user.id} user={user} startLesson={startLesson} onSelect={this.selectUser} />
-          })
+          <Container>
+            {readyUsers.map(({id}) => {
+              const user = users[id]
+              if (!user) return
+              return <ReadyUser key={user.id} user={user} startLesson={startLesson} onSelect={this.selectUser} />
+            })}
+          </Container>
         )}
 
         {selectedUser ? <StartLesson key={selectedUser.id} user={selectedUser} onRequestClose={this.unselectUser} /> : undefined}

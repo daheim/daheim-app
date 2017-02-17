@@ -27,6 +27,8 @@
   "ready.cancel": "CANCEL",
   "ready.talk.about":"What you could talk about:",
   "ready.previous":"These are your previous conversations:",
+  "ready.users.title":"These users are currently looking for a conversation:",
+  "ready.users.empty":"We're sorry. Right now, there's no suitable conversation partner online.",
 
   "changePasswordPage.title": "Change Password",
   "changePasswordPage.currentPassword": "Current Password",
