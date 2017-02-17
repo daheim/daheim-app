@@ -130,7 +130,7 @@ class LanguagesRaw extends Component {
         <VSpace v={Padding.m}/>
         <Flex wrap style={{marginLeft: Padding.m}}>
           {ls.map(language =>
-            <div key={language} style={{flex: '0 0 250px', margin: '4px 0'}}>
+            <div key={language} style={{flex: `0 0 ${(Layout.innerWidthPx-Padding.mPx)/3}px`, margin: '4px 0'}}>
               <ValuedCheckbox
                 values={languages}
                 selector={language}
@@ -192,7 +192,7 @@ class TopicsRaw extends React.Component {
         <VSpace v={Padding.m}/>
         <Flex wrap style={{marginLeft: Padding.m}}>
           {[...TopicsRaw.suggestions, ...Object.keys(leftovers)].map((topic) =>
-            <div key={topic} style={{flex: '0 0 250px', margin: '4px 0'}}>
+            <div key={topic} style={{flex: `0 0 ${(Layout.innerWidthPx-Padding.mPx)/3}px`, margin: '4px 0'}}>
               <ValuedCheckbox values={topics} selector={topic} onCheck={this.handleCheck} />
             </div>
           )}

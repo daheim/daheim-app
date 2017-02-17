@@ -1,7 +1,8 @@
 export class Padding {
   static xl = '75px'
   static l = '45px'
-  static m = '23px'
+  static mPx = 23
+  static m = `${Padding.mPx}px`
   static sPx = 7
   static s = `${Padding.sPx}px`
 }
@@ -27,6 +28,8 @@ export class Color {
 export class Layout {
   static widthPx = 780
   static width = `${Layout.widthPx}px`
+  static paddingPx = Padding.sPx
+  static innerWidthPx = 780 - Layout.paddingPx * 2
   static headerWidthPx = 1000
   static headerWidth = `${Layout.headerWidthPx}px`
   static topbarHeight = '60px'
