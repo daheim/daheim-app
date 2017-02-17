@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import styled from 'styled-components'
 
-import {Padding, Fontsize, Color} from '../styles'
+import {Layout, Padding, Fontsize, Color} from '../styles'
 
 export class HSpace extends Component {
   static propTypes = { v: PropTypes.string.isRequired }
@@ -132,6 +132,20 @@ export const Text = styled.div`
   font-size: ${Fontsize.m};
   font-weight: normal;
   font-family: 'Rambla';
+`
+
+export const Mobile = styled.div`
+  display: none;
+  @media (max-width: ${Layout.mobileBreakpoint}) {
+    display: block;
+  }
+`
+
+export const Desktop = styled.div`
+  display: none;
+  @media (min-width: ${Layout.mobileBreakpointPx + 1}px) {
+    display: block;
+  }
 `
 
 const CheckboxContainer = styled.div`

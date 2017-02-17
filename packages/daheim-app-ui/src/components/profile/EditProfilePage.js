@@ -13,7 +13,7 @@ import TimeToChoose from '../ready/TimeToChoose'
 
 import {Layout, Padding, Color, Fontsize} from '../../styles'
 import {H1, H2, DropDownMenu, Text, Button, HSpace, VSpace, TextField, Flex, Box,
-        Checkbox, InterestType, Interest} from '../Basic'
+        Checkbox, InterestType, Interest, Desktop, Mobile} from '../Basic'
 
 const avatars = {
   avatar1: 'https://assets.willkommen-daheim.org/public/assets/avatar-1.svg',
@@ -266,6 +266,10 @@ const HeaderContainer = styled.div`
   padding-top: ${Padding.xl};
   flex-direction: column;
   align-items: center;
+  @media (max-width: ${Layout.mobileBreakpoint}) {
+    text-align: center;
+    padding-top: 0;
+  }
 `
 
 const ProgressBarBg = styled.div`
@@ -290,8 +294,10 @@ const ProgressBarFg = styled.div`
 
 const ProgressBar = ({v}) => {
   return (
-    <div style={{width: '47%'}}>
-      <Text><FormattedMessage id='editProfile.progress' values={{percent: v.toString()}}/></Text>
+    <div style={{width: '100%', maxWidth: `${Layout.widthPx / 2}`}}>
+      <Text style={{textAlign: 'left'}}>
+        <FormattedMessage id='editProfile.progress' values={{percent: v.toString()}}/>
+      </Text>
       <VSpace v={Padding.s}/>
       <ProgressBarBg>
         <ProgressBarFg style={{width: `${v}%`}}>
@@ -349,12 +355,12 @@ class ProfilePageRaw extends React.Component {
       this.handleSave().then()
     }
     if (scrollToTop) {
-      window.scrollY = 0
+      window.scrollTo(0, 0)
     }
   }
 
   handleBack = () => {
-    window.scrollY = 0
+    window.scrollTo(0, 0)
     const step = this.state.step
     if (step === 'basic') this.setState({step: 'role'})
     else if (step === 'languages') this.setState({step: 'basic'})
@@ -511,7 +517,8 @@ class ProfilePageRaw extends React.Component {
       <div>
         <HeaderContainer>
           <H1><FormattedMessage id='editProfile.title'/></H1>
-          <VSpace v={Padding.m}/>
+          <Desktop><VSpace v={Padding.m}/></Desktop>
+          <Mobile><VSpace v={Padding.s}/></Mobile>
           <ProgressBar v={progress}/>
         </HeaderContainer>
         <VSpace v={Padding.xl}/>

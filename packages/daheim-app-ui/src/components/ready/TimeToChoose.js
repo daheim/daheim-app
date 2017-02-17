@@ -1,12 +1,21 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
+import {FormattedMessage} from 'react-intl'
+import styled from 'styled-components'
 
 import {switchRole} from '../../actions/profile'
 import {connect as liveConnect} from '../../actions/live'
-import {Padding} from '../../styles'
-import {Button, H1, H2, Flex, VSpace, HSpace} from '../Basic'
+import {Layout, Padding} from '../../styles'
+import {Button, H1, H2, Flex, VSpace} from '../Basic'
 
-import {FormattedMessage} from 'react-intl'
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  @media (max-width: ${Layout.mobileBreakpoint}) {
+    flex-direction: column;
+    align-items: center;
+  }
+`
 
 class TimeToChoose extends Component {
   static propTypes = {
@@ -30,7 +39,7 @@ class TimeToChoose extends Component {
 
   renderOption = (primary, id1, id2, onClick) => {
     return (
-      <Flex column align='center' style={{width: '350px'}}>
+      <Flex column align='center' style={{width: `${Layout.innerWidthPx / 2.2}px`}}>
         <Button primary={primary} neg={!primary} style={{width: '100%'}} onClick={onClick}>
           <H1><FormattedMessage id={id1}/></H1>
         </Button>
@@ -45,11 +54,11 @@ class TimeToChoose extends Component {
   render () {
     if (!this.props.profile) return null
     return (
-      <Flex justify='center' wrap style={{width: '100%'}}>
+      <Container>
         {this.renderOption(true, 'editProfile.student', 'editProfile.studentExplanation', this.student)}
-        <HSpace v={Padding.m}/>
+        <div style={{marginBottom: Padding.m, marginRight: Padding.m}}/>
         {this.renderOption(false, 'editProfile.teacher', 'editProfile.teacherExplanation', this.teacher)}
-      </Flex>
+      </Container>
     )
   }
 }
