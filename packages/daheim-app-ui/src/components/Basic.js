@@ -390,3 +390,16 @@ export const Avatar = styled.img`
   height: ${p => p.size || '100%'};
   border-radius: 50%;
 `
+
+export class CircularProgress extends Component {
+  static propTypes = {
+    size: PropTypes.number,
+  }
+
+  render() {
+    const {size} = this.props
+    return (
+      <div className='loader' style={{transform: `scale(${size})`}}/>
+    )
+  }
+}

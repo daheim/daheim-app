@@ -20,6 +20,7 @@
   "ready.connecting":"Eine Verbindung mit dem 'Daheim'-Netzwerk wird hergestellt. Bitte habe einen Moment Geduld!",
   "ready.buttonCaption":"Gespräch suchen",
   "ready.lookingForPartners":"Es wird ein passender Gesprächspartner gesucht.",
+  "ready.lookingForPartnersAsStudent":"Dauert die Suche zu lange? <a href='{link}' target='_blank'>Hier</a> findest Du Tipps zum Deutschlernen.",
   "ready.cancel":"ABBRECHEN",
   "ready.talk.about":"Worüber ihr reden könntet:",
   "ready.previous":"Das sind Deine letzten Gespräche:",

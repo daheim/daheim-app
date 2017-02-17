@@ -1,13 +1,12 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
-import CircularProgress from 'material-ui/CircularProgress'
-import {FormattedMessage, injectIntl} from 'react-intl'
+import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl'
 
 import {ready as setReady} from '../../actions/live'
 import style from './ReadySwitch.style'
 
-import {Button, H1, Flex, HSpace} from '../Basic'
+import {Button, H1, Flex, HSpace, CircularProgress, Text} from '../Basic'
 import {Layout, Padding} from '../../styles'
 
 class Connecting extends Component {
@@ -89,6 +88,8 @@ class ReadySwitch extends Component {
   render () {
     const {ready, connected} = this.props
     const {busy} = this.state
+    const {user: {profile: {role} = {}} = {}} = this.props
+    const isStudent = role === 'student'
 
     if (!connected) return <Connecting {...this.props} />
 
@@ -104,12 +105,18 @@ class ReadySwitch extends Component {
       )
     } else {
       return (
-        <div style={{display: 'flex', alignItems: 'center', margin: 20}}>
-          <div style={{margin: 20}}><CircularProgress /></div>
-          <div style={{margin: 8}}>
-            <div><FormattedMessage id='ready.lookingForPartners' /> <a href='#' onClick={this.goOffline}><FormattedMessage id='ready.cancel' /></a></div>
-          </div>
-        </div>
+        <Flex align='center' justify='center'>
+          <CircularProgress size={0.3}/>
+          <HSpace v={`${Padding.sPx * 2}px`}/>
+          <Text style={{maxWidth: Layout.widthPx * 0.4}}>
+            <FormattedHTMLMessage
+              id={`ready.lookingForPartners${isStudent ? 'AsStudent' : ''}`}
+              values={{link: 'https://www.google.com'}}
+            />
+            &nbsp;
+            <a href='#' onClick={this.goOffline}><FormattedMessage id='ready.cancel'/></a>
+          </Text>
+        </Flex>
       )
     }
   }
@@ -117,5 +124,6 @@ class ReadySwitch extends Component {
 
 export default injectIntl(connect((state, props) => {
   const {live: {connected, ready, error, readyTopic}} = state
-  return {connected, ready, error, readyTopic}
+  const user = state.profile.profile
+  return {user, connected, ready, error, readyTopic}
 }, {setReady})(ReadySwitch))

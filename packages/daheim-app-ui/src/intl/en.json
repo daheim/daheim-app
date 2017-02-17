@@ -23,7 +23,8 @@
   "ready.connecting": "Connecting to the Daheim network. Please wait...",
   "ready.buttonCaption": "Find conversation",
   "ready.lookingForPartners": "Looking for matching partners.",
-  "ready.cancel": "cancel",
+  "ready.lookingForPartnersAsStudent":"The search takes too long? <a href='{link}' target='_blank'>Here</a> you'll find tips for learning German.",
+  "ready.cancel": "CANCEL",
   "ready.talk.about":"What you could talk about:",
   "ready.previous":"These are your previous conversations:",
 
