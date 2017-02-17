@@ -76,7 +76,7 @@ let UserSchema = new Schema({
       } else if (ret.profile.pictureType === 'data') {
         ret.profile.picture = ret.profile.pictureData
       } else {
-        ret.profile.picture = null
+        ret.profile.picture = '/smiley.png'
       }
       delete ret.profile.pictureType
       delete ret.profile.pictureData

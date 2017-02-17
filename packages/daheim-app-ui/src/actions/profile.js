@@ -7,10 +7,8 @@ export const switchRole = createAction(SWITCH_ROLE, (role) => {
 })
 
 export const LOAD = 'profile/load'
-export const loadProfile = createAction(LOAD, async () => {
-  const profile = await api.get('/profile')
-  profile.picture = profile.picture || '/smiley.png'
-  return profile
+export const loadProfile = createAction(LOAD, () => {
+  return api.get('/profile')
 })
 
 export const SAVE = 'profile.saveProfile'
