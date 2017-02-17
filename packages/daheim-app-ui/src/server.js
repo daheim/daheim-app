@@ -99,6 +99,7 @@ app.use(async (req, res, next) => {
         'Cookie': cookie.serialize('sid', req.cookies.sid)
       }
     }))
+    profile.profile.picture = profile.profile.picture || '/smiley.png'
     state.profile = {profile}
   } catch (err) {
     if ((req.originalUrl !== '/auth' && req.originalUrl !== '/auth/register' && req.originalUrl.indexOf('/auth/reset') !== 0) && err.statusCode === 401) {

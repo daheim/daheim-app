@@ -1,4 +1,5 @@
 import uniqueId from 'lodash/uniqueId'
+import {LOAD_USER} from '../actions/users'
 
 export default function createApiMiddleware (apiClient) {
   return ({dispatch}) => (next) => async (action) => {
@@ -19,6 +20,11 @@ export default function createApiMiddleware (apiClient) {
     })
     try {
       const result = await apiClient.post('/actions/' + type, body)
+      if (type === LOAD_USER) {
+        for (const user of Object.values(result.users)) {
+          user.picture = user.picture || '/smiley.png'
+        }
+      }
       dispatch({
         ...action,
         payload: result,
