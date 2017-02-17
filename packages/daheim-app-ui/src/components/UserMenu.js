@@ -72,9 +72,9 @@ class UserItemRaw extends React.Component {
 
   renderEntrySecondary(link, id) {
     return (
-      <Link to={link} onClick={this.handleLinkClick}>
+      <a href={link} target='_blank'>
         <H2 style={{color: 'white'}}><FormattedMessage id={id}/></H2>
-      </Link>
+      </a>
     )
   }
 
@@ -102,11 +102,11 @@ class UserItemRaw extends React.Component {
             {this.renderEntry('/auth/logout', 'userMenu.signOut')}
             <VSpace v={Padding.m}/>
             <Flex>
-              {this.renderEntrySecondary('/', 'userMenu.agb')}
+              {this.renderEntrySecondary('https://willkommen-daheim.org/agb/', 'userMenu.agb')}
               <H2>&nbsp;|&nbsp;</H2>
-              {this.renderEntrySecondary('/', 'userMenu.privacy')}
+              {this.renderEntrySecondary('https://willkommen-daheim.org/datenschutz/', 'userMenu.privacy')}
               <H2>&nbsp;|&nbsp;</H2>
-              {this.renderEntrySecondary('/', 'userMenu.imprint')}
+              {this.renderEntrySecondary('https://willkommen-daheim.org/impressum/', 'userMenu.imprint')}
             </Flex>
             <VSpace v={Padding.m}/>
           </PopupBg>
