@@ -3,7 +3,6 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import md5 from 'md5'
-import Dropzone from 'react-dropzone'
 import styled from 'styled-components'
 import {push} from 'react-router-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
@@ -417,31 +416,6 @@ class ProfilePageRaw extends React.Component {
     e.preventDefault()
   }
 
-  handleDrop = ([file]) => {
-    const img = new Image()
-    const fr = new FileReader()
-    const canvas = document.createElement('canvas')
-    canvas.width = canvas.height = 256
-
-    fr.onload = () => {
-      img.onload = () => {
-        const ctx = canvas.getContext('2d')
-        const ratio = Math.max(canvas.width / img.width, canvas.height / img.height)
-        const centerShiftX = (canvas.width - img.width * ratio) / 2
-        const centerShiftY = (canvas.height - img.height * ratio) / 2
-        ctx.drawImage(img, 0, 0, img.width, img.height,
-          centerShiftX, centerShiftY, img.width * ratio, img.height * ratio)
-
-        const data = canvas.toDataURL('image/png')
-        this.pictureType = 'data'
-        this.pictureData = data
-        this.setState({picture: data})
-      }
-      img.src = fr.result
-    }
-    fr.readAsDataURL(file)
-  }
-
   renderStepRole() {
     return <TimeToChoose onFinished={this.handleContinue}/>
   }
@@ -494,19 +468,9 @@ class ProfilePageRaw extends React.Component {
           <H2><FormattedMessage id='editProfile.profilePicture'/></H2>
           <VSpace v={Padding.m}/>
           <div style={{display: 'flex'}}>
-            <Dropzone
-              accept='image/*'
-              style={{cursor: 'pointer', flex: '0 0 auto', margin: 5, padding: 5}}
-              activeStyle={{backgroundColor: '#eee'}}
-              onDrop={this.handleDrop}
-            >
-              <div>
-                <img style={{borderRadius: '50%', width: 128, height: 128}} src={picture} />
-              </div>
-              <div style={{textAlign: 'center'}}>
-                <a href='#' onClick={this.cancel}><FormattedMessage id='editProfile.uploadPicture' /></a>
-              </div>
-            </Dropzone>
+            <div>
+              <img style={{borderRadius: '50%', width: 128, height: 128}} src={picture} />
+            </div>
             <div style={{margin: 10}}>
               <div>
                 <a style={{margin: 5}} href='#' title='Use gravatar' onClick={this.handleGravatarClick}><img src={this.gravatarUrl} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
