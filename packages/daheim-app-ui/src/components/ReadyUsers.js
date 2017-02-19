@@ -1,7 +1,7 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage, FormattedHTMLMessage} from 'react-intl'
 import styled from 'styled-components'
 
 import StartLesson from './StartLesson'
@@ -9,7 +9,7 @@ import {startLesson} from '../actions/live'
 import {loadUser} from '../actions/users'
 
 import {H2, H3, Text, Flex, VSpace, Avatar, Button} from './Basic'
-import {Layout, Padding, Color} from '../styles'
+import {Layout, Padding} from '../styles'
 
 const rowSpacing = Padding.l
 const entryStyle = { width: Layout.widthPx / 4.5, marginRight: Padding.m, marginBottom: rowSpacing }
@@ -112,7 +112,9 @@ class ReadyUsers extends Component {
         {readyUsers.length === 0 ? (
           <Flex column style={{maxWidth: Layout.widthPx * 0.4, margin: '0 auto'}}>
             <VSpace v={Padding.m}/>
-            <Text style={{color: Color.red}}><FormattedMessage id='ready.users.empty'/></Text>
+            <Text>
+              <FormattedHTMLMessage id='ready.users.empty' values={{link: 'https://willkommen-daheim.org/hilfe/#Deutsch-vermitteln'}}/>
+            </Text>
           </Flex>
         ) : (
           <Container>
