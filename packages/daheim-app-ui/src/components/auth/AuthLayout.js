@@ -13,7 +13,7 @@ export default class AuthLayout extends Component {
     return (
       <div style={{paddingTop: 100, textAlign: 'center'}}>
 
-        <div style={{background: '#222', backgroundSize: 'cover', backgroundImage: 'url(https://assets.willkommen-daheim.org/media/daheim_hero.jpg),url(https://assets.willkommen-daheim.org/media/daheim_hero@tiny.jpg)', position: 'fixed', top: 0, right: 0, bottom: 0, left: 0}} />
+        <div style={{background: '#222', backgroundSize: 'cover', backgroundImage: 'url(/login_bg.jpg)', position: 'fixed', top: 0, right: 0, bottom: 0, left: 0}} />
 
         <div style={{
           background: 'rgba(255,255,255,1)',
