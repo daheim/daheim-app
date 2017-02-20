@@ -5,6 +5,7 @@ import Helmet from 'react-helmet'
 import moment from 'moment'
 import {Link} from 'react-router'
 import {FormattedMessage, injectIntl} from 'react-intl'
+import styled from 'styled-components'
 
 import loader from '../../loader'
 import {loadUser, sendReview} from '../../actions/users'
@@ -13,7 +14,20 @@ import ProficiencyRating from '../ProficiencyRating'
 import Review from './Review'
 import SendReview from './SendReview'
 
-import css from './ProfilePage.style'
+import {H3, Text, Flex, Box, VSpace, Avatar, Button, Interest, LanguageBox} from '../Basic'
+import {Padding} from '../../styles'
+
+const rowSpacing = Padding.s
+const colSpacing = Padding.s
+const entryStyle = { marginRight: colSpacing, marginBottom: rowSpacing }
+const reviewRowSpacing = Padding.m
+
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: -${rowSpacing};
+  margin-right: -${colSpacing};
+`
 
 class ProfilePage extends Component {
 
@@ -53,8 +67,8 @@ class ProfilePage extends Component {
   roleToTitle (role) {
     const {intl} = this.props
     switch (role) {
-      case 'student': return intl.formatMessage({id: 'profile.student'})
-      case 'teacher': return intl.formatMessage({id: 'profile.coach'})
+      case 'student': return intl.formatMessage({id: 'profile.student.long'})
+      case 'teacher': return intl.formatMessage({id: 'profile.coach.long'})
       default: return intl.formatMessage({id: 'profile.user'})
     }
   }
@@ -94,104 +108,125 @@ class ProfilePage extends Component {
     const otherReviews = receivedReviews
       .filter((review) => !(myReview && review.from === myReview.from))
       .slice(0, 3)
-      .map((review) => <Review key={review.from} {...this.props} review={review} reviewEditable={false} />)
+      .map((review) => <Review
+        key={review.from}
+        {...this.props}
+        style={{marginBottom: reviewRowSpacing}}
+        review={review}
+        reviewEditable={false}
+      />)
 
     return (
-      <div key={id} style={{margin: 16}}>
-
+      <div>
         <Helmet title={name} />
 
-        <div style={{lineHeight: '150%', display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: 20, maxWidth: '100%', padding: 10, borderBottom: 'solid 1px #EEE'}}>
-          <img src={picture} style={{width: 68, height: 68, borderRadius: '50%', marginTop: 6, marginRight: 20, boxShadow: '0 1px 1px 1px rgba(0,0,0,.1)', border: 'solid 2px white'}} />
-          <div>
-            <div style={{fontSize: 30, fontWeight: 600, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>
-              <span style={{marginRight: 10}}>{name} </span>
-              {me ? <Link to='/profile' className={css.editButton}><FormattedMessage id='profile.edit' /></Link> : null}
-              {!me && this.props.onReportUser ? <a onClick={this.handleReport} href='#' className={css.editButton}><FormattedMessage id='profile.reportUser' /></a> : null}
+        <VSpace v={Padding.l}/>
+
+        <Flex column>
+          <Flex column align='center'>
+            <Avatar size='100px' src={picture}/>
+            <H3>{name}</H3>
+            <Text>{this.roleToTitle(role)}</Text>
+          </Flex>
+
+          <VSpace v={Padding.l}/>
+
+          {introduction &&
+            <div>
+              <H3><FormattedMessage id='profile.introduction' values={{name}}/></H3>
+              <Text>{introduction}</Text>
+              <VSpace v={Padding.m}/>
             </div>
-            <div style={{fontSize: 14, fontFamily: 'Lato, sans-serif', lineHeight: '150%'}}>{this.roleToTitle(role)}</div>
-          </div>
-        </div>
+          }
 
-        <div style={{minHeight: 200}}>
+          <H3><FormattedMessage id='profile.topics' values={{name}}/></H3>
+          <Container>
+            {topicsArr.length === 0 ? (
+              <Text><FormattedMessage id='profile.noTopics'/></Text>
+            ) : (
+              topicsArr.map(topic => <Interest key={topic} interest={topic} style={entryStyle}/>)
+            )}
+          </Container>
 
-          {(myReview || editorOpen) ? (
-            <div className={css.section}>
-              <div className={css.sectionTitle}><FormattedMessage id='profile.myFeedback' /></div>
-              <div className={css.sectionContent}>
-                {editorOpen ? (
-                  <div className={css.field}>
-                    <div className={css.fieldText}>
-                      <SendReview {...this.props} onRequestClose={this.handleEditorRequestClose} />
-                    </div>
-                  </div>
-                ) : undefined}
+          <VSpace v={Padding.m}/>
 
-                {myReview ? <Review key={myReview.from} {...this.props} reviewEditable={reviewEditable} review={myReview} onRequestEdit={this.handleOpenEditor} /> : undefined}
-              </div>
+          <H3><FormattedMessage id='profile.languages' values={{name}}/></H3>
+          <Container>
+            {languagesArr.length === 0 ? (
+              <Text><FormattedMessage id='profile.noLanguages'/></Text>
+            ) : (
+              languagesArr.map(language => <LanguageBox key={language}>{language}</LanguageBox>)
+            )}
+          </Container>
+
+          <VSpace v={Padding.l}/>
+
+          {showStudentFields &&
+            <div>
+              <H3><FormattedMessage id='profile.germanLevel' values={{name}}/></H3>
+              <Text><ProficiencyRating value={'' + germanLevel} readOnly/></Text>
+              <VSpace v={Padding.m}/>
+              <H3><FormattedMessage id='profile.inGermanySince' values={{name}}/></H3>
+              <Text>{this.seitToText(inGermanySince)}</Text>
+              <VSpace v={Padding.m}/>
             </div>
-          ) : null}
+          }
 
-          <div className={css.section}>
-            <div className={css.sectionTitle}><FormattedMessage id='profile.personalDetails' /></div>
-            <div className={css.sectionContent}>
-              <div className={css.field}>
-                <div className={css.fieldTitle}><FormattedMessage id='profile.introduction' values={{name}} /></div>
-                <div className={css.fieldText}>
-                  {introduction || <i><FormattedMessage id='profile.noIntroduction' /></i>}
-                </div>
+          <H3><FormattedMessage id='profile.userSince' values={{name}}/></H3>
+          <Text>{userSinceText}</Text>
+
+          <VSpace v={Padding.l}/>
+
+          {(myReview || editorOpen) &&
+            <div>
+              <H3><FormattedMessage id='profile.myFeedback'/></H3>
+              <VSpace v={Padding.s}/>
+              <div>
+                {editorOpen &&
+                  <SendReview
+                    {...this.props}
+                    onRequestClose={this.handleEditorRequestClose}
+                  />
+                }
+                {myReview &&
+                  <Review
+                    key={myReview.from}
+                    {...this.props}
+                    reviewEditable={reviewEditable}
+                    review={myReview}
+                    onRequestEdit={this.handleOpenEditor}
+                  />
+                }
               </div>
-              {showStudentFields ? (
-                <div className={css.field}>
-                  <div className={css.fieldTitle}><FormattedMessage id='profile.inGermanySince' values={{name}} /></div>
-                  <div className={css.fieldText}>{this.seitToText(inGermanySince)}</div>
-                </div>
-              ) : null}
-              <div className={css.field}>
-                <div className={css.fieldTitle}><FormattedMessage id='profile.topics' values={{name}} /></div>
-                <div className={css.fieldText}>
-                  {topicsArr.length === 0 ? <i><FormattedMessage id='profile.noTopics' /></i> : (
-                    topicsArr.map((topic) => <span key={topic} style={{border: 'solid 1px black', padding: 3, margin: 4, display: 'inline-block'}}>{topic}</span>)
-                  )}
-                </div>
-              </div>
+              <VSpace v={Padding.m}/>
             </div>
-          </div>
+          }
 
-          <div className={css.section}>
-            <div className={css.sectionTitle}><FormattedMessage id='profile.experience' /></div>
-            <div className={css.sectionContent}>
-              {showStudentFields ? (
-                <div className={css.field}>
-                  <div className={css.fieldTitle}><FormattedMessage id='profile.germanLevel' /></div>
-                  <div className={css.fieldText}><ProficiencyRating value={'' + germanLevel} readOnly /></div>
-                </div>
-              ) : null}
-              <div className={css.field}>
-                <div className={css.fieldTitle}><FormattedMessage id='profile.languages' values={{name}} /></div>
-                <div className={css.fieldText}>
-                  {languagesArr.length === 0 ? <i><FormattedMessage id='profile.noLanguages' /></i> : (
-                    languagesArr.map((language) => <span key={language} style={{border: 'solid 1px black', padding: 3, margin: 4, display: 'inline-block'}}>{language}</span>)
-                  )}
-                </div>
-              </div>
-              <div className={css.field}>
-                <div className={css.fieldTitle}><FormattedMessage id='profile.userSince' values={{name}} /></div>
-                <div className={css.fieldText}>{userSinceText}</div>
-              </div>
+          <H3><FormattedMessage id='profile.feedback'/></H3>
+          <VSpace v={Padding.s}/>
+          {otherReviews.length !== 0 ? (
+            <div style={{marginBottom: `-${reviewRowSpacing}`}}>
+              {otherReviews}
             </div>
-          </div>
+          ) : (
+              <Text><FormattedMessage id='profile.noFeedback'/></Text>
+          )}
 
-          <div className={css.section}>
-            <div className={css.sectionTitle}><FormattedMessage id='profile.feedback' /></div>
-            <div className={css.sectionContent}>
-              <div className={css.fieldText}>
-                {otherReviews.length ? otherReviews : <i><FormattedMessage id='profile.noFeedback' /></i>}
-              </div>
-            </div>
-          </div>
+          <VSpace v={Padding.l}/>
 
-        </div>
+          {me &&
+            <Flex>
+              <Link to='/profile'><Button neutral><FormattedMessage id='profile.edit'/></Button></Link>
+              <Box auto/>
+            </Flex>
+          }
+          {!me && this.props.onReportUser &&
+            <Flex>
+              <Text><a onClick={this.handleReport} href='#'><FormattedMessage id='profile.reportUser'/></a></Text>
+              <Box auto/>
+            </Flex>
+          }
+        </Flex>
       </div>
     )
   }

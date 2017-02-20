@@ -316,7 +316,7 @@ const InterestImg = styled.img`
   filter: hue-rotate(150deg);
 `
 
-export const Interest = ({interest}) => {
+export const Interest = ({interest, ...rest}) => {
   let icon
   let text
   switch (interest) {
@@ -394,12 +394,14 @@ export const Interest = ({interest}) => {
       break
   }
   return (
-    <InterestBox>
+    <InterestBox {...rest}>
       <InterestImg src={`/icons/Icons_ready-${icon}.svg`}/>
       {text}
     </InterestBox>
   )
 }
+
+export const LanguageBox = styled(InterestBox)``
 
 export const Avatar = styled.img`
   width: ${p => p.size || 'auto'};

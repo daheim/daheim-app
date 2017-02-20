@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
 import {Link} from 'react-router'
 import styled from 'styled-components'
 
@@ -64,7 +65,10 @@ class Header extends React.Component {
           </Link>
           <Box auto/>
           <HiddenOnMobile>
-            <ProfileNamePic user={this.props.user}/>
+            <ProfileNamePic
+              user={this.props.user}
+              onClick={() => this.props.push(`users/${this.props.user.id}`)}
+            />
             <HSpace v={Padding.m}/>
             <Link to='/'>
               <Flex align='center'>
@@ -84,9 +88,9 @@ class Header extends React.Component {
 
 class ProfileNamePic extends React.Component {
   render () {
-    const {user: {profile: {name, picture} = {}} = {}} = this.props
+    const {onClick, user: {profile: {name, picture} = {}} = {}} = this.props
     return (
-      <Flex align='center'>
+      <Flex align='center' onClick={onClick} style={{cursor: 'pointer'}}>
         <H2>{name}</H2>
         <HSpace v='12px'/>
         <Avatar size='32px' src={picture} />
@@ -98,4 +102,4 @@ class ProfileNamePic extends React.Component {
 export default connect((state, props) => {
   const user = state.profile.profile
   return {user}
-}, {})(Header)
+}, {push})(Header)
