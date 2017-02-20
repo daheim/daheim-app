@@ -5,9 +5,12 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {subscribeToWebPush, unsubscribeFromWebPush} from '../../middlewares/service_worker'
 import {testNotificationBroadcast} from '../../actions/notifications'
 
+import {H2, VSpace, Button, Text} from '../Basic'
+import {Padding} from '../../styles'
+
 class NotAvailable extends Component {
   render () {
-    return <div><FormattedMessage id='notificationSettings.notAvailable' /></div>
+    return <Text><FormattedMessage id='notificationSettings.notAvailable'/></Text>
   }
 }
 
@@ -45,7 +48,7 @@ class SubscribedRaw extends Component {
     this.setState({running: false})
   }
 
-  handleSendTest = async e => {
+  handleSendTest = async () => {
     if (this.state.running) return
     this.setState({running: true})
     try {
@@ -59,11 +62,25 @@ class SubscribedRaw extends Component {
   render () {
     return (
       <div>
-        <div style={{color: '#5CB990', fontWeight: 700}}><FormattedMessage id='notificationSettings.subscribed' /></div>
-        <div style={{marginTop: 20}}>
-          <RaisedButton style={{marginRight: 16}} disabled={this.state.running} type='submit' primary label={this.props.intl.formatMessage({id: 'notificationSettings.sendTest'})} onClick={this.handleSendTest} />
-          <a href='#' disabled={this.state.running} onClick={this.handleUnsubscribe}><FormattedMessage id='notificationSettings.unsubscribe' /></a>
-        </div>
+        <Text><FormattedMessage id='notificationSettings.subscribed'/></Text>
+        <VSpace v={Padding.m}/>
+        <Button
+          type='submit' neutral
+          style={{width: 'auto'}}
+          disabled={this.state.running}
+          onClick={this.handleSendTest}
+          >
+          <FormattedMessage id='notificationSettings.sendTest'/>
+        </Button>
+        <Text>
+          <a
+            href='#'
+            disabled={this.state.running}
+            onClick={this.handleUnsubscribe}
+            >
+            <FormattedMessage id='notificationSettings.unsubscribe'/>
+          </a>
+        </Text>
       </div>
     )
   }
@@ -80,7 +97,7 @@ class NotSubscribedRaw extends Component {
     running: false
   }
 
-  handleSubscribe = async e => {
+  handleSubscribe = async () => {
     if (this.state.running) return
     this.setState({running: true})
     try {
@@ -113,17 +130,17 @@ class NotificationSettings extends Component {
   }
 
   render () {
-    const {available, started, subscribed, style, ...rest} = this.props
+    const {available, started, subscribed} = this.props
 
-    if (!started) return null
+    //if (!started) return null
 
     return (
-      <div style={{lineHeight: '150%', fontFamily: 'Lato, sans-serif', ...style}} {...rest}>
-        <h2><FormattedMessage id='notificationSettings.title' /></h2>
-        <div><FormattedMessage id='notificationSettings.description' /></div>
-        <div style={{marginTop: 20}}>
-          {available ? <Available subscribed={subscribed} /> : <NotAvailable />}
-        </div>
+      <div>
+        <H2><FormattedMessage id='notificationSettings.title'/></H2>
+        <VSpace v={Padding.m}/>
+        <Text><FormattedMessage id='notificationSettings.description'/></Text>
+        <VSpace v={Padding.m}/>
+        {available ? <Available subscribed={subscribed} /> : <NotAvailable />}
       </div>
     )
   }

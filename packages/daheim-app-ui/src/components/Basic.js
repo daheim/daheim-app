@@ -84,10 +84,11 @@ export class TextField extends Component {
     bigLabel: PropTypes.bool,
     small: PropTypes.bool,
     neutral: PropTypes.bool,
+    readOnly: PropTypes.bool,
     label: PropTypes.string,
     error: PropTypes.string,
     value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
   }
 
   render() {
@@ -100,6 +101,7 @@ export class TextField extends Component {
           innerRef={this.props.innerRef}
           small={this.props.small}
           neutral={this.props.neutral}
+          readOnly={this.props.readOnly}
           value={this.props.value}
           onChange={this.props.onChange}
           placeholder={this.props.placeholder}

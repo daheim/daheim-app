@@ -4,10 +4,20 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import {FormattedMessage, injectIntl} from 'react-intl'
 import Checkbox from 'material-ui/Checkbox'
+import styled from 'styled-components'
 
 import Modal from '../../Modal'
 import {closeAccount, logout} from '../../actions/auth'
 import {createTicket} from '../../actions/helpdesk'
+
+import {H3, Button, Flex, HSpace, VSpace, Text} from '../Basic'
+import {Layout, Padding} from '../../styles'
+
+const ButtonIcon = styled.img`
+  height: 20px;
+  object-fit: contain;
+  filter: brightness(100);
+`
 
 class CloseAccount extends Component {
 
@@ -62,9 +72,15 @@ class CloseAccount extends Component {
     const {open, confirmed, ticket, getHelpDisabled} = this.state
 
     return (
-      <div {...otherProps}>
-        <FlatButton secondary label={intl.formatMessage({id: 'closeAccount.start'})} onClick={this.openDialog} />
-        <Modal isOpen={open} onRequestClose={this.onRequestClose}>
+      <div>
+        <Button neg onClick={this.openDialog} style={{width: 'auto', paddingLeft: 30, paddingRight: 40}}>
+          <Flex align='center' justify='center'>
+            <ButtonIcon src='/icons/Icons_ready-29.svg'/>
+            <HSpace v={Padding.s}/>
+            <FormattedMessage id='closeAccount.start'/>
+          </Flex>
+        </Button>
+        <Modal isOpen={open} onRequestClose={this.onRequestClose} contentLabel={''}>
           <div style={{maxWidth: 480}}>
             <h2><FormattedMessage id='closeAccount.title' /></h2>
 
