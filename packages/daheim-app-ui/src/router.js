@@ -1,5 +1,6 @@
 import React from 'react'
-import {Router, Route, IndexRoute} from 'react-router'
+import {Router, Route, IndexRoute, applyRouterMiddleware} from 'react-router'
+import {useScroll} from 'react-router-scroll';
 import Helmet from 'react-helmet'
 
 import DefaultLayout from './containers/DefaultLayout'
@@ -25,6 +26,12 @@ import HelpPage from './components/help/HelpPage'
 import NotFoundPage from './containers/NotFoundPage'
 import AvatarMakerPage from './components/avatar/AvatarMaker'
 
+const scrollCallback = (prevRouterProps, { routes }) => {
+  const isModal = routes[routes.length-1].modal
+  if (isModal) return false
+  return true
+}
+
 export default function createRouter (history) {
   return (
     <div>
@@ -32,7 +39,10 @@ export default function createRouter (history) {
         defaultTitle='Daheim | Reden. Lernen. Leben.'
         titleTemplate='%s | Daheim'
       />
-      <Router history={history}>
+      <Router
+        history={history}
+        render={applyRouterMiddleware(useScroll(scrollCallback))}
+        >
         <Route path='/' component={DefaultLayout}>
           <IndexRoute component={ReadyPage} />
           <Route path='lessons/:lessonId' component={LessonPage} />
