@@ -15,7 +15,7 @@ import Review from './Review'
 import SendReview from './SendReview'
 
 import {H3, Text, Flex, Box, VSpace, Avatar, Button, Interest, LanguageBox} from '../Basic'
-import {Padding} from '../../styles'
+import {Padding, Layout} from '../../styles'
 
 const rowSpacing = Padding.s
 const colSpacing = Padding.s
@@ -117,7 +117,7 @@ class ProfilePage extends Component {
       />)
 
     return (
-      <div>
+      <div style={{maxWidth: '100%', width: Layout.innerWidthPx/2}}>
         <Helmet title={name} />
 
         <VSpace v={Padding.l}/>

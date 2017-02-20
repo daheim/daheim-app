@@ -32,7 +32,8 @@ export class Layout {
   static innerWidthPx = 780 - Layout.paddingPx * 2
   static headerWidthPx = 1000
   static headerWidth = `${Layout.headerWidthPx}px`
-  static topbarHeight = '60px'
+  static topbarHeightPx = 60
+  static topbarHeight = `${Layout.topbarHeightPx}px`
   static mobileBreakpointPx = 700
   static mobileBreakpoint = `${Layout.mobileBreakpointPx}px`
 }

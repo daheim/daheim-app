@@ -3,25 +3,12 @@ import {connect} from 'react-redux'
 import {connect as liveConnect} from '../actions/live'
 import {loadProfile} from '../actions/profile'
 
+import Modal from '../Modal'
 import Header from '../components/Header'
 import InvitedToLesson from '../components/InvitedToLesson'
 import {Layout} from '../styles'
 
-export class DefaultLayoutWithBreadcrumbs extends React.Component {
-  static propTypes = {
-    children: React.PropTypes.node
-  }
-
-  render () {
-    return (
-      <div>
-        {/*<div style={{fontSize: 14, margin: '12px 16px'}}><Link to='/'>◀ <FormattedMessage id='backToConversations' /></Link></div>*/}
-        {this.props.children}
-      </div>
-    )
-  }
-}
-
+// See https://github.com/ReactTraining/react-router/issues/1808
 class DefaultLayout extends React.Component {
 
   static propTypes = {
@@ -29,11 +16,23 @@ class DefaultLayout extends React.Component {
     liveConnect: PropTypes.func.isRequired
   }
 
+  previousChildren = null
+
+  componentWillReceiveProps(nextProps) {
+    const isOldModal = this.props.children.props.route.modal
+    const isNewModal = nextProps.children.props.route.modal
+    if (nextProps.location.key !== this.props.location.key && !isOldModal && isNewModal) {
+      this.previousChildren = this.props.children
+    }
+  }
+
   componentDidMount () {
     this.props.liveConnect() // TODO: handle unmount
   }
 
   render () {
+    const {children, location} = this.props
+    const isModal = children.props.route.modal
     return (
       <div>
         <Header/>
@@ -47,7 +46,16 @@ class DefaultLayout extends React.Component {
             padding: Layout.paddingPx,
             position: 'relative'
             }}>
-            {this.props.children}
+            {isModal ?
+              this.previousChildren :
+              children
+            }
+
+            {isModal &&
+              <Modal isOpen={true} onRequestClose={() => window.history.back()} contentLabel={''}>
+                {children}
+              </Modal>
+            }
           </div>
           <InvitedToLesson />
         </div>

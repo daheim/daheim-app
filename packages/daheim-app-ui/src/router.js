@@ -2,7 +2,7 @@ import React from 'react'
 import {Router, Route, IndexRoute} from 'react-router'
 import Helmet from 'react-helmet'
 
-import DefaultLayout, {DefaultLayoutWithBreadcrumbs} from './containers/DefaultLayout'
+import DefaultLayout from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
 import LessonPage from './containers/LessonPage'
 
@@ -35,17 +35,14 @@ export default function createRouter (history) {
       <Router history={history}>
         <Route path='/' component={DefaultLayout}>
           <IndexRoute component={ReadyPage} />
-
-          <Route path='/' component={DefaultLayoutWithBreadcrumbs}>
-            <Route path='lessons/:lessonId' component={LessonPage} />
-            <Route path='profile' component={EditProfilePage} />
-            <Route path='users/:userId' component={PublicProfilePage} />
-            <Route path='users/:userId/report' component={ReportUserPage} />
-            <Route path='admin' component={AdminPage} />
-            <Route path='settings' component={SettingsPage} />
-            <Route path='help' component={HelpPage} />
-            <Route path='avatar' component={AvatarMakerPage} />
-          </Route>
+          <Route path='lessons/:lessonId' component={LessonPage} />
+          <Route path='profile' component={EditProfilePage} />
+          <Route path='users/:userId' component={PublicProfilePage} modal={true}/>
+          <Route path='users/:userId/report' component={ReportUserPage} />
+          <Route path='admin' component={AdminPage} />
+          <Route path='settings' component={SettingsPage} />
+          <Route path='help' component={HelpPage} />
+          <Route path='avatar' component={AvatarMakerPage} />
         </Route>
 
         <Route path='/auth' component={AuthLayout}>

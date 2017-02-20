@@ -19,7 +19,9 @@ body, html {
 }
 
 
-
+.ReactModal__Body--open {
+  overflow: hidden;
+}
 
 
 
