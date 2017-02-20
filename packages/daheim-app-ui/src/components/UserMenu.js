@@ -93,7 +93,7 @@ class UserItemRaw extends React.Component {
             />
             {this.renderEntry('/', 'userMenu.frontPage')}
             <VSpace v={space}/>
-            {this.renderEntry(`/users/${user.id}`, 'userMenu.myProfile')}
+            {this.renderEntry(`/profile`, 'userMenu.myProfile')}
             <VSpace v={space}/>
             {this.renderEntry('/settings', 'userMenu.settings')}
             <VSpace v={space}/>
