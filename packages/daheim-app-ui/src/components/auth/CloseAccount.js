@@ -1,17 +1,14 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from 'material-ui/RaisedButton'
 import {FormattedMessage, injectIntl} from 'react-intl'
-import Checkbox from 'material-ui/Checkbox'
 import styled from 'styled-components'
 
 import Modal from '../../Modal'
 import {closeAccount, logout} from '../../actions/auth'
 import {createTicket} from '../../actions/helpdesk'
 
-import {H3, Button, Flex, HSpace, VSpace, Text} from '../Basic'
-import {Layout, Padding} from '../../styles'
+import {H2, Button, Flex, Box, HSpace, VSpace, Text, TextArea, Checkbox} from '../Basic'
+import {Layout, Padding, Color} from '../../styles'
 
 const ButtonIcon = styled.img`
   height: 20px;
@@ -81,27 +78,56 @@ class CloseAccount extends Component {
           </Flex>
         </Button>
         <Modal isOpen={open} onRequestClose={this.onRequestClose} contentLabel={''}>
-          <div style={{maxWidth: 480}}>
-            <h2><FormattedMessage id='closeAccount.title' /></h2>
+          <div style={{maxWidth: Layout.innerWidthPx / 1.5}}>
+            <Flex justify='center'><H2><FormattedMessage id='closeAccount.title'/></H2></Flex>
+            <VSpace v={Padding.m}/>
+            <Text><FormattedMessage id='closeAccount.getHelp.text' /></Text>
+            <VSpace v={Padding.m}/>
+            <TextArea
+              innerRef={this.haveHintRef}
+              placeholder={intl.formatMessage({id: 'closeAccount.getHelp.hint'})}
+              style={{color: Color.red, borderColor: Color.red}}
+              value={ticket}
+              onChange={this.handleTicketChange}
+            />
+            <VSpace v={Padding.s}/>
+            <Button
+              neg
+              disabled={getHelpDisabled}
+              onClick={this.createTicket}
+              >
+              <H2><FormattedMessage id='closeAccount.getHelp.submit'/></H2>
+            </Button>
 
-            <div style={{fontSize: 14, lineHeight: '150%'}}><FormattedMessage id='closeAccount.getHelp.text' /></div>
-            <div style={{marginTop: 14}}>
-              <textarea ref={this.haveHintRef} placeholder={intl.formatMessage({id: 'closeAccount.getHelp.hint'})} style={{width: '100%', height: 150, borderRadius: 4, fontSize: 14, padding: 6, borderColor: '#AAA'}} value={ticket} onChange={this.handleTicketChange} />
-            </div>
-            <div style={{marginTop: 10}}>
-              <FlatButton style={{marginRight: 12}} label={intl.formatMessage({id: 'closeAccount.cancel'})} onClick={this.onRequestClose} />
-              <RaisedButton primary disabled={getHelpDisabled} label={intl.formatMessage({id: 'closeAccount.getHelp.submit'})} onClick={this.createTicket} />
-            </div>
+            <VSpace v={Padding.m}/>
 
-            <div style={{borderBottom: 'solid 1px lightgray', marginTop: 30}} />
+            <Checkbox
+              style={{marginLeft: Padding.m, maxWidth: Layout.innerWidthPx / 2.5}}
+              checked={confirmed}
+              label={intl.formatMessage({id: 'closeAccount.confirmLabel'})}
+              onCheck={this.handleCheck}
+            />
 
-            <div style={{paddingLeft: 16, marginTop: 30}}>
-              <Checkbox checked={confirmed} label={intl.formatMessage({id: 'closeAccount.confirmLabel'})} onCheck={this.handleCheck} />
-            </div>
-            <div style={{marginTop: 14}}>
-              <FlatButton label={intl.formatMessage({id: 'closeAccount.cancel'})} onClick={this.onRequestClose} />
-              <FlatButton disabled={!confirmed} secondary label={intl.formatMessage({id: 'closeAccount.submit'})} onClick={this.closeAccount} />
-            </div>
+            <VSpace v={Padding.m}/>
+
+            <Flex>
+              <Button
+                style={{padding: '3px 30px'}}
+                primary
+                onClick={this.onRequestClose}
+                >
+                <H2><FormattedMessage id='closeAccount.cancel'/></H2>
+              </Button>
+              <Box auto/>
+              <Button
+                style={{width: 'auto', padding: '3px 30px'}}
+                neg
+                disabled={!confirmed}
+                onClick={this.closeAccount}
+                >
+                <H2><FormattedMessage id='closeAccount.submit'/></H2>
+              </Button>
+            </Flex>
           </div>
         </Modal>
       </div>

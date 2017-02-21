@@ -207,7 +207,7 @@ export class Checkbox extends Component {
           checked={this.props.checked}
           onChange={this.handleChange}
         />
-        <Flex align='center' onClick={() => this.handleChange({target: {checked: !checked}})}>
+        <Flex align='flex-start' onClick={() => this.handleChange({target: {checked: !checked}})}>
           <CheckboxBox bg={bg} borderColor={border}>
             {checked &&
               <img
