@@ -112,6 +112,17 @@ export class TextField extends Component {
   }
 }
 
+export const TextArea = styled.textarea`
+  width: 100%;
+  height: 150px;
+  color: ${Color.lightBlue};
+  border: 2.666px solid ${Color.lightBlue};
+  border-radius: 4px;
+  font-size: ${Fontsize.m};
+  font-family: 'Rambla';
+  padding: 4px;
+`
+
 export const H1 = styled.div`
   font-size: ${Fontsize.xl};
   font-weight: bold;

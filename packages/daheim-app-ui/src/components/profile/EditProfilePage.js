@@ -12,7 +12,7 @@ import ProficiencyRating from '../ProficiencyRating'
 import TimeToChoose from '../ready/TimeToChoose'
 
 import {Layout, Padding, Color, Fontsize} from '../../styles'
-import {H1, H2, DropDownMenu, Text, Button, HSpace, VSpace, TextField, Flex, Box,
+import {H1, H2, DropDownMenu, Text, Button, HSpace, VSpace, TextField, TextArea, Flex, Box,
         Checkbox, InterestType, Interest, Desktop, Mobile} from '../Basic'
 
 const avatars = {
@@ -203,17 +203,7 @@ class TopicsRaw extends React.Component {
         <H2><FormattedMessage id='editProfile.aboutYou'/></H2>
         <VSpace v={Padding.m}/>
         <div style={{maxWidth: 550}}>
-          <textarea
-            style={{
-              width: '100%',
-              height: 150,
-              color: Color.lightBlue,
-              border: `2.666px solid ${Color.lightBlue}`,
-              borderRadius: 4,
-              fontSize: Fontsize.m,
-              fontFamily: 'Rambla',
-              padding: 4,
-            }}
+          <TextArea
             value={introduction}
             placeholder={intl.formatMessage({id: 'editProfile.aboutYouPlaceholder'})}
             onChange={this.handleIntroductionChage}

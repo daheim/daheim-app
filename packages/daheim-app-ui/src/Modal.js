@@ -33,6 +33,7 @@ export default class DhmModal extends Component {
         className={modalCss.container}
         style={otherStyle}
         {...otherProps}
+        contentLabel=''
         >
         <VSpace v={`${Layout.topbarHeightPx}px`}/>
         <div className={modalCss.inner} style={inner}>

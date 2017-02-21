@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {FormattedMessage, FormattedHTMLMessage} from 'react-intl'
 import styled from 'styled-components'
+import {Link} from 'react-router'
 
 import StartLesson from './StartLesson'
 import {startLesson} from '../actions/live'
@@ -50,9 +51,11 @@ class ReadyUser extends Component {
         <Avatar size='100px' src={picture} onClick={this.handleClick} style={{cursor: 'pointer'}}/>
         <Text onClick={this.handleClick} style={{cursor: 'pointer'}}>{name}</Text>
         <VSpace v={Padding.m}/>
-        <Button primary onClick={this.handleProfile} style={{width: '100%'}}>
-          <H3>Profil ansehen</H3>
-        </Button>
+        <Link to={`/users/${user.id}`} style={{width: '100%'}}>
+          <Button primary style={{width: '100%'}}>
+            <H3>Profil ansehen</H3>
+          </Button>
+        </Link>
       </Flex>
     )
   }
@@ -126,7 +129,13 @@ class ReadyUsers extends Component {
           </Container>
         )}
 
-        {selectedUser ? <StartLesson key={selectedUser.id} user={selectedUser} onRequestClose={this.unselectUser} /> : undefined}
+        {selectedUser &&
+          <StartLesson
+            key={selectedUser.id}
+            user={selectedUser}
+            onRequestClose={this.unselectUser}
+          />
+        }
       </div>
     )
   }

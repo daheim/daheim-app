@@ -45,7 +45,7 @@ export default function createRouter (history) {
         >
         <Route path='/' component={DefaultLayout}>
           <IndexRoute component={ReadyPage} />
-          <Route path='lessons/:lessonId' component={LessonPage} />
+          <Route path='lessons/:lessonId' component={LessonPage} modal={true} backTo={'/'}/>
           <Route path='profile' component={EditProfilePage} />
           <Route path='users/:userId' component={PublicProfilePage} modal={true}/>
           <Route path='users/:userId/report' component={ReportUserPage} />

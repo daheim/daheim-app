@@ -19,7 +19,7 @@ class Connecting extends Component {
 
     return (
       <div style={{display: 'flex', alignItems: 'center'}}>
-        <div style={{margin: 20}}><CircularProgress /></div>
+        <div style={{margin: 20}}><CircularProgress size={0.3}/></div>
         <div style={{margin: 8}}>
           <div className={style.connecting}><FormattedMessage id='ready.connecting' /></div>
           {error ? (

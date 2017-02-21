@@ -4,6 +4,26 @@ import {Checkbox} from './Basic'
 
 import {injectIntl} from 'react-intl'
 
+export const levelToMessageId = (level) => {
+  switch (level) {
+    case 1: return 'profile.proficiencyA1';
+    case 2: return 'profile.proficiencyA2';
+    case 3: return 'profile.proficiencyB1';
+    case 4: return 'profile.proficiencyB2';
+    case 5: return 'profile.proficiencyC1';
+  }
+}
+
+export const levelToString = (level) => {
+  switch (level) {
+    case 1: return 'A1';
+    case 2: return 'A2';
+    case 3: return 'B1';
+    case 4: return 'B2';
+    case 5: return 'C1';
+  }
+}
+
 class ProficiencyRating extends Component {
 
   static propTypes = {
@@ -24,11 +44,11 @@ class ProficiencyRating extends Component {
     if (props.values == null) {
       const m = id => props.intl.formatMessage({id})
       this.state.values = {
-        1: m('profile.proficiencyA1'),
-        2: m('profile.proficiencyA2'),
-        3: m('profile.proficiencyB1'),
-        4: m('profile.proficiencyB2'),
-        5: m('profile.proficiencyC1'),
+        1: m(levelToMessageId(1)),
+        2: m(levelToMessageId(2)),
+        3: m(levelToMessageId(3)),
+        4: m(levelToMessageId(4)),
+        5: m(levelToMessageId(5)),
       }
     }
   }

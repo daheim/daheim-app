@@ -1,5 +1,6 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
 import {connect as liveConnect} from '../actions/live'
 import {loadProfile} from '../actions/profile'
 
@@ -30,6 +31,19 @@ class DefaultLayout extends React.Component {
     this.props.liveConnect() // TODO: handle unmount
   }
 
+  handleCloseModal = () => {
+    const backTo = this.props.children.props.route.backTo
+    if (backTo) {
+      this.props.push(backTo)
+      // TODO: Not good, but I found no better way to circumvent the following situation:
+      // Botch finish conversation. Then teacher closes 'Conversation finished' popup and gets
+      // back to main page. However, the start lesson modal is still visible and it shows an error message.
+      window.location.reload()
+    } else {
+      window.history.back()
+    }
+  }
+
   render () {
     const {children, location} = this.props
     const isModal = children.props.route.modal
@@ -52,7 +66,7 @@ class DefaultLayout extends React.Component {
             }
 
             {isModal &&
-              <Modal isOpen={true} onRequestClose={() => window.history.back()} contentLabel={''}>
+              <Modal isOpen={true} onRequestClose={this.handleCloseModal}>
                 {children}
               </Modal>
             }
@@ -99,4 +113,4 @@ class DefaultLayoutOrLoad extends Component {
 export default connect((state, props) => {
   const {profile, error} = state.profile
   return {profile, error}
-}, {liveConnect, loadProfile})(DefaultLayoutOrLoad)
+}, {liveConnect, loadProfile, push})(DefaultLayoutOrLoad)

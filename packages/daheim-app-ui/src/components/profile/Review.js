@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl'
 
 import ProficiencyRating from '../ProficiencyRating'
 
-import {Text, Flex, Box, HSpace, Avatar} from '../Basic'
+import {H3, Button, Text, Flex, Box, HSpace, Avatar} from '../Basic'
 import {Padding} from '../../styles'
 
 class Review extends Component {
@@ -59,6 +59,16 @@ class Review extends Component {
             <Text>{text || <ProficiencyRating value={String(rating)} readOnly/>}</Text>
           </div>
         </Flex>
+        {reviewEditable &&
+          <Flex justify='flex-end' style={{width: '100%'}}>
+            <Button
+              onClick={this.handleEditClick}
+              style={{width: 'auto', height: 'auto', padding: '5px 10px'}}
+              >
+              <H3><FormattedMessage id='profile.editFeedback'/></H3>
+            </Button>
+          </Flex>
+        }
       </div>
     )
   }

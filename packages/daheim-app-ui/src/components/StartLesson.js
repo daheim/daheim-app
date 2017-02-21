@@ -1,11 +1,21 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import FlatButton from 'material-ui/FlatButton'
-import CircularProgress from 'material-ui/CircularProgress'
+import {FormattedMessage, injectIntl} from 'react-intl'
+import styled from 'styled-components'
 import Modal from '../Modal'
 
 import {startLesson, leaveIfNotStarted} from '../actions/live'
-import ProfilePage from './profile/PublicProfilePage'
+import ProfilePage, {ProfileHeader} from './profile/PublicProfilePage'
+import {levelToString} from './ProficiencyRating'
+
+import {H3, Flex, VSpace, HSpace, Button, CircularProgress} from './Basic'
+import {Padding} from '../styles'
+
+const ButtonIcon = styled.img`
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(100);
+`
 
 class LessonGuardRaw extends Component {
 
@@ -19,8 +29,8 @@ class LessonGuardRaw extends Component {
     if (lesson) {
       return (
         <div style={{display: 'flex', alignItems: 'center', marginTop: 20, marginLeft: 16}}>
-          <CircularProgress />
-          <div style={{margin: 10, fontWeight: 700}}>Warten auf Gesprächspartner</div>
+          <CircularProgress size={0.25}/>
+          <H3 style={{margin: 10}}>Warten auf Gesprächspartner</H3>
         </div>
       )
     } else {
@@ -86,49 +96,67 @@ class StartLesson extends Component {
   }
 
   render () {
-    const {user, onRequestClose} = this.props
+    const {user, onRequestClose, intl} = this.props
     const {startLessonPromise, error, lessonId} = this.state
 
-    const actions = [
-      <FlatButton
-        key='cancel'
-        className='cancel'
-        label='Abbrechen'
-        onTouchTap={onRequestClose}
-      />,
-      <FlatButton
-        key='start'
-        className='start'
-        label={'los geht\'s'}
-        primary
-        disabled={!!(startLessonPromise || lessonId)}
-        onTouchTap={this.handleStartLesson}
-        style={{color: 'white', backgroundColor: '#E61C78', fontWeight: 'bold'}}
-      />
-    ]
-
     return (
-      <Modal isOpen autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions} style={{inner: {minWidth: '60%'}}}>
-        <div className='startLessonDialog' style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
-          {actions}
-        </div>
-        {error ? (
-          <div style={{background: '#FA8072', border: 'solid 1px darkred', padding: 16, color: 'black', margin: '10px 0', borderRadius: 2}}>{error}</div>
-        ) : undefined}
-        {lessonId ? (
-          <LessonGuard lessonId={lessonId} />
-        ) : undefined}
-        {startLessonPromise ? (
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <CircularProgress />
-            <div style={{margin: 10, fontWeight: 700}}>Läuft...</div>
-          </div>
-        ) : undefined}
+      <Modal
+        isOpen
+        autoScrollBodyContent
+        open
+        onRequestClose={onRequestClose}
+        >
+        <Flex column align='center' justify='center'>
+          <VSpace v={Padding.l}/>
 
-        <ProfilePage params={{userId: user.id}} reviewEditable={false} onRequestClose={this.handleRequestClose} />
+          <ProfileHeader
+            user={user}
+            text={intl.formatMessage({id: 'lesson.germanLevel'}, {name: user.name, level: levelToString(user.germanLevel)})}
+          />
+
+          <VSpace v={Padding.m}/>
+
+          <Button
+            primary
+            disabled={!!(startLessonPromise || lessonId)}
+            onClick={this.handleStartLesson}
+            style={{width: 'auto', height: 'auto', padding: '3px 30px'}}
+            >
+            <Flex align='center' justify='center'>
+              <ButtonIcon src='/icons/Icons_ready-02.svg'/>
+              <HSpace v={Padding.s}/>
+              <H3><FormattedMessage id='lesson.start'/></H3>
+            </Flex>
+          </Button>
+          {error &&
+            <div
+              style={{background: '#FA8072', border: 'solid 1px darkred', padding: 16, color: 'black', margin: '10px 0', borderRadius: 2}}
+              >
+              {error}
+            </div>
+          }
+          {lessonId &&
+            <LessonGuard lessonId={lessonId} />
+          }
+          {startLessonPromise &&
+            <div style={{display: 'flex', alignItems: 'center', marginTop: 20, marginLeft: 16}}>
+              <CircularProgress size={0.25}/>
+              <H3 style={{margin: 10}}>...</H3>
+            </div>
+          }
+        </Flex>
+
+        <VSpace v={Padding.m}/>
+
+        <ProfilePage
+          params={{userId: user.id}}
+          hideHeader={true}
+          reviewEditable={false}
+          onRequestClose={this.handleRequestClose}
+        />
       </Modal>
     )
   }
 }
 
-export default connect(null, {startLesson, leaveIfNotStarted})(StartLesson)
+export default injectIntl(connect(null, {startLesson, leaveIfNotStarted})(StartLesson))

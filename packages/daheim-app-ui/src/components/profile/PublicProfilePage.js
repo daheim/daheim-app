@@ -14,7 +14,7 @@ import ProficiencyRating from '../ProficiencyRating'
 import Review from './Review'
 import SendReview from './SendReview'
 
-import {H3, Text, Flex, Box, VSpace, Avatar, Button, Interest, LanguageBox} from '../Basic'
+import {H2, H3, Text, Flex, Box, VSpace, Avatar, Button, Interest, LanguageBox} from '../Basic'
 import {Padding, Layout} from '../../styles'
 
 const rowSpacing = Padding.s
@@ -29,6 +29,36 @@ const Container = styled.div`
   margin-right: -${colSpacing};
 `
 
+class ProfileHeaderRaw extends Component {
+  static propTypes = {
+    user: PropTypes.object,
+    text: PropTypes.string,
+  }
+
+  roleToTitle (role) {
+    const {intl} = this.props
+    switch (role) {
+      case 'student': return intl.formatMessage({id: 'profile.student.long'})
+      case 'teacher': return intl.formatMessage({id: 'profile.coach.long'})
+      default: return intl.formatMessage({id: 'profile.user'})
+    }
+  }
+
+  render() {
+    const {role, name, picture} = this.props.user
+    return (
+      <Flex column align='center'>
+        <Avatar size='100px' src={picture}/>
+        <VSpace v={Padding.m}/>
+        <H2>{name}</H2>
+        <Text>{this.props.text || this.roleToTitle(role)}</Text>
+      </Flex>
+    )
+  }
+}
+
+export const ProfileHeader = injectIntl(ProfileHeaderRaw)
+
 class ProfilePage extends Component {
 
   static propTypes = {
@@ -38,7 +68,9 @@ class ProfilePage extends Component {
     reviewEditable: PropTypes.bool.isRequired,
     intl: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
-    onReportUser: PropTypes.func
+    onReportUser: PropTypes.func,
+    hideHeader: PropTypes.bool,
+    fromLesson: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -50,7 +82,12 @@ class ProfilePage extends Component {
   }
 
   handleEditorRequestClose = () => {
-    this.setState({editorOpen: false})
+    if (this.props.fromLesson) {
+      this.props.push('/')
+      setTimeout(() => window.location.reload(), 10)
+    } else {
+      this.setState({editorOpen: false})
+    }
   }
 
   handleOpenEditor = () => {
@@ -85,7 +122,7 @@ class ProfilePage extends Component {
   }
 
   render () {
-    const {user, userMeta, me, reviewEditable} = this.props
+    const {user, userMeta, me, reviewEditable, fromLesson} = this.props
 
     const userNotFound = userMeta && userMeta.error && userMeta.error.code === 'user_not_found'
     if (userNotFound) {
@@ -120,16 +157,22 @@ class ProfilePage extends Component {
       <div style={{maxWidth: '100%', width: Layout.innerWidthPx/2}}>
         <Helmet title={name} />
 
-        <VSpace v={Padding.l}/>
+        {!this.props.hideHeader && <VSpace v={Padding.l}/>}
 
         <Flex column>
-          <Flex column align='center'>
-            <Avatar size='100px' src={picture}/>
-            <H3>{name}</H3>
-            <Text>{this.roleToTitle(role)}</Text>
-          </Flex>
+          {!this.props.hideHeader && <ProfileHeader user={user}/>}
 
-          <VSpace v={Padding.l}/>
+          {!this.props.hideHeader && <VSpace v={Padding.l}/>}
+
+          {fromLesson &&
+            <div>
+              <SendReview
+                {...this.props}
+                onRequestClose={this.handleEditorRequestClose}
+              />
+              <VSpace v={Padding.l}/>
+            </div>
+          }
 
           {introduction &&
             <div>
@@ -175,20 +218,20 @@ class ProfilePage extends Component {
           <H3><FormattedMessage id='profile.userSince' values={{name}}/></H3>
           <Text>{userSinceText}</Text>
 
-          <VSpace v={Padding.l}/>
+          {!fromLesson && <VSpace v={Padding.l}/>}
 
-          {(myReview || editorOpen) &&
+          {(myReview || editorOpen) && !fromLesson &&
             <div>
               <H3><FormattedMessage id='profile.myFeedback'/></H3>
               <VSpace v={Padding.s}/>
               <div>
-                {editorOpen &&
+                {(editorOpen) &&
                   <SendReview
                     {...this.props}
                     onRequestClose={this.handleEditorRequestClose}
                   />
                 }
-                {myReview &&
+                {myReview && !editorOpen &&
                   <Review
                     key={myReview.from}
                     {...this.props}
@@ -202,29 +245,33 @@ class ProfilePage extends Component {
             </div>
           }
 
-          <H3><FormattedMessage id='profile.feedback'/></H3>
-          <VSpace v={Padding.s}/>
-          {otherReviews.length !== 0 ? (
-            <div style={{marginBottom: `-${reviewRowSpacing}`}}>
-              {otherReviews}
+          {!fromLesson &&
+            <div>
+              <H3><FormattedMessage id='profile.feedback'/></H3>
+              <VSpace v={Padding.s}/>
+              {otherReviews.length !== 0 ? (
+                <div style={{marginBottom: `-${reviewRowSpacing}`}}>
+                  {otherReviews}
+                </div>
+              ) : (
+                  <Text><FormattedMessage id='profile.noFeedback'/></Text>
+              )}
+
+              <VSpace v={Padding.l}/>
+
+              {me &&
+                <Flex>
+                  <Link to='/profile'><Button neutral><FormattedMessage id='profile.edit'/></Button></Link>
+                  <Box auto/>
+                </Flex>
+              }
+              {!me && this.props.onReportUser &&
+                <Flex>
+                  <Text><a onClick={this.handleReport} href='#'><FormattedMessage id='profile.reportUser'/></a></Text>
+                  <Box auto/>
+                </Flex>
+              }
             </div>
-          ) : (
-              <Text><FormattedMessage id='profile.noFeedback'/></Text>
-          )}
-
-          <VSpace v={Padding.l}/>
-
-          {me &&
-            <Flex>
-              <Link to='/profile'><Button neutral><FormattedMessage id='profile.edit'/></Button></Link>
-              <Box auto/>
-            </Flex>
-          }
-          {!me && this.props.onReportUser &&
-            <Flex>
-              <Text><a onClick={this.handleReport} href='#'><FormattedMessage id='profile.reportUser'/></a></Text>
-              <Box auto/>
-            </Flex>
           }
         </Flex>
       </div>
