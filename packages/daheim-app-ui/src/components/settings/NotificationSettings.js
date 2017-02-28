@@ -1,12 +1,35 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import {FormattedMessage, injectIntl} from 'react-intl'
-import RaisedButton from 'material-ui/RaisedButton'
 import {subscribeToWebPush, unsubscribeFromWebPush} from '../../middlewares/service_worker'
 import {testNotificationBroadcast} from '../../actions/notifications'
 
-import {H2, VSpace, Button, Text} from '../Basic'
-import {Padding} from '../../styles'
+import {H2, H3, VSpace, Button, Text, Switch} from '../Basic'
+import {Layout, Padding} from '../../styles'
+
+class NotificationSwitch extends Component {
+  static propTypes = {
+    disabled: PropTypes.bool,
+    activated: PropTypes.bool,
+    onSwitch: PropTypes.func,
+  }
+
+  render() {
+    const {activated, onSwitch, disabled} = this.props
+    return (
+      <div style={{width: 260}}>
+        <H3>Benachrichtigungen</H3>
+        <Switch
+          disabled={disabled}
+          selected={1 - activated}
+          label0="Aktiviert"
+          label1="Deaktiviert"
+          onSwitch={() => onSwitch(!activated)}
+        />
+      </div>
+    )
+  }
+}
 
 class NotAvailable extends Component {
   render () {
@@ -35,9 +58,7 @@ class SubscribedRaw extends Component {
     running: false
   }
 
-  handleUnsubscribe = async e => {
-    e.preventDefault()
-
+  handleUnsubscribe = async () => {
     if (this.state.running) return
     this.setState({running: true})
     try {
@@ -62,7 +83,11 @@ class SubscribedRaw extends Component {
   render () {
     return (
       <div>
-        <Text><FormattedMessage id='notificationSettings.subscribed'/></Text>
+        <NotificationSwitch
+          disabled={this.state.running}
+          activated={true}
+          onSwitch={this.handleUnsubscribe}
+        />
         <VSpace v={Padding.m}/>
         <Button
           type='submit' neutral
@@ -72,15 +97,6 @@ class SubscribedRaw extends Component {
           >
           <FormattedMessage id='notificationSettings.sendTest'/>
         </Button>
-        <Text>
-          <a
-            href='#'
-            disabled={this.state.running}
-            onClick={this.handleUnsubscribe}
-            >
-            <FormattedMessage id='notificationSettings.unsubscribe'/>
-          </a>
-        </Text>
       </div>
     )
   }
@@ -110,12 +126,11 @@ class NotSubscribedRaw extends Component {
 
   render () {
     return (
-      <div>
-        <div style={{color: '#E61C78', fontWeight: 700}}><FormattedMessage id='notificationSettings.notSubscribed' /></div>
-        <div style={{marginTop: 20}}>
-          <RaisedButton disabled={this.state.running} type='submit' primary label={this.props.intl.formatMessage({id: 'notificationSettings.subscribe'})} onClick={this.handleSubscribe} />
-        </div>
-      </div>
+      <NotificationSwitch
+        disabled={this.state.running}
+        activated={false}
+        onSwitch={this.handleSubscribe}
+      />
     )
   }
 }
@@ -138,7 +153,9 @@ class NotificationSettings extends Component {
       <div>
         <H2><FormattedMessage id='notificationSettings.title'/></H2>
         <VSpace v={Padding.m}/>
-        <Text><FormattedMessage id='notificationSettings.description'/></Text>
+        <Text style={{maxWidth: Layout.innerWidthPx / 1.25}}>
+          <FormattedMessage id='notificationSettings.description'/>
+        </Text>
         <VSpace v={Padding.m}/>
         {available ? <Available subscribed={subscribed} /> : <NotAvailable />}
       </div>

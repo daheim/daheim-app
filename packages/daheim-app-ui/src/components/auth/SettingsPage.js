@@ -8,7 +8,7 @@ import {changePassword} from '../../actions/auth'
 import CloseAccount from './CloseAccount'
 import NotificationSettings from '../settings/NotificationSettings'
 
-import {H1, H2, Flex, VSpace, Button, Text, TextField} from '../Basic'
+import {H1, H2, Flex, VSpace, Button, Text, TextField, Switch} from '../Basic'
 import {Layout, Padding, Color} from '../../styles'
 
 class SettingsPage extends Component {
@@ -28,7 +28,8 @@ class SettingsPage extends Component {
     repeatNewPassword: '',
     repeatNewPasswordError: null,
     errorMessage: null,
-    running: false
+    running: false,
+    newsletter: false,
   }
 
   componentDidMount () {
@@ -99,9 +100,13 @@ class SettingsPage extends Component {
     if (success) push('/')
   }
 
+  handleNewsletter = async () => {
+    this.setState({newsletter: !this.state.newsletter})
+  }
+
   render () {
     const {intl, profile} = this.props
-    const {password, passwordError, newPassword, newPasswordError,
+    const {newsletter, password, passwordError, newPassword, newPasswordError,
       repeatNewPassword, repeatNewPasswordError, errorMessage, running} = this.state
 
     return (
@@ -118,7 +123,13 @@ class SettingsPage extends Component {
         <H2><FormattedMessage id='settings.newsletter'/></H2>
         <VSpace v={Padding.m}/>
         <Text><FormattedMessage id='settings.newsletter.text'/></Text>
-        <Text>TODO: Switch (Abonniert/Abmelden)</Text>
+        <Switch
+          style={{width: 280}}
+          selected={1 - newsletter}
+          label0={'Abonniert'}
+          label1={'Abgemeldet'}
+          onSwitch={this.handleNewsletter}
+        />
 
         <VSpace v={Padding.xl}/>
 

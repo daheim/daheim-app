@@ -432,3 +432,70 @@ export class CircularProgress extends Component {
     )
   }
 }
+
+const SwitchBox = styled.div`
+  display: flex;
+  padding: 4px;
+  border: 2px solid ${Color.lightBlue};
+  border-radius: 6px;
+`
+
+const SwitchLabelContainer = styled(SwitchBox)`
+  border-color: rgba(0,0,0,0);
+  padding-top: 0;
+  padding-bottom: 0;
+`
+
+const SwitchButton = styled.div`
+  visibility: ${p => p.hide ? 'hidden' : 'visible'};
+  background: ${Color.lightBlue};
+  height: 20px;
+  border-radius: 4px;
+`
+
+const SwitchLabel = styled(Text)`
+  visibility: ${p => p.hide ? 'hidden' : 'visible'};
+  padding: 2px 30px;
+`
+
+export class Switch extends Component {
+  static propTypes = {
+    disabled: PropTypes.bool,
+    style: PropTypes.object,
+    selected: PropTypes.number.isRequired,
+    label0: PropTypes.string.isRequired,
+    label1: PropTypes.string.isRequired,
+    onSwitch: PropTypes.func.isRequired,
+  }
+
+  handleSwitch = () => {
+    if (this.props.disabled) return
+    this.props.onSwitch(!this.props.selected)
+  }
+
+  render() {
+    const {style, disabled, selected, label0, label1} = this.props
+    return (
+      <Flex
+        column
+        style={{cursor: 'pointer', opacity: disabled ? 0.5 : 1, userSelect: 'none', ...style}}
+        onClick={this.handleSwitch}
+        >
+        <SwitchLabelContainer>
+          <SwitchLabel>{label0}</SwitchLabel>
+          <Box auto/>
+          <SwitchLabel>{label1}</SwitchLabel>
+        </SwitchLabelContainer>
+        <SwitchBox>
+          <SwitchButton hide={selected !== 0}>
+            <SwitchLabel hide>{label0}</SwitchLabel>
+          </SwitchButton>
+          <Box auto/>
+          <SwitchButton hide={selected !== 1}>
+            <SwitchLabel hide>{label1}</SwitchLabel>
+          </SwitchButton>
+        </SwitchBox>
+      </Flex>
+    )
+  }
+}
