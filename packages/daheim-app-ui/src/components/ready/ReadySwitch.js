@@ -85,6 +85,14 @@ class ReadySwitch extends Component {
     }
   }
 
+  shareOnFb = (e) => {
+    e.preventDefault()
+    FB.ui({
+      method: 'share',
+      href: 'https://willkommen-daheim.org/',
+    }, function(response){});
+  }
+
   render () {
     const {ready, connected} = this.props
     const {busy} = this.state
@@ -115,6 +123,8 @@ class ReadySwitch extends Component {
             />
             &nbsp;
             <a href='#' onClick={this.goOffline}><FormattedMessage id='ready.cancel'/></a>
+            <br/>
+            <a href='#' onClick={this.shareOnFb}>Share on Facebook</a>
           </Text>
         </Flex>
       )
