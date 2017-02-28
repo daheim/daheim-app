@@ -1,4 +1,6 @@
 {
+  "more":"More",
+
   "browserNotSupported": "Unfortunately your browser is not supported. Please download one of the supported browsers below:",
   "browserTooOld": "Your {browserName} is getting a bit old. Please update it by clicking the link below:",
   "emailAddressMissing": "Please fill in you email address",
@@ -172,13 +174,15 @@
 
   "help.sent": "Thank you for your feedback. The Daheim Team will contact you soon.",
   "help.title": "Help",
-  "help.goToHelpArea": "If you have questions about Daheim, you can get more information under the links below:",
+  "help.text1":"Do you have questions about Daheim?",
+  "help.text2":"Here you'll find answers for the most frequent questions.",
   "help.faq": "Frequently Asked Questions",
   "help.manual": "International User Guide",
   "help.houseRules": "Community Guidelines",
-  "help.text": "If you have any further questions, improvement ideas or just want to contact the Daheim Team, please use the form below.",
-  "help.hint": "Please describe your issue here",
+  "help.text": "The right answer wasn't included? Then just write us your question!",
+  "help.hint": "e.g.: Hello, I have a question...",
   "help.submit": "Contact Daheim Team",
+  "help.effort":"We attempt to reply to your questions as soon as possible.",
 
   "notificationSettings.title": "Notifications",
   "notificationSettings.notAvailable": "Unfortunately notifications are not available in this browsers.",
