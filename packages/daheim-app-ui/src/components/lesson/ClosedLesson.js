@@ -23,7 +23,7 @@ class ClosedLesson extends Component {
 
   render () {
     const {closeReason, partnerId, user, intl} = this.props
-    if (!partnerId) return (
+    if (!partnerId || user == null) return (
       <H2><FormattedMessage id='lesson.thanks'/></H2>
     )
     return (
