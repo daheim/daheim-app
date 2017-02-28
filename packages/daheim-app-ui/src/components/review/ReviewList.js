@@ -14,12 +14,20 @@ import {H2, H3, Flex, Box, VSpace, Avatar, Text, Button} from '.././Basic'
 import {Layout, Padding} from '../../styles'
 
 const rowSpacing = Padding.l
-const entryStyle = { width: Layout.widthPx / 4.5, marginRight: Padding.m, marginBottom: rowSpacing }
+const colSpacingPx = Padding.mPx
+const colSpacing = `${colSpacingPx}px`
+const entries = 4
+const entryStyle = {
+  width: (Layout.innerWidthPx - colSpacingPx * (entries - 1)) / entries,
+  marginLeft: colSpacing,
+  marginTop: rowSpacing
+}
 
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: -${rowSpacing};
+  margin-top: -${rowSpacing};
+  margin-left: -${colSpacing};
   @media (max-width: ${Layout.mobileBreakpoint}) {
     justify-content: center;
   }
@@ -42,6 +50,10 @@ class ReviewList extends React.Component {
     push: React.PropTypes.func.isRequired,
     loadLessons: React.PropTypes.func.isRequired,
     loadUser: React.PropTypes.func.isRequired
+  }
+
+  state = {
+    showMore: false,
   }
 
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
@@ -128,6 +140,8 @@ class ReviewList extends React.Component {
   render () {
     const {lessonList, lessons} = this.props
     const error = !lessonList.meta.loaded && lessonList.meta.error
+    const showMore = this.state.showMore
+    const ls = error ? [] : showMore ? lessonList.data : lessonList.data.slice(0, 4)
 
     return (
       <div style={{width: '100%'}}>
@@ -137,14 +151,21 @@ class ReviewList extends React.Component {
           {error ? (
             <p style={{textAlign: 'center', color: 'darkred'}}>{error}. <a href='#' onClick={this.retry}>nochmal versuchen</a></p>
           ) : (
-            lessonList.data.length ? (
-              <Container>
-                {lessonList.data.map(lessonId => this.renderEntry(lessons[lessonId].data))}
-                {/* See http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid */}
-                <Box style={entryStyle}/>
-                <Box style={entryStyle}/>
-                <Box style={entryStyle}/>
-              </Container>
+            ls.length ? (
+              <div>
+                <Container>
+                  {ls.map(lessonId => this.renderEntry(lessons[lessonId].data))}
+                  {/* See http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid */}
+                  <Box style={entryStyle}/>
+                  <Box style={entryStyle}/>
+                  <Box style={entryStyle}/>
+                </Container>
+                {!showMore &&
+                  <a href='#' onClick={(e) => {e.preventDefault(); this.setState({showMore: true})}}>
+                    <FormattedMessage id='more'/>
+                  </a>
+                }
+              </div>
             ) : (
               <p style={{textAlign: 'center'}}>Du hast noch keine vorherige Lektionen.</p>
             )
