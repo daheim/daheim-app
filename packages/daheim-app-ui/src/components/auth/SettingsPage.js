@@ -21,6 +21,7 @@ class SettingsPage extends Component {
   }
 
   state = {
+    email: this.props.profile.username,
     password: '',
     passwordError: null,
     newPassword: '',
@@ -34,6 +35,10 @@ class SettingsPage extends Component {
 
   componentDidMount () {
     if (this.refs.password) this.refs.password.focus()
+  }
+
+  handleEmailChange = (e) => {
+    this.setState({email: e.target.value})
   }
 
   handlePasswordChange = (e) => {
@@ -50,7 +55,7 @@ class SettingsPage extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault()
-    const {password, newPassword, repeatNewPassword, running} = this.state
+    const {email, password, newPassword, repeatNewPassword, running} = this.state
     const {intl, push} = this.props
 
     if (running) return
@@ -62,14 +67,14 @@ class SettingsPage extends Component {
       repeatNewPasswordError: null,
       errorMessage: null
     }
-    if (!password) {
-      error = true
-      errors.passwordError = intl.formatMessage({id: 'settings.requiredField'})
-    }
-    if (!newPassword) {
-      error = true
-      errors.newPasswordError = intl.formatMessage({id: 'settings.requiredField'})
-    }
+    // if (!password) {
+    //   error = true
+    //   errors.passwordError = intl.formatMessage({id: 'settings.requiredField'})
+    // }
+    // if (!newPassword) {
+    //   error = true
+    //   errors.newPasswordError = intl.formatMessage({id: 'settings.requiredField'})
+    // }
     if (newPassword !== repeatNewPassword) {
       error = true
       errors.repeatNewPasswordError = intl.formatMessage({id: 'settings.newPasswordMismatch'})
@@ -82,6 +87,7 @@ class SettingsPage extends Component {
     try {
       await this.props.changePassword({
         username: this.props.profile.username,
+        email: email,
         password,
         newPassword,
         repeatNewPassword
@@ -97,7 +103,10 @@ class SettingsPage extends Component {
       this.setState({running: false})
     }
 
-    if (success) push('/')
+    if (success) {
+      push('/')
+      window.location.reload()
+    }
   }
 
   handleNewsletter = async () => {
@@ -106,7 +115,7 @@ class SettingsPage extends Component {
 
   render () {
     const {intl, profile} = this.props
-    const {newsletter, password, passwordError, newPassword, newPasswordError,
+    const {newsletter, email, password, passwordError, newPassword, newPasswordError,
       repeatNewPassword, repeatNewPasswordError, errorMessage, running} = this.state
 
     return (
@@ -137,9 +146,10 @@ class SettingsPage extends Component {
           <H2><FormattedMessage id='settings.changeEmail'/></H2>
           <VSpace v={Padding.m}/>
           <TextField
-            readOnly neutral type='email'
+            neutral type='email'
             label={intl.formatMessage({id: 'forgotPasswordPage.emailAddressLabel'})}
-            value={profile.username}
+            value={email}
+            onChange={this.handleEmailChange}
           />
           <VSpace v={Padding.m}/>
           <H2><FormattedMessage id='settings.changePassword' /></H2>

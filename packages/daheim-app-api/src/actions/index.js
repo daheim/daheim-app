@@ -208,8 +208,9 @@ def('/auth.resetPassword', async (req, res) => {
 })
 
 def('/auth.changePassword', async (req, res) => {
-  const {newPassword} = req.body
-  req.user.password = newPassword
+  const {newPassword, email} = req.body
+  req.user.username = email
+  if (newPassword) req.user.password = newPassword
   req.user.save()
   return {}
 }, {
