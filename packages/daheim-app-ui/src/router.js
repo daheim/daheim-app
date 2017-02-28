@@ -28,8 +28,7 @@ import AvatarMakerPage from './components/avatar/AvatarMaker'
 
 const scrollCallback = (prevRouterProps, { routes }) => {
   const isModal = routes[routes.length-1].modal
-  if (isModal) return false
-  return true
+  return !isModal;
 }
 
 export default function createRouter (history) {
@@ -63,8 +62,8 @@ export default function createRouter (history) {
           <Route path='logout' component={LogoutPage} />
         </Route>
 
-        <Route path='*' component={AuthLayout}>
-          <IndexRoute component={NotFoundPage} />
+        <Route path='*' component={DefaultLayout}>
+          <IndexRoute component={NotFoundPage} modal={true} backTo={'/'}/>
         </Route>
       </Router>
     </div>
