@@ -7,6 +7,7 @@ import {push} from 'react-router-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {FormattedMessage, injectIntl} from 'react-intl'
 
+import Modal from '../../Modal'
 import {saveProfile} from '../../actions/profile'
 import ProficiencyRating from '../ProficiencyRating'
 import TimeToChoose from '../ready/TimeToChoose'
@@ -284,7 +285,7 @@ const ProgressBarFg = styled.div`
 
 const ProgressBar = ({v}) => {
   return (
-    <div style={{width: '100%', maxWidth: `${Layout.widthPx / 2}`}}>
+    <div style={{width: '100%', maxWidth: `${Layout.widthPx / 2}px`}}>
       <Text style={{textAlign: 'left'}}>
         <FormattedMessage id='editProfile.progress' values={{percent: v.toString()}}/>
       </Text>
@@ -319,6 +320,9 @@ class ProfilePageRaw extends React.Component {
 
     this.state = {
       step: step,
+      changedAvatar: false,
+      showAvatarHelp: false,
+      showAvatarHelpStep: 0,
       picture: profile.picture,
       gender: profile.gender,
       name: profile.name || '',
@@ -336,9 +340,12 @@ class ProfilePageRaw extends React.Component {
 
   handleContinue = () => {
     let scrollToTop = true
-    const step = this.state.step
+    const {step, changedAvatar} = this.state
     if (step === 'role') this.setState({step: 'basic'})
-    else if (step === 'basic') this.setState({step: 'languages'})
+    else if (step === 'basic') {
+      if (!changedAvatar) this.setState({showAvatarHelp: true})
+      else this.setState({step: 'languages'})
+    }
     else if (step === 'languages') this.setState({step: 'interests'})
     else {
       scrollToTop = false
@@ -397,15 +404,66 @@ class ProfilePageRaw extends React.Component {
     e.preventDefault()
   }
 
+  handleCloseAvatarHelp = () => {
+    this.setState({showAvatarHelp: false, showAvatarHelpStep: 0})
+  }
+
+  handleNextAvatarHelp = () => {
+    const {showAvatarHelpStep} = this.state
+    if (showAvatarHelpStep === 0) {
+      this.setState({showAvatarHelpStep: 1})
+    } else {
+      this.handleCloseAvatarHelp()
+    }
+  }
+
+  handleNoAvatarHelp = () => {
+    this.handleCloseAvatarHelp()
+    this.setState({changedAvatar: true})
+    setTimeout(() => this.handleContinue(), 5)
+  }
+
   renderStepRole() {
     return <TimeToChoose onFinished={this.handleContinue}/>
   }
 
+  renderAvatarHelp() {
+    const s = this.state.showAvatarHelpStep
+    return (
+      <Modal isOpen={true} onRequestClose={this.handleCloseAvatarHelp}>
+        <Flex
+          column align='center' justify='center'
+          style={{maxWidth: Layout.innerWidthPx / 1.6}}
+          >
+          <H1 style={{color: Color.red, textAlign: 'center'}}>
+            Du kannst Dein Profilbild auch bearbeiten!
+          </H1>
+          <VSpace v={Padding.m}/>
+          <img
+            src={`/avatarhelp${s}.png`}
+            style={{width: '100%', height: 260, objectFit: 'contain'}}
+          />
+          <VSpace v={Padding.m}/>
+          <Flex style={{width: '100%'}}>
+            <Button neg onClick={this.handleNoAvatarHelp} style={{flex: 1}}>
+              <H2>Nein, danke.</H2>
+            </Button>
+            <HSpace v={Padding.s}/>
+            <Button primary onClick={this.handleNextAvatarHelp} style={{flex: 1}}>
+              <H2>Ja, ok.</H2>
+            </Button>
+          </Flex>
+        </Flex>
+      </Modal>
+    )
+  }
+
   renderStepBasic() {
     const intl = this.props.intl
-    const {name, gender, picture} = this.state
+    const {name, gender, picture, showAvatarHelp} = this.state
     return (
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        {showAvatarHelp && this.renderAvatarHelp()}
         <div style={{flex: '1 1 400px'}}>
           <Box auto style={{maxWidth: Layout.widthPx / 2}}>
             <TextField
