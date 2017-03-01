@@ -15,10 +15,10 @@ class NotificationSwitch extends Component {
   }
 
   render() {
-    const {activated, onSwitch, disabled} = this.props
+    const {small, activated, onSwitch, disabled} = this.props
     return (
       <div style={{width: 260}}>
-        <H3>Benachrichtigungen</H3>
+        {!small && <H3>Benachrichtigungen</H3>}
         <Switch
           disabled={disabled}
           selected={1 - activated}
@@ -43,7 +43,8 @@ class Available extends Component {
   }
 
   render () {
-    return this.props.subscribed ? <Subscribed /> : <NotSubscribed />
+    const {small} = this.props
+    return this.props.subscribed ? <Subscribed small={small} /> : <NotSubscribed small={small} />
   }
 }
 
@@ -87,16 +88,21 @@ class SubscribedRaw extends Component {
           disabled={this.state.running}
           activated={true}
           onSwitch={this.handleUnsubscribe}
+          small={this.props.small}
         />
-        <VSpace v={Padding.m}/>
-        <Button
-          type='submit' neutral
-          style={{width: 'auto'}}
-          disabled={this.state.running}
-          onClick={this.handleSendTest}
-          >
-          <FormattedMessage id='notificationSettings.sendTest'/>
-        </Button>
+        {!this.props.small &&
+          <div>
+            <VSpace v={Padding.m}/>
+            <Button
+              type='submit' neutral
+              style={{width: 'auto'}}
+              disabled={this.state.running}
+              onClick={this.handleSendTest}
+              >
+              <FormattedMessage id='notificationSettings.sendTest'/>
+            </Button>
+          </div>
+        }
       </div>
     )
   }
@@ -130,6 +136,7 @@ class NotSubscribedRaw extends Component {
         disabled={this.state.running}
         activated={false}
         onSwitch={this.handleSubscribe}
+        small={this.props.small}
       />
     )
   }
@@ -163,6 +170,30 @@ class NotificationSettings extends Component {
   }
 
 }
+
+class NotificationSettingsSmallRaw extends Component {
+  static propTypes = {
+    subscribed: PropTypes.bool,
+    available: PropTypes.bool,
+    started: PropTypes.bool,
+    style: PropTypes.object
+  }
+
+  render () {
+    const {available, started, subscribed} = this.props
+
+    return (
+      <div>
+        {available ? <Available subscribed={subscribed} small={true} /> : <NotAvailable />}
+      </div>
+    )
+  }
+}
+
+export const NotificationSettingsSmall = connect((state) => {
+  const {started, available, subscribed} = state.serviceWorker
+  return {started, available, subscribed}
+})(NotificationSettingsSmallRaw)
 
 export default connect((state) => {
   const {started, available, subscribed} = state.serviceWorker

@@ -3,8 +3,9 @@ import {connect} from 'react-redux'
 import styled from 'styled-components'
 
 import Modal from '../../Modal'
+import {NotificationSettingsSmall} from '../settings/NotificationSettings'
 
-import {H1, H2, Text, Flex, VSpace, HSpace, Button} from '../Basic'
+import {H1, H2, Text, Flex, Box, VSpace, HSpace, Button} from '../Basic'
 import {Layout, Color, Padding} from '../../styles'
 
 import {sawRules} from '../../actions/profile'
@@ -15,6 +16,12 @@ const Icon = styled.img`
   filter: hue-rotate(190deg) brightness(1.6) grayscale(0.3);
 `
 
+const Icon2 = styled.img`
+  height: 50px;
+  object-fit: contain;
+  filter: hue-rotate(50deg) brightness(1.2) grayscale(0.3);
+`
+
 class WelcomeRaw extends React.Component {
   state = {
     open: true,
@@ -22,7 +29,13 @@ class WelcomeRaw extends React.Component {
   }
 
   handleCloseModal = () => {
-    this.setState({ open: false })
+    const {role} = this.props.profile
+    const {step} = this.state
+    if (role === 'teacher' && step < 5) {
+      this.setState({ step: 5 })
+    } else {
+      this.setState({ open: false })
+    }
     this.props.sawRules()
   }
 
@@ -39,8 +52,13 @@ class WelcomeRaw extends React.Component {
   }
 
   goForward = () => {
+    const {role} = this.props.profile
     const {step} = this.state
-    if (step >= 4) this.handleCloseModal()
+    if (role === 'teacher') {
+      if (step >= 5) this.handleCloseModal()
+    } else {
+      if (step >= 4) this.handleCloseModal()
+    }
     this.setState({step: step + 1})
   }
 
@@ -50,9 +68,43 @@ class WelcomeRaw extends React.Component {
     this.setState({step: step - 1})
   }
 
+  renderNotificationSettings() {
+    return (
+      <Modal isOpen={this.state.open} onRequestClose={this.handleCloseModal}>
+        <Flex
+          column align='center' justify='center'
+          style={{maxWidth: Layout.innerWidthPx / 1.7}}
+          >
+          <Icon2 src='/icons/Icons_ready-27.svg'/>
+          <H1 style={{color: Color.lightBlue, textAlign: 'center'}}>
+            Benachrichtigungs-einstellungen
+          </H1>
+          <VSpace v={Padding.l}/>
+          <Text style={{paddingLeft: Padding.l, paddingRight: Padding.l}}>
+            Hier kannst Du die Benachrichtigungsfunktion einstellen. Wenn Du sie aktiviert hast, bekommst Du eine
+            Mitteilung sobald ein Gesprächspartner bereit für eine Unterhal- tung ist. Du kannst die Benachrichtigung
+            auch auf Deinem Handy, Tablet und anderen Geräten aktivieren.
+          </Text>
+          <VSpace v={Padding.m}/>
+          <VSpace v={Padding.s}/>
+          <Flex align='flex-end' style={{width: '100%'}}>
+            <Box auto>
+              <NotificationSettingsSmall/>
+            </Box>
+            <HSpace v={Padding.s}/>
+            <Button neg onClick={this.goForward} style={{flex: 1, height: '100%', minWidth: 150}}>
+              <H2>Nein, danke.</H2>
+            </Button>
+          </Flex>
+        </Flex>
+      </Modal>
+    )
+  }
+
   render() {
     if (this.props.profile.sawRules) return null
     const {step} = this.state
+    if (step === 5) return this.renderNotificationSettings()
     return (
       <Modal isOpen={this.state.open} onRequestClose={this.handleCloseModal}>
         <Flex
