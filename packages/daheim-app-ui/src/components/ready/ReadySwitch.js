@@ -103,7 +103,7 @@ class ReadySwitch extends Component {
 
     if (!ready && !busy) {
       return (
-        <Button primary onClick={this.goOnline} style={{width: '100%', maxWidth: Layout.widthPx * 0.75}}>
+        <Button primary onClick={this.goOnline} style={{width: '100%', maxWidth: Layout.widthPx * 0.65}}>
           <Flex align='center' justify='center'>
             <ButtonIcon src='/icons/Icons_ready-02.svg'/>
             <HSpace v={Padding.s}/>

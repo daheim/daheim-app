@@ -35,6 +35,7 @@ let UserSchema = new Schema({
 
   profile: {
     completed: Boolean,
+    sawRules: Boolean,
     name: String,
     role: String,
     gender: String,

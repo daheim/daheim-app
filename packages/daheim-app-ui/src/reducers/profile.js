@@ -3,6 +3,7 @@ import {handleActions} from 'redux-actions'
 import {
   LOAD,
   SWITCH_ROLE,
+  SAW_RULES,
   SAVE
 } from '../actions/profile'
 import {
@@ -46,6 +47,7 @@ function updateAfterAuth (state, action) {
 export default handleActions({
   [LOAD]: updateProfile,
   [SWITCH_ROLE]: updateProfile,
+  [SAW_RULES]: updateProfile,
   [SAVE]: updateProfile2,
 
   [REGISTER]: updateAfterAuth,

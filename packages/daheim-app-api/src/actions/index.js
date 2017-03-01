@@ -364,4 +364,11 @@ const deleteFileHook = (path) => async () => {
   // TODO: delete azure file
 }
 
+def('/users.sawRules', async (req) => {
+  const {user} = req
+  user.profile.sawRules = true
+  user.save()
+  return user
+})
+
 export default app

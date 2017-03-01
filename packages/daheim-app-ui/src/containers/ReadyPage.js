@@ -3,6 +3,7 @@ import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import {FormattedMessage} from 'react-intl'
 
+import Welcome from '../components/ready/Welcome'
 import ReviewList from '../components/review/ReviewList'
 import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
@@ -43,6 +44,8 @@ class ReadyPageRaw extends React.Component {
         {role === 'teacher' ? (
           <ReadyUsers />
         ) : undefined}
+
+        <Welcome/>
 
         <VSpace v={Padding.xl}/>
         <TalkAbout />
