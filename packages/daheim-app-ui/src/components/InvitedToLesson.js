@@ -1,11 +1,22 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {FormattedMessage} from 'react-intl'
 import FlatButton from 'material-ui/FlatButton'
 import {Howl} from 'howler'
+import styled from 'styled-components'
 import Modal from '../Modal'
 
 import {join, leave, ready as setReady} from '../actions/live'
-import ProfilePage from './profile/PublicProfilePage'
+import ProfilePage, {ProfileHeader} from './profile/PublicProfilePage'
+
+import {H3, Flex, VSpace, HSpace, Button} from './Basic'
+import {Padding} from '../styles'
+
+const ButtonIcon = styled.img`
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(100);
+`
 
 class InvitedToLessonDialog extends Component {
 
@@ -54,30 +65,41 @@ class InvitedToLessonDialog extends Component {
     // const {lesson} = this.props
     // const {id} = lesson
 
-    const actions = [
-      <FlatButton
-        key='cancel'
-        className='cancel'
-        label='Abbrechen'
-        onTouchTap={this.handleRequestClose}
-      />,
-      <FlatButton
-        key='start'
-        className='start'
-        label={'LOS GEHT\'S'}
-        primary
-        onTouchTap={this.handleAccept}
-        style={{color: 'white', backgroundColor: '#E61C78', fontWeight: 'bold'}}
-      />
-    ]
-
     return (
-      <Modal isOpen autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions} style={{inner: {minWidth: '60%'}}}>
-        <div className='invitedToLessonDialog' style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
-          {actions}
-        </div>
-        <h2>Neues Gespräch</h2>
-        <ProfilePage params={{userId: this.props.lesson.teacherId}} reviewEditable={false} />
+      <Modal
+        isOpen
+        autoScrollBodyContent
+        open
+        modal
+        onRequestClose={this.handleRequestClose}
+        >
+        <Flex column align='center' justify='center'>
+          <VSpace v={Padding.l}/>
+
+          <ProfileHeader user={this.props.user}/>
+
+          <VSpace v={Padding.m}/>
+
+          <Button
+            primary
+            onClick={this.handleAccept}
+            style={{width: 'auto', height: 'auto', padding: '3px 30px'}}
+            >
+            <Flex align='center' justify='center'>
+              <ButtonIcon src='/icons/Icons_ready-02.svg'/>
+              <HSpace v={Padding.s}/>
+              <H3><FormattedMessage id='lesson.accept'/></H3>
+            </Flex>
+          </Button>
+        </Flex>
+
+        <VSpace v={Padding.m}/>
+
+        <ProfilePage
+          params={{userId: this.props.lesson.teacherId}}
+          hideHeader={true}
+          reviewEditable={false}
+        />
       </Modal>
     )
   }
@@ -113,5 +135,6 @@ export default connect((state, props) => {
   if (lesson) {
     if (lesson.connected || lesson.participating) lesson = undefined
   }
-  return {lesson}
+  const user = lesson && state.users.users[lesson.teacherId]
+  return {lesson, user}
 }, {join, leave, setReady})(InvitedToLesson)

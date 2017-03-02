@@ -1,39 +1,38 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
-import Popover, {PopoverAnimationVertical} from 'material-ui/Popover'
-import classnames from 'classnames'
-import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down'
-import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-drop-up'
+import styled from 'styled-components'
 import {FormattedMessage} from 'react-intl'
 
-import style from './Header.style'
+import {Layout, Color, Padding} from '../styles'
+import {Flex, H1, H2, VSpace} from './Basic'
 
-class UserDropdown extends React.Component {
-
-  static propTypes = {
-    user: PropTypes.object.isRequired,
-    onRequestClose: PropTypes.func
+const PopupBg = styled.div`
+  position: absolute;
+  right: ${Padding.s};
+  width: ${Layout.headerWidthPx / 2}px;
+  margin-top: ${Padding.m};
+  @media (max-width: ${Layout.headerWidthPx / 2 + 4 * Padding.sPx}px) {
+    left: ${Padding.s};
+    width: auto;
   }
+  display: flex;
+  flex-direction: column;
+  padding: ${Padding.l};
+  border-radius: 6px;
+  color: white;
+  background: ${Color.red};
+`
 
-  handleClick = (e) => {
-    if (this.props.onRequestClose) this.props.onRequestClose()
-  }
-
-  render () {
-    const {user} = this.props
-
-    return (
-      <div style={{width: 200, overflowY: 'auto'}}>
-        <Link to='/' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.frontPage' /></Link>
-        <Link to={`/users/${user.id}`} className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.myProfile' /></Link>
-        <Link to='/password' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.settings' /></Link>
-        <Link to='/help' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.help' /></Link>
-        <Link to='/auth/logout' className={style.dropDownItem} onClick={this.handleClick}><FormattedMessage id='userMenu.signOut' /></Link>
-      </div>
-    )
-  }
-}
+const X = styled.img`
+  position: absolute;
+  right: ${Padding.m};
+  top: ${Padding.m};
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(100);
+  cursor: pointer;
+`
 
 class UserItemRaw extends React.Component {
   static propTypes = {
@@ -44,47 +43,74 @@ class UserItemRaw extends React.Component {
     open: false
   }
 
-  handleRequestClose = (e) => {
+  handleClose = (e) => {
+    e.preventDefault()
     this.setState({ open: false })
   }
 
-  handleClick = (e) => {
+  handleOpen = (e) => {
     e.preventDefault()
+    const open = this.state.open
     this.setState({
-      open: true,
-      anchorEl: e.currentTarget
+      open: !open,
     })
+  }
+
+  handleLinkClick = () => {
+    this.setState({
+      open: false,
+    })
+  }
+
+  renderEntry(link, id) {
+    return (
+      <Link to={link} onClick={this.handleLinkClick}>
+        <H1 style={{color: 'white'}}><FormattedMessage id={id}/></H1>
+      </Link>
+    )
+  }
+
+  renderEntrySecondary(link, id) {
+    return (
+      <a href={link} target='_blank'>
+        <H2 style={{color: 'white'}}><FormattedMessage id={id}/></H2>
+      </a>
+    )
   }
 
   render () {
     const {open} = this.state
-    const {user: {profile: {name, picture} = {}} = {}} = this.props
-    const classes = classnames({
-      [style.headerItem]: true,
-      [style.headerItemActive]: open
-    })
+    const {user} = this.props
+    const space = Padding.s
     return (
       <div>
-        <Link to='/profile' className={classes} onClick={this.handleClick}>
-          <div style={{ marginRight: 12 }}>
-            {name}
-          </div>
-          <img className={style.avatar} src={picture} />
-          {open ? <ArrowDropUp style={{height: 24}} /> : <ArrowDropDown style={{height: 24}} />}
-        </Link>
-        <Popover
-          open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'right', vertical: 'top'}}
-          onRequestClose={this.handleRequestClose}
-          animation={PopoverAnimationVertical}
-          style={{ borderRadius: null }}
-        >
-          <UserDropdown
-            {...this.props}
-            onRequestClose={this.handleRequestClose} />
-        </Popover>
+        <a href='#' onClick={this.handleOpen}><H2 style={{color: Color.black}}>MENÜ</H2></a>
+        {open &&
+          <PopupBg>
+            <X
+              onClick={this.handleClose}
+              src='/icons/Icons_ready-14.svg'
+            />
+            {this.renderEntry('/', 'userMenu.frontPage')}
+            <VSpace v={space}/>
+            {this.renderEntry(`/profile`, 'userMenu.myProfile')}
+            <VSpace v={space}/>
+            {this.renderEntry('/settings', 'userMenu.settings')}
+            <VSpace v={space}/>
+            {this.renderEntry('/help', 'userMenu.help')}
+            <VSpace v={space}/>
+            {this.renderEntry('/auth/logout', 'userMenu.signOut')}
+            <VSpace v={Padding.m}/>
+            <Flex>
+              {this.renderEntrySecondary('https://willkommen-daheim.org/agb/', 'userMenu.agb')}
+              <H2>&nbsp;|&nbsp;</H2>
+              {this.renderEntrySecondary('https://willkommen-daheim.org/datenschutz/', 'userMenu.privacy')}
+              <H2>&nbsp;|&nbsp;</H2>
+              {this.renderEntrySecondary('https://willkommen-daheim.org/impressum/', 'userMenu.imprint')}
+            </Flex>
+            <VSpace v={Padding.m}/>
+          </PopupBg>
+        }
       </div>
     )
   }

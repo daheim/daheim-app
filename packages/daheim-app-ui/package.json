@@ -107,6 +107,7 @@
     "react-redux": "^4.4.1",
     "react-router": "^2.4.0",
     "react-router-redux": "^4.0.1",
+    "react-router-scroll": "^0.4.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.3.1",
     "redux-actions": "^0.11.0",
@@ -116,6 +117,7 @@
     "serialize-javascript": "^1.2.0",
     "socket.io-client": "^1.4.6",
     "spdy": "^3.3.2",
+    "styled-components": "^1.4.3",
     "webpack-isomorphic-tools": "^2.2.50",
     "webrtc-adapter": "^2.0.2",
     "whatwg-fetch": "^1.0.0"

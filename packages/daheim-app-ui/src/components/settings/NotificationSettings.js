@@ -1,13 +1,39 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import {FormattedMessage, injectIntl} from 'react-intl'
-import RaisedButton from 'material-ui/RaisedButton'
 import {subscribeToWebPush, unsubscribeFromWebPush} from '../../middlewares/service_worker'
 import {testNotificationBroadcast} from '../../actions/notifications'
 
+import {H2, H3, VSpace, Button, Text, Switch} from '../Basic'
+import {Layout, Padding} from '../../styles'
+
+class NotificationSwitch extends Component {
+  static propTypes = {
+    disabled: PropTypes.bool,
+    activated: PropTypes.bool,
+    onSwitch: PropTypes.func,
+  }
+
+  render() {
+    const {small, activated, onSwitch, disabled} = this.props
+    return (
+      <div style={{width: 260}}>
+        {!small && <H3>Benachrichtigungen</H3>}
+        <Switch
+          disabled={disabled}
+          selected={1 - activated}
+          label0="Aktiviert"
+          label1="Deaktiviert"
+          onSwitch={() => onSwitch(!activated)}
+        />
+      </div>
+    )
+  }
+}
+
 class NotAvailable extends Component {
   render () {
-    return <div><FormattedMessage id='notificationSettings.notAvailable' /></div>
+    return <Text><FormattedMessage id='notificationSettings.notAvailable'/></Text>
   }
 }
 
@@ -17,7 +43,8 @@ class Available extends Component {
   }
 
   render () {
-    return this.props.subscribed ? <Subscribed /> : <NotSubscribed />
+    const {small} = this.props
+    return this.props.subscribed ? <Subscribed small={small} /> : <NotSubscribed small={small} />
   }
 }
 
@@ -32,9 +59,7 @@ class SubscribedRaw extends Component {
     running: false
   }
 
-  handleUnsubscribe = async e => {
-    e.preventDefault()
-
+  handleUnsubscribe = async () => {
     if (this.state.running) return
     this.setState({running: true})
     try {
@@ -45,7 +70,7 @@ class SubscribedRaw extends Component {
     this.setState({running: false})
   }
 
-  handleSendTest = async e => {
+  handleSendTest = async () => {
     if (this.state.running) return
     this.setState({running: true})
     try {
@@ -59,11 +84,25 @@ class SubscribedRaw extends Component {
   render () {
     return (
       <div>
-        <div style={{color: '#5CB990', fontWeight: 700}}><FormattedMessage id='notificationSettings.subscribed' /></div>
-        <div style={{marginTop: 20}}>
-          <RaisedButton style={{marginRight: 16}} disabled={this.state.running} type='submit' primary label={this.props.intl.formatMessage({id: 'notificationSettings.sendTest'})} onClick={this.handleSendTest} />
-          <a href='#' disabled={this.state.running} onClick={this.handleUnsubscribe}><FormattedMessage id='notificationSettings.unsubscribe' /></a>
-        </div>
+        <NotificationSwitch
+          disabled={this.state.running}
+          activated={true}
+          onSwitch={this.handleUnsubscribe}
+          small={this.props.small}
+        />
+        {!this.props.small &&
+          <div>
+            <VSpace v={Padding.m}/>
+            <Button
+              type='submit' neutral
+              style={{width: 'auto'}}
+              disabled={this.state.running}
+              onClick={this.handleSendTest}
+              >
+              <FormattedMessage id='notificationSettings.sendTest'/>
+            </Button>
+          </div>
+        }
       </div>
     )
   }
@@ -80,7 +119,7 @@ class NotSubscribedRaw extends Component {
     running: false
   }
 
-  handleSubscribe = async e => {
+  handleSubscribe = async () => {
     if (this.state.running) return
     this.setState({running: true})
     try {
@@ -93,12 +132,12 @@ class NotSubscribedRaw extends Component {
 
   render () {
     return (
-      <div>
-        <div style={{color: '#E61C78', fontWeight: 700}}><FormattedMessage id='notificationSettings.notSubscribed' /></div>
-        <div style={{marginTop: 20}}>
-          <RaisedButton disabled={this.state.running} type='submit' primary label={this.props.intl.formatMessage({id: 'notificationSettings.subscribe'})} onClick={this.handleSubscribe} />
-        </div>
-      </div>
+      <NotificationSwitch
+        disabled={this.state.running}
+        activated={false}
+        onSwitch={this.handleSubscribe}
+        small={this.props.small}
+      />
     )
   }
 }
@@ -113,22 +152,48 @@ class NotificationSettings extends Component {
   }
 
   render () {
-    const {available, started, subscribed, style, ...rest} = this.props
+    const {available, started, subscribed} = this.props
 
-    if (!started) return null
+    //if (!started) return null
 
     return (
-      <div style={{lineHeight: '150%', fontFamily: 'Lato, sans-serif', ...style}} {...rest}>
-        <h2><FormattedMessage id='notificationSettings.title' /></h2>
-        <div><FormattedMessage id='notificationSettings.description' /></div>
-        <div style={{marginTop: 20}}>
-          {available ? <Available subscribed={subscribed} /> : <NotAvailable />}
-        </div>
+      <div>
+        <H2><FormattedMessage id='notificationSettings.title'/></H2>
+        <VSpace v={Padding.m}/>
+        <Text style={{maxWidth: Layout.innerWidthPx / 1.25}}>
+          <FormattedMessage id='notificationSettings.description'/>
+        </Text>
+        <VSpace v={Padding.m}/>
+        {available ? <Available subscribed={subscribed} /> : <NotAvailable />}
       </div>
     )
   }
 
 }
+
+class NotificationSettingsSmallRaw extends Component {
+  static propTypes = {
+    subscribed: PropTypes.bool,
+    available: PropTypes.bool,
+    started: PropTypes.bool,
+    style: PropTypes.object
+  }
+
+  render () {
+    const {available, started, subscribed} = this.props
+
+    return (
+      <div>
+        {available ? <Available subscribed={subscribed} small={true} /> : <NotAvailable />}
+      </div>
+    )
+  }
+}
+
+export const NotificationSettingsSmall = connect((state) => {
+  const {started, available, subscribed} = state.serviceWorker
+  return {started, available, subscribed}
+})(NotificationSettingsSmallRaw)
 
 export default connect((state) => {
   const {started, available, subscribed} = state.serviceWorker

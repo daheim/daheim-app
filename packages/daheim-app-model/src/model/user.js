@@ -1,7 +1,6 @@
 import {Schema, default as mongoose} from 'mongoose'
 import bcrypt from 'bcryptjs'
 import BaseError from 'es6-error'
-import gravatar from 'gravatar'
 import Bluebird from 'bluebird'
 
 import avatars from '../avatars'
@@ -35,8 +34,11 @@ let UserSchema = new Schema({
   lockUntil: {type: Date},
 
   profile: {
+    completed: Boolean,
+    sawRules: Boolean,
     name: String,
     role: String,
+    gender: String,
     languages2: [String],
     topics2: [String],
     inGermanySince: String,
@@ -75,7 +77,7 @@ let UserSchema = new Schema({
       } else if (ret.profile.pictureType === 'data') {
         ret.profile.picture = ret.profile.pictureData
       } else {
-        ret.profile.picture = gravatar.url(ret.username, {s: '256', r: 'x', d: 'monsterid', protocol: 'https'})
+        ret.profile.picture = '/smiley.png'
       }
       delete ret.profile.pictureType
       delete ret.profile.pictureData

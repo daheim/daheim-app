@@ -1,15 +1,18 @@
 import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
+import {FormattedMessage} from 'react-intl'
 
-import NotYetOpenPage from '../components/ready/NotYetOpenPage'
+import Welcome from '../components/ready/Welcome'
 import ReviewList from '../components/review/ReviewList'
 import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
 import ReadySwitch from '../components/ready/ReadySwitch'
 import TimeToChoose from '../components/ready/TimeToChoose'
-// import NotYetInOperation from '../components/NotYetInOperation'
 import NotSupportedBrowser from '../components/ready/NotSupportedBrowser'
+
+import {H1, Flex, VSpace} from '../components/Basic'
+import {Padding} from '../styles'
 
 class ReadyPageRaw extends React.Component {
 
@@ -21,11 +24,17 @@ class ReadyPageRaw extends React.Component {
 
   render () {
     const {user: {profile: {role} = {}} = {}} = this.props
+    const isStudent = role === 'student'
+    const isTeacher = role === 'teacher'
+    const isNeither = !isStudent && !isTeacher
 
     return (
-      <div style={{padding: 16}}>
+      <Flex column align='center'>
+        <VSpace v={Padding.xl}/>
+        <H1><FormattedMessage id='ready.title'/></H1>
+        <VSpace v={Padding.xl}/>
 
-        <TimeToChoose />
+        {isNeither && <TimeToChoose />}
         <NotSupportedBrowser />
 
         {role === 'student' ? (
@@ -36,9 +45,14 @@ class ReadyPageRaw extends React.Component {
           <ReadyUsers />
         ) : undefined}
 
-        <ReviewList />
+        <Welcome/>
+
+        <VSpace v={Padding.xl}/>
         <TalkAbout />
-      </div>
+
+        <VSpace v={Padding.xl}/>
+        <ReviewList />
+      </Flex>
     )
   }
 }

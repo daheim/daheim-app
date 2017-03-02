@@ -1,8 +1,10 @@
 import React, {PropTypes, Component} from 'react'
-import ProficiencyRating from '../ProficiencyRating'
-import RaisedButton from 'material-ui/RaisedButton'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
-export default class SendReview extends Component {
+import {H3, Flex, HSpace, Avatar, Button, TextArea} from '../Basic'
+import {Padding} from '../../styles'
+
+class SendReviewRaw extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
@@ -46,18 +48,45 @@ export default class SendReview extends Component {
     }
   }
 
+  handleLater = () => {
+    if (this.props.onRequestClose) this.props.onRequestClose()
+  }
+
   render () {
-    const {user} = this.props
+    const {user, intl} = this.props
     const {text, rating} = this.state
     const {name = 'mich'} = user
 
     return (
       <form>
-        <div><textarea placeholder={`Bitte schreib ein Paar Worte über ${name}!`} style={{width: '100%', height: 100, borderRadius: 4, fontSize: 14, padding: 6, borderColor: '#AAA', marginTop: 2}} value={text} onChange={this.handleTextChange} /></div>
-        <div style={{marginBottom: 8}}>Deutschkenntnis:</div>
-        <div style={{marginBottom: 8}}><ProficiencyRating value={String(rating)} onChange={this.handleRatingChange} /></div>
-        <div><RaisedButton label='Speichern' primary onClick={this.handleSend} /></div>
+        <div>
+          <TextArea
+            placeholder={intl.formatMessage({id: 'profile.feedbackPlaceholder'})}
+            style={{}}
+            value={text}
+            onChange={this.handleTextChange}
+          />
+        </div>
+        <Flex style={{width: '100%'}}>
+          <Button
+            neutral
+            onClick={this.handleSend}
+            style={{width: 'auto', height: 'auto', padding: '5px 10px', flexBasis: 0, flexGrow: 1}}
+            >
+            <H3><FormattedMessage id='profile.saveFeedback'/></H3>
+          </Button>
+          <HSpace v={Padding.s}/>
+          <Button
+            neg
+            onClick={this.handleLater}
+            style={{width: 'auto', height: 'auto', padding: '5px 10px', flexBasis: 0, flexGrow: 1}}
+            >
+            <H3><FormattedMessage id='profile.saveFeedbackLater'/></H3>
+          </Button>
+        </Flex>
       </form>
     )
   }
 }
+
+export default injectIntl(SendReviewRaw)

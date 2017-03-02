@@ -1,11 +1,13 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import {push} from 'react-router-redux'
 import moment from 'moment'
+import {FormattedMessage} from 'react-intl'
 
 import ProficiencyRating from '../ProficiencyRating'
 
-import css from './ProfilePage.style'
+import {H3, Button, Text, Flex, Box, HSpace, Avatar} from '../Basic'
+import {Padding} from '../../styles'
 
 class Review extends Component {
 
@@ -31,29 +33,42 @@ class Review extends Component {
     if (this.props.onRequestEdit) this.props.onRequestEdit()
   }
 
+  handleProfileClick = () => {
+    console.log('TODO open profile of ' + JSON.stringify(this.props.user || 'no user'))
+    this.props.push(`/users/${this.props.user.id}`)
+  }
+
   render () {
-    const {review, user = {}, reviewEditable} = this.props
+    const {review, user = {}, reviewEditable, style} = this.props
     const {from, rating, text, date} = review
     const {name = 'BenutzerIn', picture} = user
 
     const dateText = moment(date).format('LL')
 
     return (
-      <div className={css.field}>
-        <div className={css.fieldTitle}>
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <img src={picture} style={{width: 28, height: 28, borderRadius: '50%', boxShadow: '0 1px 1px 1px rgba(0,0,0,.1)', border: 'solid 1px white'}} />
-            <div style={{marginLeft: 8}}>
-              <Link to={`/users/${from}`}>{name}</Link>
-              <span style={{fontSize: 10, color: '#aaa'}}> {dateText}</span>
-              {!reviewEditable ? null : <span> <a style={{fontSize: 10}} href='#' onClick={this.handleEditClick}>bearbeiten</a></span>}
-            </div>
+      <div style={style}>
+        <Flex align='start'>
+          <Box style={{width: Padding.m}}/>
+          <Avatar size='30px' src={picture} onClick={this.handleProfileClick} style={{cursor: 'pointer'}}/>
+          <HSpace v={Padding.s}/>
+          <div>
+            <Text>
+              <b onClick={this.handleProfileClick} style={{cursor: 'pointer'}}>{name}</b>&nbsp;
+              <FormattedMessage id='profile.feedback.on'/> {dateText}
+            </Text>
+            <Text>{text || <ProficiencyRating value={String(rating)} readOnly/>}</Text>
           </div>
-        </div>
-        <div style={{marginLeft: 36}} className={css.fieldText}>
-          <ProficiencyRating itemStyle={{marginBottom: 8}} value={String(rating)} readOnly />
-          <div>{text}</div>
-        </div>
+        </Flex>
+        {reviewEditable &&
+          <Flex justify='flex-end' style={{width: '100%'}}>
+            <Button
+              onClick={this.handleEditClick}
+              style={{width: 'auto', height: 'auto', padding: '5px 10px'}}
+              >
+              <H3><FormattedMessage id='profile.editFeedback'/></H3>
+            </Button>
+          </Flex>
+        }
       </div>
     )
   }
@@ -66,4 +81,4 @@ export default connect((state, props) => {
   const userMeta = state.users.usersMeta[from]
 
   return {user, userMeta}
-}, {})(Review)
+}, {push})(Review)

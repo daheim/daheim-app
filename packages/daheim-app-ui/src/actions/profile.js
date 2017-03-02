@@ -21,6 +21,11 @@ export const saveProfile = (body) => {
   }
 }
 
+export const SAW_RULES = 'profile/sawRules'
+export const sawRules = createAction(SAW_RULES, () => {
+  return api.post('/actions/users.sawRules', {})
+})
+
 // import dispatcher from '../dispatcher';
 // import {Store} from 'flux/utils';
 // import Promise from 'bluebird';

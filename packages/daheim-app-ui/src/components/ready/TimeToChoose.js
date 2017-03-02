@@ -1,47 +1,64 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import RaisedButton from 'material-ui/RaisedButton'
+import {FormattedMessage} from 'react-intl'
+import styled from 'styled-components'
 
 import {switchRole} from '../../actions/profile'
 import {connect as liveConnect} from '../../actions/live'
+import {Layout, Padding} from '../../styles'
+import {Button, H1, H2, Flex, VSpace} from '../Basic'
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  @media (max-width: ${Layout.mobileBreakpoint}) {
+    flex-direction: column;
+    align-items: center;
+  }
+`
 
 class TimeToChoose extends Component {
   static propTypes = {
     switchRole: PropTypes.func.isRequired,
     liveConnect: PropTypes.func.isRequired,
-    profile: PropTypes.object
+    profile: PropTypes.object,
+    onFinished: PropTypes.func,
   }
 
   student = async () => {
     await this.props.switchRole('student')
     this.props.liveConnect()
+    if (this.props.onFinished) this.props.onFinished()
   }
 
   teacher = async () => {
     await this.props.switchRole('teacher')
     this.props.liveConnect()
+    if (this.props.onFinished) this.props.onFinished()
+  }
+
+  renderOption = (primary, id1, id2, onClick) => {
+    return (
+      <Flex column align='center' style={{width: `${Layout.innerWidthPx / 2.2}px`}}>
+        <Button primary={primary} neg={!primary} style={{width: '100%'}} onClick={onClick}>
+          <H1><FormattedMessage id={id1}/></H1>
+        </Button>
+        <VSpace v={Padding.m}/>
+        <H2 style={{textAlign: 'center', width: '80%'}}>
+          <FormattedMessage id={id2}/>
+        </H2>
+      </Flex>
+    )
   }
 
   render () {
     if (!this.props.profile) return null
-
-    const {profile: {role} = {}} = this.props.profile || {}
-    if (role === 'teacher' || role === 'student') return null
-
     return (
-      <div>
-        <h2>Wer bist du?</h2>
-        <div style={{display: 'flex'}}>
-          <div style={{flex: '0 0 auto', fontSize: 20, fontWeight: 700, margin: 20, padding: 20}}>
-            <div style={{textAlign: 'center', marginBottom: 10}}>Bist du Sprachschüler?</div>
-            <div style={{textAlign: 'center'}}><RaisedButton label='Schüler' primary onClick={this.student} /></div>
-          </div>
-          <div style={{flex: '0 0 auto', fontSize: 20, fontWeight: 700, margin: 20, padding: 20}}>
-            <div style={{textAlign: 'center', marginBottom: 10}}>Bist du Sprachcoach?</div>
-            <div style={{textAlign: 'center'}}><RaisedButton label='Sprachcoach' primary onClick={this.teacher} /></div>
-          </div>
-        </div>
-      </div>
+      <Container>
+        {this.renderOption(true, 'editProfile.student', 'editProfile.studentExplanation', this.student)}
+        <div style={{marginBottom: Padding.m, marginRight: Padding.m}}/>
+        {this.renderOption(false, 'editProfile.teacher', 'editProfile.teacherExplanation', this.teacher)}
+      </Container>
     )
   }
 }

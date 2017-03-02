@@ -1,8 +1,9 @@
 import React from 'react'
-import {Router, Route, IndexRoute} from 'react-router'
+import {Router, Route, IndexRoute, applyRouterMiddleware} from 'react-router'
+import {useScroll} from 'react-router-scroll';
 import Helmet from 'react-helmet'
 
-import DefaultLayout, {DefaultLayoutWithBreadcrumbs} from './containers/DefaultLayout'
+import DefaultLayout from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
 import LessonPage from './containers/LessonPage'
 
@@ -12,7 +13,7 @@ import RegistrationPage from './components/auth/RegistrationPage'
 import ForgotPasswordPage from './components/auth/ForgotPasswordPage'
 import ResetPasswordPage from './components/auth/ResetPasswordPage'
 import LogoutPage from './components/auth/LogoutPage'
-import ChangePasswordPage from './components/auth/ChangePasswordPage'
+import SettingsPage from './components/auth/SettingsPage'
 
 import AdminPage from './components/admin/AdminPage'
 
@@ -25,6 +26,11 @@ import HelpPage from './components/help/HelpPage'
 import NotFoundPage from './containers/NotFoundPage'
 import AvatarMakerPage from './components/avatar/AvatarMaker'
 
+const scrollCallback = (prevRouterProps, { routes }) => {
+  const isModal = routes[routes.length-1].modal
+  return !isModal;
+}
+
 export default function createRouter (history) {
   return (
     <div>
@@ -32,20 +38,20 @@ export default function createRouter (history) {
         defaultTitle='Daheim | Reden. Lernen. Leben.'
         titleTemplate='%s | Daheim'
       />
-      <Router history={history}>
+      <Router
+        history={history}
+        render={applyRouterMiddleware(useScroll(scrollCallback))}
+        >
         <Route path='/' component={DefaultLayout}>
           <IndexRoute component={ReadyPage} />
-
-          <Route path='/' component={DefaultLayoutWithBreadcrumbs}>
-            <Route path='lessons/:lessonId' component={LessonPage} />
-            <Route path='profile' component={EditProfilePage} />
-            <Route path='users/:userId' component={PublicProfilePage} />
-            <Route path='users/:userId/report' component={ReportUserPage} />
-            <Route path='admin' component={AdminPage} />
-            <Route path='password' component={ChangePasswordPage} />
-            <Route path='help' component={HelpPage} />
-            <Route path='avatar' component={AvatarMakerPage} />
-          </Route>
+          <Route path='lessons/:lessonId' component={LessonPage} modal={true} backTo={'/'}/>
+          <Route path='profile' component={EditProfilePage} />
+          <Route path='users/:userId' component={PublicProfilePage} modal={true}/>
+          <Route path='users/:userId/report' component={ReportUserPage} />
+          <Route path='admin' component={AdminPage} />
+          <Route path='settings' component={SettingsPage} />
+          <Route path='help' component={HelpPage} />
+          <Route path='avatar' component={AvatarMakerPage} />
         </Route>
 
         <Route path='/auth' component={AuthLayout}>
@@ -56,8 +62,8 @@ export default function createRouter (history) {
           <Route path='logout' component={LogoutPage} />
         </Route>
 
-        <Route path='*' component={AuthLayout}>
-          <IndexRoute component={NotFoundPage} />
+        <Route path='*' component={DefaultLayout}>
+          <IndexRoute component={NotFoundPage} modal={true} backTo={'/'}/>
         </Route>
       </Router>
     </div>

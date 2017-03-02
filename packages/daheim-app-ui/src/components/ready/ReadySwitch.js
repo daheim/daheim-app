@@ -1,11 +1,13 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import CircularProgress from 'material-ui/CircularProgress'
-import RaisedButton from 'material-ui/RaisedButton'
-import {FormattedMessage, injectIntl} from 'react-intl'
+import styled from 'styled-components'
+import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl'
 
 import {ready as setReady} from '../../actions/live'
 import style from './ReadySwitch.style'
+
+import {Button, H1, Flex, HSpace, CircularProgress, Text} from '../Basic'
+import {Layout, Padding} from '../../styles'
 
 class Connecting extends Component {
   static propTypes = {
@@ -17,7 +19,7 @@ class Connecting extends Component {
 
     return (
       <div style={{display: 'flex', alignItems: 'center'}}>
-        <div style={{margin: 20}}><CircularProgress /></div>
+        <div style={{margin: 20}}><CircularProgress size={0.3}/></div>
         <div style={{margin: 8}}>
           <div className={style.connecting}><FormattedMessage id='ready.connecting' /></div>
           {error ? (
@@ -28,6 +30,12 @@ class Connecting extends Component {
     )
   }
 }
+
+const ButtonIcon = styled.img`
+  height: 40px;
+  object-fit: contain;
+  filter: brightness(100);
+`
 
 class ReadySwitch extends Component {
 
@@ -77,26 +85,48 @@ class ReadySwitch extends Component {
     }
   }
 
+  shareOnFb = (e) => {
+    e.preventDefault()
+    FB.ui({
+      method: 'share',
+      href: 'https://willkommen-daheim.org/',
+    }, function(response){});
+  }
+
   render () {
-    const {ready, connected, intl} = this.props
+    const {ready, connected} = this.props
     const {busy} = this.state
+    const {user: {profile: {role} = {}} = {}} = this.props
+    const isStudent = role === 'student'
 
     if (!connected) return <Connecting {...this.props} />
 
     if (!ready && !busy) {
       return (
-        <div style={{textAlign: 'center', margin: '40px 20px'}}>
-          <RaisedButton className='readySwitch' label={intl.formatMessage({id: 'ready.buttonCaption'})} primary onClick={this.goOnline} />
-        </div>
+        <Button primary onClick={this.goOnline} style={{width: '100%', maxWidth: Layout.widthPx * 0.65}}>
+          <Flex align='center' justify='center'>
+            <ButtonIcon src='/icons/Icons_ready-02.svg'/>
+            <HSpace v={Padding.s}/>
+            <H1><FormattedMessage id='ready.buttonCaption'/></H1>
+          </Flex>
+        </Button>
       )
     } else {
       return (
-        <div style={{display: 'flex', alignItems: 'center', margin: 20}}>
-          <div style={{margin: 20}}><CircularProgress /></div>
-          <div style={{margin: 8}}>
-            <div><FormattedMessage id='ready.lookingForPartners' /> <a href='#' onClick={this.goOffline}><FormattedMessage id='ready.cancel' /></a></div>
-          </div>
-        </div>
+        <Flex align='center' justify='center'>
+          <CircularProgress size={0.3}/>
+          <HSpace v={`${Padding.sPx * 2}px`}/>
+          <Text style={{maxWidth: Layout.widthPx * 0.4}}>
+            <FormattedHTMLMessage
+              id={`ready.lookingForPartners${isStudent ? 'AsStudent' : ''}`}
+              values={{link: 'https://www.google.com'}}
+            />
+            &nbsp;
+            <a href='#' onClick={this.goOffline}><FormattedMessage id='ready.cancel'/></a>
+            <br/>
+            <a href='#' onClick={this.shareOnFb}>Share on Facebook</a>
+          </Text>
+        </Flex>
       )
     }
   }
@@ -104,5 +134,6 @@ class ReadySwitch extends Component {
 
 export default injectIntl(connect((state, props) => {
   const {live: {connected, ready, error, readyTopic}} = state
-  return {connected, ready, error, readyTopic}
+  const user = state.profile.profile
+  return {user, connected, ready, error, readyTopic}
 }, {setReady})(ReadySwitch))

@@ -1,11 +1,18 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
+import styled from 'styled-components'
 
 import {leave, join} from '../actions/live'
 import ClosedLesson from '../components/lesson/ClosedLesson'
+import {Button, H2, Flex, HSpace} from '../components/Basic'
+import {Padding} from '../styles'
+
+const ButtonIcon = styled.img`
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(25);
+`
 
 class ResizedVideo extends Component {
 
@@ -112,7 +119,17 @@ class LessionPage extends React.Component {
           </div>
         )}
         <div style={{position: 'absolute', bottom: 10, left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <RaisedButton className='finishLesson' label='Gespräch beenden' primary onClick={this.handleLeave} />
+          <Button
+            neg
+            onClick={this.handleLeave}
+            style={{width: 'auto', height: 'auto', padding: '3px 30px'}}
+            >
+            <Flex align='center' justify='center'>
+              <ButtonIcon src='/icons/Icons_ready-01.svg'/>
+              <HSpace v={Padding.s}/>
+              <H2>Beenden</H2>
+            </Flex>
+          </Button>
         </div>
       </div>
     )
@@ -139,10 +156,15 @@ class NotParticipating extends Component {
     return (
       <div style={{margin: 16}}>
         <h1>Join Lesson</h1>
-        <div>
-          <RaisedButton label='Join Lesson' primary onClick={this.handleJoin} />
-          <FlatButton label='Close Lesson' onClick={this.handleLeave} />
-        </div>
+        <Flex>
+          <Button primary onClick={this.handleJoin}>
+            <H2>Join</H2>
+          </Button>
+          <HSpace v={Padding.m}/>
+          <Button neg onClick={this.handleLeave}>
+            <H2>Close</H2>
+          </Button>
+        </Flex>
       </div>
     )
   }
@@ -163,7 +185,9 @@ class NotActive extends Component {
       <div style={{margin: 16}}>
         <h1>Waiting for student to connect...</h1>
         <div>
-          <RaisedButton label='Close Lesson' primary onClick={this.handleLeave} />
+          <Button neg onClick={this.handleLeave}>
+            <H2>Close lesson</H2>
+          </Button>
         </div>
       </div>
     )

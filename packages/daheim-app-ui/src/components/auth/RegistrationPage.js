@@ -1,15 +1,15 @@
 import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-import Checkbox from 'material-ui/Checkbox'
 import {Link} from 'react-router'
+import {injectIntl} from 'react-intl'
 import {FormattedMessage} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {register} from '../../actions/auth'
 import FacebookLogin from './FacebookLogin'
+import {VSpace, Button, TextField, Checkbox} from '../Basic'
+import {Padding, Fontsize, Color} from '../../styles'
 
 class RegistrationFormRaw extends Component {
 
@@ -28,7 +28,7 @@ class RegistrationFormRaw extends Component {
     error: null,
     errorPassword: null,
     errorEmail: null,
-    firstName: null
+    firstName: '',
   }
 
   handleNewsletterChange = (e) => this.setState({newsletter: e.target.checked})
@@ -89,10 +89,6 @@ class RegistrationFormRaw extends Component {
     return !valid.hasErrors
   }
 
-  componentDidMount () {
-    this.refs.firstName.focus()
-  }
-
   handleEmailChange = (e) => this.setState({email: e.target.value})
   handlePasswordChange = (e) => this.setState({password: e.target.value})
   handleFirstNameChange = (e) => this.setState({firstName: e.target.value})
@@ -113,18 +109,54 @@ class RegistrationFormRaw extends Component {
       )
     }
 
+    const intl = this.props.intl
+
     return (
       <LoadingPanel loading={this.state.loading}>
         <form noValidate onSubmit={this.handleRegisterClick}>
           {error}
-          <TextField ref='firstName' fullWidth floatingLabelText='Vorname' value={this.state.firstName} onChange={this.handleFirstNameChange} />
-          <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
-          <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
-          <Checkbox style={{marginTop: 20}} label='Ich möchte mich für den Newsletter anmelden' checked={this.state.newsletter} onCheck={this.handleNewsletterChange} />
-          <Checkbox style={{marginTop: 10}} label='Ja, ich akzeptiere die AGB' checked={this.state.agree} onCheck={this.handleAgreeChange} />
-          <div style={{textAlign: 'center'}}><RaisedButton disabled={!this.state.agree} type='submit' style={{marginTop: 20}} fullWidth primary label='Jetzt registrieren' /></div>
-          <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
-            <FormattedMessage id='registerPage.buttomText' values={{
+          <TextField
+            placeholder={intl.formatMessage({id: 'registerPage.namePlaceholder'})}
+            label={intl.formatMessage({id: 'registerPage.nameLabel'})}
+            value={this.state.firstName}
+            onChange={this.handleFirstNameChange}
+          />
+          <VSpace v={Padding.m}/>
+          <TextField
+            type='email'
+            placeholder={intl.formatMessage({id: 'loginPage.emailPlaceholder'})}
+            label={intl.formatMessage({id: 'loginPage.emailLabel'})}
+            errorText={this.state.errorEmail}
+            value={this.state.email}
+            onChange={this.handleEmailChange}
+          />
+          <VSpace v={Padding.s}/>
+          <TextField
+            type='password'
+            placeholder={intl.formatMessage({id: 'loginPage.passwordPlaceholder'})}
+            label={intl.formatMessage({id: 'loginPage.passwordLabel'})}
+            errorText={this.state.errorPassword}
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+          />
+          <VSpace v={Padding.s}/>
+          <Checkbox style={{width: '80%'}}
+            label='Ich möchte mich für den Newsletter anmelden'
+            checked={this.state.newsletter}
+            onCheck={this.handleNewsletterChange}
+          />
+          <VSpace v={Padding.s}/>
+          <Checkbox
+            label='Ja, ich akzeptiere die AGB'
+            checked={this.state.agree}
+            onCheck={this.handleAgreeChange}
+          />
+          <VSpace v={Padding.m}/>
+          <Button primary type='submit' disabled={!this.state.agree} style={{margin: '0 auto', textAlign: 'center'}}>Registrieren</Button>
+          <VSpace v={Padding.m}/>
+          <div style={{fontSize: Fontsize.m, textAlign: 'center', width: '80%', margin: '0 auto'}}>
+            <FormattedMessage id='registerPage.bottomText' values={{
+              br: <br/>,
               loginLink: <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}><FormattedMessage id='registerPage.loginLinkText' /></Link>,
               agbLink: <a href='https://willkommen-daheim.org/agb/' target='_blank'><FormattedMessage id='registerPage.agbLinkText' /></a>
             }} />
@@ -135,7 +167,7 @@ class RegistrationFormRaw extends Component {
   }
 }
 
-const RegistrationForm = connect(null, {register})(RegistrationFormRaw)
+const RegistrationForm = connect(null, {register})(injectIntl(RegistrationFormRaw))
 
 class RegistrationPage extends Component {
 
@@ -154,9 +186,11 @@ class RegistrationPage extends Component {
 
   render () {
     return (
-      <div style={{width: 400}}>
-        <h1 style={{fontSize: 22, marginTop: 40}}>Jetzt kostenlos Mitglied werden!</h1>
-        <div style={{paddingBottom: 16, marginBottom: 4, borderBottom: 'dashed 1px gray'}}><FacebookLogin onLogin={this.handleLogin} /></div>
+      <div style={{width: 340}}>
+        <FacebookLogin onLogin={this.handleLogin}/>
+        <VSpace v={Padding.s}/>
+        <div style={{fontSize: Fontsize.m, textAlign: 'center', color: Color.black}}>oder</div>
+        <VSpace v={Padding.s}/>
         <RegistrationForm onLogin={this.handleLogin} defaultUsername={this.props.location.query.username} />
       </div>
     )
