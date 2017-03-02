@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import styled from 'styled-components'
 
-import {H2, Flex, HSpace, VSpace} from '../Basic'
-import {Padding, Color} from '../../styles'
+import {H2, Flex, HSpace, VSpace, Desktop, Mobile} from '../Basic'
+import {Layout, Padding, Color} from '../../styles'
 
 import dataf from './dataf'
 import datam from './datam'
@@ -114,48 +114,6 @@ function createAvatar(def, data) {
   return result
 }
 
-class AvatarRender extends Component {
-
-  static propTypes = {
-    def: PropTypes.object
-  }
-
-  createAvatar () {
-    const def = this.props.def || {}
-    const data = this.props.data
-
-    let result = '<svg xmlns="http://www.w3.org/2000/svg" width="65mm" height="65mm" viewBox="0 0 184.25 184.25">'
-    result += '<defs><style>'
-    result += `.skin{fill:${skinColors[def.skinColor || 1].color}}`
-    result += `.shirt{fill:${colors[def.shirtColor || 4].color}}`
-    result += `.hair{fill:${colors[def.hairColor || 2].color}}`
-    result += `.band{fill:${colors[def.bandColor || 2].color}}`
-    result += `.hijab{fill:${colors[def.hijabColor || 2].color}}`
-    result += `.glasses{stroke:${colors[def.glassesColor || 2].color}}`
-
-    result += '</style>'
-    result += data.face[def.face || 2].defs
-    result += '</defs>'
-
-    result += data.bg.svg
-    result += data.shirt.svg
-
-    result += data.face[def.face || 2].svg
-    result += data.hair[def.hair || 1].svg
-    result += data.glasses[def.glasses || 2].svg
-
-    result += '</svg>'
-
-    return result
-  }
-
-  render () {
-    const imagedata = this.createAvatar()
-
-    return <img src={`data:image/svg+xml,${imagedata}`} style={{borderRadius: '50%', height: 250}} />
-  }
-}
-
 const defaultDef = {
   shirtColor: 3,
   hair: 1,
@@ -168,6 +126,16 @@ const defaultDef = {
   skinColor: 1,
   beard: 1,
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  @media (max-width: ${Layout.mobileBreakpoint}) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`
 
 export default class AvatarMakerPage extends Component {
 
@@ -206,13 +174,11 @@ export default class AvatarMakerPage extends Component {
   }
 
   handleHairColorChanged = (v) => {
-    const data = this.data
     const n = mod(this.state.def.hairColor + (v - 1), Object.keys(colors).length)
     this.handleChange({def: {...this.state.def, hairColor: n + 1}})
   }
 
   handleGlassesChanged = (v) => {
-    const data = this.data
     const n = mod(this.state.def.glassesColor + v, Object.keys(colors).length + 1)
     if (n === 0) {
       this.handleChange({def: {...this.state.def, glasses: 1, glassesColor: 0}})
@@ -222,19 +188,16 @@ export default class AvatarMakerPage extends Component {
   }
 
   handleShirtColorChanged = (v) => {
-    const data = this.data
     const n = mod(this.state.def.shirtColor + (v - 1), Object.keys(colors).length)
     this.handleChange({def: {...this.state.def, shirtColor: n + 1}})
   }
 
   handleSkinColorChanged = (v) => {
-    const data = this.data
     const n = mod(this.state.def.skinColor + (v - 1), Object.keys(skinColors).length)
     this.handleChange({def: {...this.state.def, skinColor: n + 1}})
   }
 
   handleAccesoryColorChanged = (v) => {
-    const data = this.data
     const n = mod(this.state.def.hijabColor + (v - 1), Object.keys(colors).length)
     this.handleChange({def: {...this.state.def, hijabColor: n + 1, bandColor: n + 1}})
   }
@@ -248,9 +211,10 @@ export default class AvatarMakerPage extends Component {
   render () {
     const m = this.props.gender === 'm'
     return (
-      <Flex align='flex-start'>
+      <Container>
         <img src={this.state.svg} style={{borderRadius: '50%', height: 250}} />
-        <HSpace v='100px'/>
+        <Desktop><HSpace v='100px'/></Desktop>
+        <Mobile><VSpace v='20px'/></Mobile>
         <div>
           <Slider label='Mund' onSlide={this.handleFaceChanged}/>
           <VSpace v={Padding.s}/>
@@ -270,7 +234,7 @@ export default class AvatarMakerPage extends Component {
           <VSpace v={Padding.s}/>
           <Slider label='Shirt' onSlide={this.handleShirtColorChanged}/>
         </div>
-      </Flex>
+      </Container>
     )
   }
 }
