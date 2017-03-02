@@ -7,6 +7,7 @@ import {push} from 'react-router-redux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {FormattedMessage, injectIntl} from 'react-intl'
 
+import AvatarMaker from '../avatar/AvatarMaker'
 import Modal from '../../Modal'
 import {saveProfile} from '../../actions/profile'
 import ProficiencyRating from '../ProficiencyRating'
@@ -15,20 +16,6 @@ import TimeToChoose from '../ready/TimeToChoose'
 import {Layout, Padding, Color, Fontsize} from '../../styles'
 import {H1, H2, DropDownMenu, Text, Button, HSpace, VSpace, TextField, TextArea, Flex, Box,
         Checkbox, InterestType, Interest, Desktop, Mobile} from '../Basic'
-
-const avatars = {
-  avatar1: 'https://assets.willkommen-daheim.org/public/assets/avatar-1.svg',
-  avatar2: 'https://assets.willkommen-daheim.org/public/assets/avatar-2.svg',
-  avatar3: 'https://assets.willkommen-daheim.org/public/assets/avatar-3.svg',
-  avatar4: 'https://assets.willkommen-daheim.org/public/assets/avatar-4.svg',
-  avatar5: 'https://assets.willkommen-daheim.org/public/assets/avatar-5.svg',
-  avatar6: 'https://assets.willkommen-daheim.org/public/assets/avatar-6.svg',
-  avatar7: 'https://assets.willkommen-daheim.org/public/assets/avatar-7.svg',
-  avatar9: 'https://assets.willkommen-daheim.org/public/assets/avatar-9.svg',
-  avatar10: 'https://assets.willkommen-daheim.org/public/assets/avatar-10.svg',
-  avatar11: 'https://assets.willkommen-daheim.org/public/assets/avatar-11.svg',
-  avatar12: 'https://assets.willkommen-daheim.org/public/assets/avatar-12.svg'
-}
 
 class LanguagesRaw extends Component {
 
@@ -389,11 +376,10 @@ class ProfilePageRaw extends React.Component {
     }
   }
 
-  handleAvatarClick = (e, key) => {
-    e.preventDefault()
-    this.pictureType = 'avatar'
-    this.pictureData = key
-    this.setState({picture: avatars[key]})
+  handleAvatarClick = (svg) => {
+    this.pictureType = 'data'
+    this.pictureData = svg
+    this.setState({picture: svg})
   }
 
   handleNameChange = (e) => {
@@ -506,19 +492,12 @@ class ProfilePageRaw extends React.Component {
 
           <H2><FormattedMessage id='editProfile.profilePicture'/></H2>
           <VSpace v={Padding.m}/>
-          <div style={{display: 'flex'}}>
-            <div>
-              <img style={{borderRadius: '50%', width: 128, height: 128}} src={picture} />
-            </div>
-            <div style={{margin: 10}}>
-              <div>
-                {Object.keys(avatars).map((key) => {
-                  const handler = (e) => this.handleAvatarClick(e, key)
-                  return <a key={key} style={{margin: 5}} href='#' title='Use avatar' onClick={handler}><img src={avatars[key]} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
-                })}
-              </div>
-            </div>
-          </div>
+          <Text>
+            Klicke auf die Pfeile bis Dein Avatar so aussieht, wie Du es willst.
+          </Text>
+          <VSpace v={Padding.m}/>
+          <AvatarMaker gender={gender} onChange={this.handleAvatarClick} initialSvg={picture}/>
+          <VSpace v={Padding.l}/>
         </div>
       </div>
     )
