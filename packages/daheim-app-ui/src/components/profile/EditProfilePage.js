@@ -379,7 +379,7 @@ class ProfilePageRaw extends React.Component {
   handleAvatarClick = (svg) => {
     this.pictureType = 'data'
     this.pictureData = svg
-    this.setState({picture: svg})
+    this.setState({picture: svg, changedAvatar: true})
   }
 
   handleNameChange = (e) => {
