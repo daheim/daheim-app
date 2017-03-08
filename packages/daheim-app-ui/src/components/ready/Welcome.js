@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import Modal from '../../Modal'
 import {NotificationSettingsSmall} from '../settings/NotificationSettings'
+import {subscribeToWebPush} from '../../middlewares/service_worker'
 
 import {H1, H2, Text, Flex, Box, VSpace, HSpace, Button} from '../Basic'
 import {Layout, Color, Padding} from '../../styles'
@@ -26,16 +27,35 @@ class WelcomeRaw extends React.Component {
   state = {
     open: true,
     step: 0,
+    running: false,
+  }
+
+  componentDidMount() {
+    const {role, sawRules} = this.props.profile
+    if (role === 'teacher' && !sawRules) this.handleSubscribe().then()
+  }
+
+  handleSubscribe = async () => {
+    if (this.state.running) return
+    this.setState({running: true})
+    try {
+      await this.props.subscribeToWebPush()
+    } catch (err) {
+      //setTimeout(_ => window.alert(err.message))
+    }
+    this.setState({running: false})
+    console.log('subscribed to push notifications')
   }
 
   handleCloseModal = () => {
-    const {role} = this.props.profile
-    const {step} = this.state
-    if (role === 'teacher' && step < 5) {
-      this.setState({ step: 5 })
-    } else {
-      this.setState({ open: false })
-    }
+    //const {step} = this.state
+    //const {role} = this.props.profile
+    // if (role === 'teacher' && step < 5) {
+    //   this.setState({ step: 5 })
+    // } else {
+    //   this.setState({ open: false })
+    // }
+    this.setState({ open: false })
     this.props.sawRules()
   }
 
@@ -52,13 +72,14 @@ class WelcomeRaw extends React.Component {
   }
 
   goForward = () => {
-    const {role} = this.props.profile
     const {step} = this.state
-    if (role === 'teacher') {
-      if (step >= 5) this.handleCloseModal()
-    } else {
-      if (step >= 4) this.handleCloseModal()
-    }
+    //const {role} = this.props.profile
+    // if (role === 'teacher') {
+    //   if (step >= 5) this.handleCloseModal()
+    // } else {
+    //   if (step >= 4) this.handleCloseModal()
+    // }
+    if (step >= 4) this.handleCloseModal()
     this.setState({step: step + 1})
   }
 
@@ -104,7 +125,7 @@ class WelcomeRaw extends React.Component {
   render() {
     if (this.props.profile.sawRules) return null
     const {step} = this.state
-    if (step === 5) return this.renderNotificationSettings()
+    //if (step === 5) return this.renderNotificationSettings()
     return (
       <Modal closeIcon={false} isOpen={this.state.open} onRequestClose={this.handleCloseModal}>
         <Flex
@@ -213,4 +234,4 @@ class WelcomeRaw extends React.Component {
 export default connect((state) => {
   const {profile} = state.profile.profile
   return {profile}
-}, {sawRules})(WelcomeRaw)
+}, {sawRules, subscribeToWebPush})(WelcomeRaw)
