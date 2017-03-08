@@ -123,8 +123,8 @@ class ReadySwitch extends Component {
             />
             &nbsp;
             <a href='#' onClick={this.goOffline}><FormattedMessage id='ready.cancel'/></a>
-            <br/>
-            <a href='#' onClick={this.shareOnFb}>Share on Facebook</a>
+            {/*<br/>*/}
+            {/*<a href='#' onClick={this.shareOnFb}>Share on Facebook</a>*/}
           </Text>
         </Flex>
       )
