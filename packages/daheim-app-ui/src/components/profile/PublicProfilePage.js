@@ -45,6 +45,7 @@ class ProfileHeaderRaw extends Component {
   }
 
   render() {
+    if (this.props.user == null) return null // TODO: Why does this happen?
     const {role, name, picture} = this.props.user
     return (
       <Flex column align='center'>
