@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import styled from 'styled-components'
@@ -43,8 +44,16 @@ class UserItemRaw extends React.Component {
     open: false
   }
 
+  componentDidMount() {
+    window.addEventListener('click', this.handleClick, true)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleClick, true)
+  }
+
   handleClose = (e) => {
-    e.preventDefault()
+    if (e) e.preventDefault()
     this.setState({ open: false })
   }
 
@@ -60,6 +69,14 @@ class UserItemRaw extends React.Component {
     this.setState({
       open: false,
     })
+  }
+
+  handleClick = (e) => {
+    const container = ReactDOM.findDOMNode(this)
+    let target = e.target
+    while (target && target !== container) target = target.parentElement
+    if (target === container) return
+    this.handleClose()
   }
 
   renderEntry(link, id) {
