@@ -5,6 +5,8 @@ export class Padding {
   static m = `${Padding.mPx}px`
   static sPx = 7
   static s = `${Padding.sPx}px`
+  static gridPx = 15
+  static grid = `${Padding.gridPx}px`
 }
 
 export class Fontsize {

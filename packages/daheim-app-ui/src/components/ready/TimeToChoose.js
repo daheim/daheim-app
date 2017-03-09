@@ -40,7 +40,7 @@ class TimeToChoose extends Component {
   renderOption = (primary, id1, id2, onClick) => {
     return (
       <Flex column align='center' style={{width: `${Layout.innerWidthPx / 2.2}px`}}>
-        <Button primary={primary} neg={!primary} style={{width: '100%'}} onClick={onClick}>
+        <Button primary={primary} neg={!primary} style={{width: '100%', paddingTop: 8, paddingBottom: 8}} onClick={onClick}>
           <H1><FormattedMessage id={id1}/></H1>
         </Button>
         <VSpace v={Padding.m}/>
