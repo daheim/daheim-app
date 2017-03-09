@@ -75,6 +75,7 @@ const Input = styled.input`
   border: 2.666px solid ${p => p.neutral ? Color.lightBlue : Color.lightGreen};
   font-weight: ${p => p.small ? 'normal' : 'bold'};
   font-size: ${p => p.small ? Fontsize.m : Fontsize.l};
+  font-family: 'Rambla';
 `
 
 export class TextField extends Component {
