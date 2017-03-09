@@ -33,8 +33,8 @@ const ArrowBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
-  width: 120px;
+  height: 28px;
+  width: 100px;
   padding: 2px;
   background: ${Color.lightBlue};
   border-radius: 6px;
@@ -42,7 +42,7 @@ const ArrowBox = styled.div`
 
 const Arrow = styled.img`
   cursor: pointer;
-  width: 30px;
+  width: 26px;
   height: 100%;
   filter: brightness(10);
   ${p => p.mirrored ? 'transform: scale(-1, 1);' : ''}
@@ -80,8 +80,8 @@ class Slider extends Component {
           <Space onClick={this.forward}/>
           <Arrow src='/icons/Icons_ready-12.svg' onClick={this.forward}/>
         </ArrowBox>
-        <HSpace v={Padding.s}/>
-        <H2>{label}</H2>
+        <HSpace v={Padding.grid}/>
+        <H2 style={{fontWeight: 'normal'}}>{label}</H2>
       </Flex>
     )
   }

@@ -434,7 +434,7 @@ class ProfilePageRaw extends React.Component {
             <Button neg onClick={this.handleNoAvatarHelp} style={{flex: 1}}>
               <H2>Nein, danke.</H2>
             </Button>
-            <HSpace v={Padding.s}/>
+            <HSpace v={Padding.grid}/>
             <Button primary onClick={this.handleNextAvatarHelp} style={{flex: 1}}>
               <H2>Ja, ok.</H2>
             </Button>
@@ -471,14 +471,14 @@ class ProfilePageRaw extends React.Component {
                 checked={gender === 'w'}
                 onCheck={() => this.setState({ gender: 'w' })}
               />
-              <HSpace v={Padding.m}/>
+              <HSpace v={Padding.grid}/>
               <Checkbox
                 type='neutral'
                 label={intl.formatMessage({id: 'editProfile.genderM'})}
                 checked={gender === 'm'}
                 onCheck={() => this.setState({ gender: 'm' })}
               />
-              <HSpace v={Padding.m}/>
+              <HSpace v={Padding.grid}/>
               <Checkbox
                 type='neutral'
                 label={intl.formatMessage({id: 'editProfile.genderX'})}
@@ -558,7 +558,7 @@ class ProfilePageRaw extends React.Component {
               <Button onClick={this.handleBack}>
                 <FormattedMessage id='editProfile.back'/>
               </Button>
-              <HSpace v={Padding.s}/>
+              <HSpace v={Padding.grid}/>
               <Button primary onClick={this.handleContinue}>
                 <FormattedMessage id={continueId}/>
               </Button>
@@ -590,7 +590,7 @@ class ProfilePageRaw extends React.Component {
             <Button onClick={() => this.props.push('/')}>
               <FormattedMessage id='editProfile.back'/>
             </Button>
-            <HSpace v={Padding.s}/>
+            <HSpace v={Padding.grid}/>
             <Button primary onClick={this.handleSave}>
               <FormattedMessage id={'editProfile.save'}/>
             </Button>
