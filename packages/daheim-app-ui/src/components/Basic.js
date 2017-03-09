@@ -101,7 +101,7 @@ export class TextField extends Component {
             enter={{animation: 'slideDown', duration: 100}}
             leave={{animation: 'slideUp', duration: 100}}
             >
-            {(error || value) &&
+            {(error || (value && label)) &&
               <div>
                 <Label big={bigLabel} red={error}>{error ? error : label}</Label>
                 <VSpace v={Padding.s}/>

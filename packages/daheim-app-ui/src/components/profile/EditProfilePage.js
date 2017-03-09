@@ -126,20 +126,19 @@ class LanguagesRaw extends Component {
               />
             </div>
           )}
-        </Flex>
-        <Flex align='center'>
-          <Checkbox
-            type='neutral'
-            style={{marginLeft: Padding.m, marginTop: '4px'}}
-            checked={this.state.extraLanguageChecked}
-            onCheck={this.handleExtraLanguageCheck}
-          />
-          <TextField
-            small neutral
-            placeholder={intl.formatMessage({id: 'profile.additionalLanguage'})}
-            value={this.state.extraLanguage}
-            onChange={this.handleExtraLanguage}
-          />
+          <Flex align='center' style={{flex: `0 0 ${(Layout.innerWidthPx-Padding.mPx)/3}px`, margin: '4px 0'}}>
+            <Checkbox
+              type='neutral'
+              checked={this.state.extraLanguageChecked}
+              onCheck={this.handleExtraLanguageCheck}
+            />
+            <TextField
+              small neutral
+              placeholder={intl.formatMessage({id: 'profile.additionalLanguage'})}
+              value={this.state.extraLanguage}
+              onChange={this.handleExtraLanguage}
+            />
+          </Flex>
         </Flex>
       </Flex>
     )
