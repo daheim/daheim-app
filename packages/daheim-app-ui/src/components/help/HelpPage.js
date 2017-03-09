@@ -14,10 +14,9 @@ const alert = window.alert
 const maxWidth = Layout.innerWidthPx / 1.35
 
 const QuestionBox = styled.div`
-  padding: 8px;
+  padding: ${Padding.gridPx-1}px ${Padding.grid};
   border: 2px solid ${Color.lightGreen};
-  border-radius: 4px;
-  
+  border-radius: 6px;
 `
 
 class Question extends Component {
@@ -31,8 +30,8 @@ class Question extends Component {
     return (
       <QuestionBox>
         <Flex align='flex-start' style={{cursor: 'pointer'}} onClick={() => this.setState({open: !open})}>
-          <H2 style={{color: Color.lightGreen}}>{number}.</H2>&nbsp;
-          <H2>{question}</H2>
+          <H2 normal style={{color: Color.lightGreen}}>{number}.</H2>&nbsp;
+          <H2 normal>{question}</H2>
           <Box auto/>
           <H2 style={{color: Color.lightGreen}}>▾</H2>
         </Flex>
@@ -96,8 +95,8 @@ class HelpPage extends Component {
         <Flex justify='center'><H1><FormattedMessage id='help.title'/></H1></Flex>
         <VSpace v={Padding.l}/>
 
-        <H2><FormattedMessage id='help.text1'/></H2>
-        <H2 style={{maxWidth: maxWidth}}><FormattedMessage id='help.text2'/></H2>
+        <H2 normal><FormattedMessage id='help.text1'/></H2>
+        <H2 normal style={{maxWidth: maxWidth}}><FormattedMessage id='help.text2'/></H2>
 
         <VSpace v={Padding.l}/>
 
@@ -105,12 +104,12 @@ class HelpPage extends Component {
 
         <VSpace v={Padding.l}/>
 
-        <H2 style={{maxWidth: maxWidth}}><FormattedMessage id='help.text'/></H2>
+        <H2 normal style={{maxWidth: maxWidth}}><FormattedMessage id='help.text'/></H2>
         <VSpace v={Padding.m}/>
         <TextArea
           innerRef={this.haveHintRef}
           placeholder={intl.formatMessage({id: 'help.hint'})}
-          style={{maxWidth: Layout.innerWidthPx / 1.7, borderColor: Color.lightGreen}}
+          style={{maxWidth: Layout.innerWidthPx / 1.7, borderColor: Color.lightGreen, color: Color.green}}
           value={ticket}
           onChange={this.handleTicketChange}
         />
@@ -126,7 +125,7 @@ class HelpPage extends Component {
 
         <VSpace v={Padding.m}/>
 
-        <H2 style={{maxWidth: maxWidth}}><FormattedMessage id='help.effort'/></H2>
+        <H2 normal style={{maxWidth: maxWidth}}><FormattedMessage id='help.effort'/></H2>
       </div>
     )
   }

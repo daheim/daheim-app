@@ -142,7 +142,7 @@ export const H1 = styled.div`
 
 export const H2 = styled.div`
   font-size: ${Fontsize.l};
-  font-weight: bold;
+  font-weight: ${p => p.normal ? 'normal' : 'bold'};
   font-family: 'Rambla';
 `
 
