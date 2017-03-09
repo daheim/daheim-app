@@ -9,7 +9,7 @@ import StartLesson from './StartLesson'
 import {startLesson} from '../actions/live'
 import {loadUser} from '../actions/users'
 
-import {H2, H3, Text, Flex, VSpace, Avatar, Button} from './Basic'
+import {H2, H3, Text, Flex, VSpace, HSpace, Avatar, Button} from './Basic'
 import {Layout, Padding} from '../styles'
 
 const rowSpacing = Padding.l
@@ -22,6 +22,11 @@ const Container = styled.div`
   @media (max-width: ${Layout.mobileBreakpoint}) {
     justify-content: center;
   }
+`
+
+const Image = styled.img`
+  height: 240px;
+  object-fit: contain;
 `
 
 class ReadyUser extends Component {
@@ -110,16 +115,18 @@ class ReadyUsers extends Component {
 
     return (
       <div style={{width: '100%'}}>
-        <H2><FormattedMessage id='ready.users.title'/></H2>
-        <VSpace v={Padding.m}/>
-        {readyUsers.length === 0 ? (
-          <Flex column style={{maxWidth: Layout.widthPx * 0.4, margin: '0 auto'}}>
-            <VSpace v={Padding.m}/>
-            <Text>
-              <FormattedHTMLMessage id='ready.users.empty' values={{link: 'https://willkommen-daheim.org/hilfe/#Deutsch-vermitteln'}}/>
-            </Text>
-          </Flex>
-        ) : (
+      {readyUsers.length === 0 ? (
+        <Flex wrap align='center' justify='center'>
+          <Image src={`/talk/nobody.png`}/>
+          <HSpace v={Padding.m}/>
+          <H2 style={{maxWidth: Layout.widthPx * 0.5}}>
+            <FormattedHTMLMessage id='ready.users.empty' values={{link: 'https://willkommen-daheim.org/hilfe/#Deutsch-vermitteln'}}/>
+          </H2>
+        </Flex>
+      ) : (
+        <div>
+          <H2><FormattedMessage id='ready.users.title'/></H2>
+          <VSpace v={Padding.m}/>
           <Container>
             {readyUsers.map(({id}) => {
               const user = users[id]
@@ -127,7 +134,8 @@ class ReadyUsers extends Component {
               return <ReadyUser key={user.id} user={user} startLesson={startLesson} onSelect={this.selectUser} />
             })}
           </Container>
-        )}
+        </div>
+      )}
 
         {selectedUser &&
           <StartLesson
