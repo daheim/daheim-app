@@ -56,11 +56,11 @@ class ReadyUser extends Component {
         <Avatar size='100px' src={picture} onClick={this.handleClick} style={{cursor: 'pointer'}}/>
         <Text onClick={this.handleClick} style={{cursor: 'pointer'}}>{name}</Text>
         <VSpace v={Padding.m}/>
-        <Link to={`/users/${user.id}`} style={{width: '100%'}}>
-          <Button primary style={{width: '100%'}}>
+        {/*<Link to={`/users/${user.id}`} style={{width: '100%'}}>*/}
+          <Button primary style={{width: '100%'}} onClick={this.handleClick}>
             <H3>Profil ansehen</H3>
           </Button>
-        </Link>
+        {/*</Link>*/}
       </Flex>
     )
   }
