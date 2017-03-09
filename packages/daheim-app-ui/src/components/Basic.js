@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {VelocityTransitionGroup} from 'velocity-react'
 import styled from 'styled-components'
 
 import {Layout, Padding, Fontsize, Color} from '../styles'
@@ -92,11 +93,20 @@ export class TextField extends Component {
   }
 
   render() {
-    const {bigLabel, label, error} = this.props
+    const {value, bigLabel, label, error} = this.props
     return (
       <div>
-        <Label big={bigLabel} red={error}>{error ? error : label}</Label>
-        <VSpace v={Padding.s}/>
+          <VelocityTransitionGroup
+            enter={{animation: 'slideDown', duration: 100}}
+            leave={{animation: 'slideUp', duration: 100}}
+            >
+            {(error || value) &&
+              <div>
+                <Label big={bigLabel} red={error}>{error ? error : label}</Label>
+                <VSpace v={Padding.s}/>
+              </div>
+            }
+          </VelocityTransitionGroup>
         <Input
           innerRef={this.props.innerRef}
           small={this.props.small}
