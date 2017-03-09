@@ -229,7 +229,7 @@ export default class AvatarMakerPage extends Component {
           {m ? (
             <Slider label='Bart' onSlide={this.handleBeardChanged}/>
           ) : (
-            <Slider label='Accesoirfarbe' onSlide={this.handleAccesoryColorChanged}/>
+            <Slider label='Accesoirefarbe' onSlide={this.handleAccesoryColorChanged}/>
           )}
           <VSpace v={Padding.s}/>
           <Slider label='Shirt' onSlide={this.handleShirtColorChanged}/>
