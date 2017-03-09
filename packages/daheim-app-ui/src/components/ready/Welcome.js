@@ -14,7 +14,7 @@ import {sawRules} from '../../actions/profile'
 const Icon = styled.img`
   height: 50px;
   object-fit: contain;
-  filter: hue-rotate(190deg) brightness(1.6) grayscale(0.3);
+  filter: hue-rotate(195deg) brightness(1.6) grayscale(0.2);
 `
 
 const Icon2 = styled.img`
@@ -66,7 +66,7 @@ class WelcomeRaw extends React.Component {
         width: 7,
         height: 7,
         borderRadius: 60,
-        background: `rgba(0,0,0,${active ? '0.7' : '0.3'})`
+        background: `rgba(37,122,81,${active ? '1' : '0.5'})`
       }}/>
     )
   }

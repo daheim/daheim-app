@@ -335,7 +335,7 @@ const InterestImg = styled.img`
   height: 100%;
   margin-right: 3px;
   object-fit: contain;
-  filter: hue-rotate(150deg);
+  filter: hue-rotate(50deg);
 `
 
 export const Interest = ({interest, ...rest}) => {
