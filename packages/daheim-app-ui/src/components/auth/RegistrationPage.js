@@ -22,7 +22,7 @@ class RegistrationFormRaw extends Component {
   state = {
     email: this.props.defaultUsername || '',
     password: '',
-    newsletter: true,
+    newsletter: false,
     agree: false,
     loading: false,
     error: null,
