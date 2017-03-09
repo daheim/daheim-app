@@ -260,8 +260,36 @@ const DropDownSelect = styled.select`
   text-align: center;
   background: white;
   border: 2.666px solid ${Color.lightBlue};
-  border-radius: 4px;
+  border-radius: 6px;
   color: ${Color.lightBlue};
+`
+
+const DropDownOverlay = styled.div`
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  font-size: ${Fontsize.l};
+  font-weight: bold;
+  font-family: 'Rambla';
+  text-align: center;
+  background: white;
+  border: 2.666px solid ${Color.lightBlue};
+  border-radius: 6px;
+  color: ${Color.lightBlue};
+`
+
+const DropDownContainer = styled.div`
+  position: relative;
+  display: inline-block;
 `
 
 export class DropDownMenu extends Component {
@@ -284,17 +312,23 @@ export class DropDownMenu extends Component {
     const items = this.props.items
     const selected = this.props.selected
     return (
-      <DropDownSelect
-        value={selected.label}
-        onChange={this.handleSelect}
-        >
-        {items.map(item =>
-          <option
-            key={item.label}
-            value={item.label}
-          >{item.label}</option>
-        )}
-      </DropDownSelect>
+      <DropDownContainer>
+        <DropDownOverlay>
+          <span>{selected.label}</span>
+          <span style={{position: 'absolute', right: 7}}>▾</span>
+        </DropDownOverlay>
+        <DropDownSelect
+          value={selected.label}
+          onChange={this.handleSelect}
+          >
+          {items.map(item =>
+            <option
+              key={item.label}
+              value={item.label}
+            >{item.label}</option>
+          )}
+        </DropDownSelect>
+      </DropDownContainer>
     )
   }
 }

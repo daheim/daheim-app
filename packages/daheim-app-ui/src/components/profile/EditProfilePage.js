@@ -82,6 +82,15 @@ class LanguagesRaw extends Component {
     LanguagesRaw.suggestions.forEach((suggestion) => delete leftovers[suggestion])
     const ls = [...LanguagesRaw.suggestions, ...Object.keys(leftovers)]
 
+    const sinceItems = [
+      {value: '2017', label: '2017'},
+      {value: '2016', label: '2016'},
+      {value: '2015', label: '2015'},
+      {value: '2014', label: '2014'},
+      {value: 'earlier', label: intl.formatMessage({id: 'editProfile.earlierThan2004'})},
+    ]
+    const selectedSince = sinceItems.find(i => i.value === inGermanySince) || sinceItems[0]
+
     return (
       <Flex column wrap>
         {showStudentFields ? (
@@ -90,14 +99,8 @@ class LanguagesRaw extends Component {
             <VSpace v={Padding.m}/>
             <div>
               <DropDownMenu
-                items={[
-                  {value: '2017', label: '2017'},
-                  {value: '2016', label: '2016'},
-                  {value: '2015', label: '2015'},
-                  {value: '2014', label: '2014'},
-                  {value: 'earlier', label: intl.formatMessage({id: 'editProfile.earlierThan2004'})},
-                ]}
-                selected={inGermanySince}
+                items={sinceItems}
+                selected={selectedSince}
                 onSelect={(e) => this.handleInGermanySinceChange(e.value)}
               />
             </div>
