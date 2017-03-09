@@ -35,18 +35,19 @@ export default class DhmModal extends Component {
         {...otherProps}
         contentLabel=''
         >
-        <VSpace v={`${Layout.topbarHeightPx}px`}/>
-        <div style={{transform: 'translateZ(0)', height: '100%'}}>
-          <div className={modalCss.inner} style={inner}>
-            {closeIcon &&
-              <div
-                className={modalCss.closeIconContainer}
-                onClick={this.handleCloseIconClick}
-                >
-                <CloseIcon color='gray'/>
-              </div>
-            }
-            {children}
+        <div style={{paddingTop: `${Layout.topbarHeightPx}px`, height: '100%'}}>
+          <div style={{transform: 'translateZ(0)', height: '100%'}}>
+            <div className={modalCss.inner} style={inner}>
+              {closeIcon &&
+                <div
+                  className={modalCss.closeIconContainer}
+                  onClick={this.handleCloseIconClick}
+                  >
+                  <CloseIcon color='gray'/>
+                </div>
+              }
+              {children}
+            </div>
           </div>
         </div>
         <VSpace v={Padding.s}/>
