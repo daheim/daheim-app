@@ -111,7 +111,7 @@ function createAvatar(def, data) {
 
   result += '</svg>'
 
-  return result
+  return result.replace(/#/g, '%23')
 }
 
 const defaultDef = {
