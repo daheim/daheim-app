@@ -75,7 +75,7 @@ let UserSchema = new Schema({
       if (ret.profile.pictureType === 'avatar') {
         ret.profile.picture = avatars[ret.profile.pictureData] || avatars.default
       } else if (ret.profile.pictureType === 'data') {
-        ret.profile.picture = ret.profile.pictureData
+        ret.profile.picture = ret.profile.pictureData.replace(/#/g, '%23')
       } else {
         ret.profile.picture = '/smiley.png'
       }
