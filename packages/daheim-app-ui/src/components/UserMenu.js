@@ -11,7 +11,7 @@ const PopupBg = styled.div`
   position: absolute;
   right: ${Padding.s};
   width: ${Layout.headerWidthPx / 2}px;
-  margin-top: ${Padding.m};
+  margin-top: ${Padding.mPx - 6}px;
   @media (max-width: ${Layout.headerWidthPx / 2 + 4 * Padding.sPx}px) {
     left: ${Padding.s};
     width: auto;
@@ -19,7 +19,7 @@ const PopupBg = styled.div`
   display: flex;
   flex-direction: column;
   padding: ${Padding.l};
-  border-radius: 6px;
+  border-radius: 8px;
   color: white;
   background: ${Color.red};
 `
