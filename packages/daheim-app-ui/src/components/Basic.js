@@ -332,81 +332,103 @@ export const Interest = ({interest, ...rest}) => {
   let text
   switch (interest) {
     case InterestType.school:
+    case 'Schule / Ausbildung':
       icon = '03'
       text = 'Schule / Ausbildung'
       break
     case InterestType.photography:
+    case 'Fotografie':
       icon = '05'
       text = 'Fotografie'
       break
     case InterestType.games:
+    case 'Computerspiele':
       icon = '06'
       text = 'Computerspiele'
       break
     case InterestType.languages:
+    case 'Sprachen':
       icon = '07'
       text = 'Sprachen'
       break
     case InterestType.creative:
+    case 'Kreatives':
       icon = '08'
       text = 'Kreatives'
       break
     case InterestType.tech:
+    case 'Technik':
       icon = '09'
       text = 'Technik'
       break
     case InterestType.food:
+    case 'Essen & Trinken':
       icon = '11'
       text = 'Essen & Trinken'
       break
     case InterestType.culture:
+    case 'Kunst & Kultur':
       icon = '10'
       text = 'Kunst & Kultur'
       break
     case InterestType.sports:
+    case 'Sport':
       icon = '15'
       text = 'Sport'
       break
     case InterestType.books:
+    case 'Books':
       icon = '16'
       text = 'Books'
       break
     case InterestType.nature:
+    case 'Natur':
       icon = '17'
       text = 'Natur'
       break
     case InterestType.celebs:
+    case 'Prominente':
       icon = '18'
       text = 'Prominente'
       break
     case InterestType.music:
+    case 'Musik':
       icon = '20'
       text = 'Musik'
       break
     case InterestType.travel:
+    case 'Reisen':
       icon = '22'
       text = 'Reisen'
       break
     case InterestType.politics:
+    case 'Politik':
       icon = '19'
       text = 'Politik'
       break
     case InterestType.tv:
+    case 'Filme & Serien':
       icon = '24'
       text = 'Filme & Serien'
       break
     case InterestType.german:
+    case 'Typisch Deutsch':
       icon = '23'
       text = 'Typisch Deutsch'
       break
     case InterestType.work:
+    case 'Job / Arbeit':
       icon = '21'
       text = 'Job / Arbeit'
+      break
+    default:
+      icon = null
+      text = interest
       break
   }
   return (
     <InterestBox {...rest}>
-      <InterestImg src={`/icons/Icons_ready-${icon}.svg`}/>
+      {icon && <InterestImg src={`/icons/Icons_ready-${icon}.svg`}/>}
       {text}
     </InterestBox>
   )
