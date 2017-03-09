@@ -199,7 +199,7 @@ class ProfilePage extends Component {
             {languagesArr.length === 0 ? (
               <Text><FormattedMessage id='profile.noLanguages'/></Text>
             ) : (
-              languagesArr.map(language => <LanguageBox key={language}>{language}</LanguageBox>)
+              languagesArr.map(language => <LanguageBox key={language} style={entryStyle}>{language}</LanguageBox>)
             )}
           </Container>
 
