@@ -47,6 +47,7 @@ class DefaultLayout extends React.Component {
   render () {
     const {children, location} = this.props
     const isModal = children.props.route.modal
+    const modalColor = children.props.route.modalColor
     return (
       <div>
         <Header/>
@@ -66,7 +67,7 @@ class DefaultLayout extends React.Component {
             }
 
             {isModal &&
-              <Modal isOpen={true} onRequestClose={this.handleCloseModal}>
+              <Modal isOpen={true} color={modalColor} onRequestClose={this.handleCloseModal}>
                 {children}
               </Modal>
             }

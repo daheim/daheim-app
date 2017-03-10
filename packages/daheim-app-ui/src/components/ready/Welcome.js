@@ -127,7 +127,7 @@ class WelcomeRaw extends React.Component {
     const {step} = this.state
     //if (step === 5) return this.renderNotificationSettings()
     return (
-      <Modal closeIcon={false} isOpen={this.state.open} onRequestClose={this.handleCloseModal}>
+      <Modal color={Color.green} closeIcon={false} isOpen={this.state.open} onRequestClose={this.handleCloseModal}>
         <Flex
           column align='center' justify='center'
           style={{maxWidth: Layout.innerWidthPx / 1.7}}

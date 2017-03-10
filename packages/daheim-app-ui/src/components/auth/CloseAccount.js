@@ -77,7 +77,7 @@ class CloseAccount extends Component {
             <FormattedMessage id='closeAccount.start'/>
           </Flex>
         </Button>
-        <Modal isOpen={open} onRequestClose={this.onRequestClose} contentLabel={''}>
+        <Modal color={Color.red} isOpen={open} onRequestClose={this.onRequestClose} contentLabel={''}>
           <div style={{maxWidth: Layout.innerWidthPx / 1.5}}>
             <Flex justify='center'><H2><FormattedMessage id='closeAccount.title'/></H2></Flex>
             <VSpace v={Padding.m}/>
@@ -102,6 +102,7 @@ class CloseAccount extends Component {
             <VSpace v={Padding.m}/>
 
             <Checkbox
+              type='neg'
               style={{marginLeft: Padding.m, maxWidth: Layout.innerWidthPx / 2.5}}
               checked={confirmed}
               label={intl.formatMessage({id: 'closeAccount.confirmLabel'})}

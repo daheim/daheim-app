@@ -26,6 +26,8 @@ import HelpPage from './components/help/HelpPage'
 import NotFoundPage from './containers/NotFoundPage'
 import AvatarMakerPage from './components/avatar/AvatarMaker'
 
+import {Color} from './styles'
+
 const scrollCallback = (prevRouterProps, { routes }) => {
   const isModal = routes[routes.length-1].modal
   return !isModal;
@@ -63,7 +65,7 @@ export default function createRouter (history) {
         </Route>
 
         <Route path='*' component={DefaultLayout}>
-          <IndexRoute component={NotFoundPage} modal={true} backTo={'/'}/>
+          <IndexRoute component={NotFoundPage} modal={true} backTo={'/'} modalColor={Color.red}/>
         </Route>
       </Router>
     </div>

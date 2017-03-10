@@ -207,8 +207,8 @@ export class Checkbox extends Component {
   render() {
     const {checked, type, label, children} = this.props
     const bg = type === 'neutral' && this.props.checked ? Color.lightBlue : 'none'
-    const filter = type === 'neutral' ? 'brightness(100)' : 'none'
-    const border = type === 'neutral' ? Color.lightBlue : Color.lightGreen
+    const filter = type === 'neutral' ? 'brightness(100)' : type === 'neg' ? 'hue-rotate(205deg) brightness(0.8)' : 'none'
+    const border = type === 'neutral' ? Color.lightBlue : type === 'neg' ? Color.red : Color.lightGreen
     return (
       <CheckboxContainer style={this.props.style}>
         <input

@@ -4,11 +4,12 @@ import Modal from 'react-modal'
 import modalCss from './Modal.style'
 
 import {VSpace} from './components/Basic'
-import {Layout, Padding} from './styles'
+import {Layout, Padding, Color} from './styles'
 
 export default class DhmModal extends Component {
 
   static propTypes = {
+    color: PropTypes.string,
     closeIcon: PropTypes.bool,
     onRequestClose: PropTypes.func,
     children: PropTypes.node,
@@ -24,8 +25,9 @@ export default class DhmModal extends Component {
   }
 
   render () {
-    const {children, closeIcon, style, ...otherProps} = this.props
-    const {inner, otherStyle} = style || {}
+    const {color, children, closeIcon, style, ...otherProps} = this.props
+    const {inner={}, otherStyle={}} = style || {}
+    inner.borderColor = color || Color.lightBlue
 
     return (
       <Modal
@@ -43,7 +45,7 @@ export default class DhmModal extends Component {
                   className={modalCss.closeIconContainer}
                   onClick={this.handleCloseIconClick}
                   >
-                  <CloseIcon color='gray'/>
+                  <CloseIcon color={color || Color.lightBlue}/>
                 </div>
               }
               {children}

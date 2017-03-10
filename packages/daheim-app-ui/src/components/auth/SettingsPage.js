@@ -161,6 +161,7 @@ class SettingsPage extends Component {
             value={password}
             onChange={this.handlePasswordChange}
           />
+          <VSpace v={Padding.s}/>
           <TextField
             type='password' neutral
             error={newPasswordError}
@@ -168,6 +169,7 @@ class SettingsPage extends Component {
             value={newPassword}
             onChange={this.handleNewPasswordChange}
           />
+          <VSpace v={Padding.s}/>
           <TextField
             type='password' neutral
             error={repeatNewPasswordError}
