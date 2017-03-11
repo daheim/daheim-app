@@ -31,7 +31,6 @@ const X = styled.img`
   top: ${Padding.m};
   height: 16px;
   object-fit: contain;
-  filter: brightness(100);
   cursor: pointer;
 `
 
@@ -106,7 +105,7 @@ class UserItemRaw extends React.Component {
           <PopupBg>
             <X
               onClick={this.handleClose}
-              src='/icons/Icons_ready-14.svg'
+              src='/icons/close.svg'
             />
             {this.renderEntry('/', 'userMenu.frontPage')}
             <VSpace v={space}/>
