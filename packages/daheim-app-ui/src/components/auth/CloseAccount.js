@@ -119,7 +119,7 @@ class CloseAccount extends Component {
                 >
                 <H2><FormattedMessage id='closeAccount.cancel'/></H2>
               </Button>
-              <Box auto/>
+              <Box auto style={{minWidth: Padding.grid}}/>
               <Button
                 style={{width: 'auto', padding: '3px 30px'}}
                 neg

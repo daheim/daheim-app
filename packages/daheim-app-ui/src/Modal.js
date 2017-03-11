@@ -37,7 +37,7 @@ export default class DhmModal extends Component {
         {...otherProps}
         contentLabel=''
         >
-        <div style={{paddingTop: `${Layout.topbarHeightPx}px`, height: '100%'}}>
+        <div style={{padding: `${Layout.topbarHeightPx}px 0`, height: '100%', width: '100%', maxWidth: Layout.innerWidthPx/2}}>
           <div style={{transform: 'translateZ(0)', height: '100%'}}>
             <div className={modalCss.inner} style={inner}>
               {closeIcon &&

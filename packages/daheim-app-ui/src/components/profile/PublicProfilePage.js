@@ -155,7 +155,7 @@ class ProfilePage extends Component {
       />)
 
     return (
-      <div style={{maxWidth: '100%', width: Layout.innerWidthPx/2}}>
+      <div style={{width: '100%', maxWidth: Layout.innerWidthPx/2}}>
         <Helmet title={name} />
 
         {!this.props.hideHeader && <VSpace v={Padding.l}/>}
