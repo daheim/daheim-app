@@ -6,7 +6,7 @@ import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl'
 import {ready as setReady} from '../../actions/live'
 import style from './ReadySwitch.style'
 
-import {Button, H1, Flex, HSpace, CircularProgress, Text} from '../Basic'
+import {Button, H1, Flex, HSpace, CircularProgress, CircularProgress2, Text} from '../Basic'
 import {Layout, Padding} from '../../styles'
 
 class Connecting extends Component {
@@ -114,7 +114,7 @@ class ReadySwitch extends Component {
     } else {
       return (
         <Flex align='center' justify='center'>
-          <CircularProgress size={0.3}/>
+          <CircularProgress2 size={0.8}/>
           <HSpace v={`${Padding.sPx * 2}px`}/>
           <Text style={{maxWidth: Layout.widthPx * 0.4}}>
             <FormattedHTMLMessage

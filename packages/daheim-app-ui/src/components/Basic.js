@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {VelocityTransitionGroup} from 'velocity-react'
 import styled from 'styled-components'
+import {searchAnimations} from 'bodymovin'
 
 import {Layout, Padding, Fontsize, Color} from '../styles'
 
@@ -496,6 +497,34 @@ export class CircularProgress extends Component {
     const {size} = this.props
     return (
       <div className='loader' style={{transform: `scale(${size})`}}/>
+    )
+  }
+}
+
+export class CircularProgress2 extends Component {
+  static propTypes = {
+    size: PropTypes.number,
+  }
+
+  handleNode = () => {
+    searchAnimations()
+  }
+
+  render() {
+    const {size} = this.props
+    return (
+      <div
+        ref={this.handleNode}
+        style={{
+          margin: '0 -55px',
+          width: `${300 * size}px`,
+          transform: `scale(${size})`
+        }}
+        className='bodymovin'
+        data-animation-path="/warten.json"
+        data-anim-loop="true"
+        data-name="ninja"
+      />
     )
   }
 }
