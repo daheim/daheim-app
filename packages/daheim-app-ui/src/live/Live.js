@@ -16,7 +16,7 @@ class Connection {
       const socket = this.socket = io(window.__INIT.SIO_URL, {
         reconnection: false,
         multiplex: false,
-        transports: ['websocket'],
+        transports: window.__INIT.SIO_TRANSPORTS,
         query: {
           'access_token': accessToken
         }
